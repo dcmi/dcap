@@ -1,2 +1,3 @@
-# dcap
+# Dublin Core Application Profile (DCAP)
 Revisiting the Singapore Framework....
+
