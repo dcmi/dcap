@@ -1,0 +1,63 @@
+Entity,label,cardinality,property?,value?,Notes
+descriptionSet,descSetID,"1,1",dct:identifier,xsd:literal,
+,display name,"1,-1",rdfs:label,xsd:literal,one value per language
+,version,"0,1",,xsd:literal,
+,version date,"0,1",dct:date,xsd:datetime,
+,topic,"0,-1",dct:subject,"xsd:literal, xsd:IRI",DCT says advised to take from a list.
+,creator,"0,-1","dct:creator, dct:contributor",xsd:literal,
+,rights,"0,-1",dct:rights,xsd:literal,
+,open/closed,"0,1",sx:closed,xsd:boolean,default open?
+,descriptions,"0,-1",dct:identifier,xsd:literal (array),
+description,descID,"1,1",dct:identifier,xsd:literal,
+,display name,"1,-1",rdfs:label,xsd:literal,one value per language?
+,description,"0,1",dct:description,xsd:literal,
+,example,"0,-1",vann:example,xsd:literal,
+,usage note,"0,1",vann:usageNote,xsd:literal,
+,standalone,"0,1",,"yes, no, either",No' means the description can only be used if it is the object of a triple; yes & either seem to be equivalent
+,class,"0,-1",rdf:type,rdfs:Class,The valid RDF  class(es) for this description; only for RDF data 
+,min. occurrence,"0,1",sx:min,xsd:integer,Default 0
+,max. occurrence,"0,1",sx:max,xsd:integer,Default -1
+,statements,"0,-1",dct:identifier,xsd:literal (array),
+Statement,statementID,"1,1",dct:identifier,xsd:literal,
+,property,"1,1",(term),xsd:literal,
+,display name,"0,-1",rdfs:label,xsd:literal,one value per language
+,description,"0,-1",dct:description,xsd:literal,
+,usage note,"0,-1",vann:usageNote,xsd:literal,
+,example,"0,-1",vann:example,xsd:literal,
+,min. occurrence,"0,1",sx:minInclusive,xsd:integer,Default 0
+,max. occurrence,"0,1",sx:maxInclusive,xsd:integer,Default -1
+,value link,"0,1",sx:valueExpr,xsd:literal,Assuming a statement can be reused within a set
+Datatype value,datatypeID,"1,1",dct:identifier,xsd:literal,
+,display name,"0,-1",rdfs:label,literal or language literal,one value per language
+,short description,"0,-1",dct:description,xsd:literal,
+,usage note,"0,-1",vann:usageNote,xsd:literal,
+,example,"0,-1",vann:example,,
+,data type ,"1,1",sx:datatype,any xsd datatype,
+,datatype list,"0,1",sx:datatype,list of any xsd datatypes,"where more than one type is valid, e.g. date, datetime"
+,datatype value constraint,"0,1",sx:pattern,Grep-like string,"this needs to be a shex statement, e.g. <= today's date, or a regex?"
+Literal value,literal value ID,"1,1",dct:identifier,xsd:literal,
+,display name,"0,-1",rdfs:label,xsd:literal,one value per language
+,description,"0,-1",dct:description,xsd:literal,
+,usage note,"0,-1",vann:usageNote,xsd:literal,
+,example,"0,-1",vann:example,,
+,max length,"0,1",sx:maxLength,,default unlimited
+,min  length,"0,1",sx:minLength,,Default (?)
+,language tag constraint,"0,1",,,one or more language tags that are considered valid
+,unique language constraint,"0,1",,ShEx issue #47 - may be available in the future,only one occurrence of each language tag is allowed
+,literal value list,"0,1",,xsd:literal,"Eg:red, blue, green"
+Object value,object value ID,"1,1",dct:identifier,xsd:IRI,
+,display name,"0,-1",rdfs:label,xsd:literal,if language literal then one per language
+,description,"0,-1",dct:description,xsd:literal,
+,usage note,"0,-1",vann:usageNote,xsd:literal,
+,example,"0,-1",vann:example,,
+,IRI list,"0,1",,xsd:IRI,a list of valid IRIs or IRI stems
+,object class constraint,"0,1",sx:pattern,xsd:literal,must belong to this class or one of this list of classes
+,,,,,
+,,,,,
+namespaces,http://vocab.org/vann/,vann,,,
+,http://purl.org/dc/terms/,dct,,,
+,http://www.w3.org/ns/dcat,dcat,,,
+,http://www.w3.org/2001/XMLSchema,xsd,,,
+,http://www.w3.org/ns/shex,sx,,,
+,http://www.w3.org/1999/02/22-rdf-syntax-ns#,rdf,,,
+,http://www.w3.org/2000/01/rdf-schema#,rdfs,,,

@@ -1,0 +1,54 @@
+DCMI entity,element,,BIBFRAME entity,element,,DSP entity,element
+descriptionSet,descSetID,,Profile,identifier,,Description Set Template,
+,display name,,,title,,,
+,version,,,description,,,
+,version date,,,date,,,
+,topic,,,contact,,,
+,creator,,,remark,,,
+,rights,,,resource templates,,,
+,open/closed,,,,,,
+,descriptions,,,,,,
+description,descID,,Resource template,identifier,,Description Template,ID
+,display name,,,resource identifier,,,standalone
+,description,,,resource label,,,minOccurs
+,usage note,,,contact,,,maxOccurs
+,example,,,,,,resource class
+,standalone,,,remark,,,
+,class,,,property templates,,,
+,min. occurrence,,,,,,
+,max. occurrence,,,,,,
+,statements,,,,,,
+Statement,statementID,,Property,,,Statement template,minOccurs
+,property,,,identifier,,,maxOccurs
+,display name,,,property label,,,type
+,description,,,mandatory,,Property constraints,list
+,usage note,,,,,,Sub-property
+,example,,,repeatable,,,
+,min. occurrence,,,type,,,
+,max. occurrence,,,value constraint,,,
+,value link,,,remark,,,
+Datatype value,datatypeID,,,,,,
+,display name,,Value constraint,language,,Literal value constraints,literal list
+,description,,,language URI,,,language (allowed)
+,usage note,,,,,,language list
+,example,,,language label,,,syntax encoding scheme (SES)
+,datatype ,,,dataType,,,SES list
+,datatype list,,,value template reference,,Non-literal constraints,desc. Template reference
+,datatype value constraint,,,use values from,,,class membership
+Literal value,literal value ID,,,editable,,,value URI occurrence
+,display name,,,remark,,,value URI list
+,description,,,,,,vocab. Encoding scheme (allowed)
+,usage note,,,,,,vocab. Encoding scheme list
+,example,,,,,,value string constraint
+,max length,,,,,,minOccurs
+,min  length,,,,,,maxOccurs
+,language tag constraint,,,,,,
+,unique language constraint,,,,,,
+,literal value list,,Value DataType,dataType ID,,,
+Object value,object value ID,,,dataType label,,,
+,display name,,,dataType label hint,,,
+,short description,,,remark,,,
+,usage note,,,,,,
+,example,,,,,,
+,IRI list,,,,,,
+,object class constraint,,,,,,
