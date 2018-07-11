@@ -1,0 +1,13 @@
+name = Hierarchical Select Menu
+description = Use Hierarchical Select for menu parent selection.
+dependencies[] = hierarchical_select
+dependencies[] = menu
+package = Form Elements
+core = 7.x
+
+; Information added by Drupal.org packaging script on 2015-05-29
+version = "7.x-3.0-beta2"
+core = "7.x"
+project = "hierarchical_select"
+datestamp = "1432903085"
+

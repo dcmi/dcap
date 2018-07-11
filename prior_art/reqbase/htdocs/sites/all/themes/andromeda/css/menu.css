@@ -1,0 +1,164 @@
+/**
+ * @file
+ * Menu and Navigation styling
+ */
+
+#main-menu {
+  font-family: SansationLight;
+  height: 100px;
+  line-height: 100px;
+  margin-left: 500px;
+  overflow: hidden;
+  width: 440px;
+}
+
+.logo-on-right #main-menu {
+  float:left;
+  margin:0;
+}
+
+.with-slogan #main-menu{
+  height:120px;
+  line-height:120px;
+}
+
+#main-menu ul.links {
+  float:right;
+}
+
+.logo-on-right #main-menu ul.links {
+  float:left;
+}
+
+#main-menu ul.links{
+  overflow:hidden;
+  margin:0;
+  padding:0;
+}
+
+#main-menu ul.links li{
+  float:left;
+  margin:0 0 0 25px;
+  list-style:none outside none;
+}
+
+.logo-on-right #main-menu ul.links li {
+  margin:0 25px 0 0;
+}
+
+#main-menu ul.links li a{
+  color: #C0C0C0;
+  text-decoration:none;
+  font-size:14px;
+}
+
+#main-menu ul.links li.active-trail a {
+  color:#FFF;
+}
+
+#main-menu ul.links li a.active{
+  color:#fff;
+}
+
+#main-menu ul.links li a:hover{
+  text-decoration:underline;
+}
+
+/**
+ * Nice menus support
+ */
+.block-nice-menus {
+  float:right;
+}
+
+.logo-on-right .block-nice-menus {
+  float:left;
+}
+
+.block-nice-menus h2.block-title {
+  display:none;
+}
+
+ul.nice-menu {
+  border: medium none;
+  font-family: SansationLight;
+  height: 40px;
+  margin: 30px 0;
+  z-index:1000;
+}
+
+ul.nice-menu li {
+  margin:0 0 0 15px;
+  border:none;
+  background:none;
+  list-style:none outside none;
+}
+
+.logo-on-right ul.nice-menu li {
+  margin:0 15px 0 0;
+  list-style:none outside none;
+}
+
+ul.nice-menu li a{
+  color: #C0C0C0;
+  text-decoration:none;
+  font-size:14px;
+  display:block;
+  height:30px;
+  line-height: 30px;
+  padding:5px 10px !important;
+  margin:0;
+  border-radius:5px;
+}
+
+ul.nice-menu li a:hover,
+ul.nice-menu li.over a{
+  background:#111;
+}
+
+ul.nice-menu li.menuparent {
+  background:none !important;
+  list-style:none outside none;
+}
+
+ul.nice-menu li.menuparent ul {
+  border:none;
+  background:#111;
+  margin-top:14px;
+  border-radius:0 5px 5px 5px;
+  padding:0 0 10px 0;
+}
+
+ul.nice-menu li.menuparent ul li {
+  padding:0;
+  margin:0;
+  background:url("../images/double-line.gif") repeat-x scroll center bottom transparent;
+  list-style:none outside none;
+}
+
+ul.nice-menu li.over ul li a{
+  background:#111;
+  padding:3px 10px !important;
+}
+
+ul.nice-menu li.active-trail a{
+  color:#FFFFFF;
+}
+
+ul.nice-menu li.active-trail ul li a {
+  color:#C0C0C0;
+}
+
+ul.nice-menu li.active-trail ul li a.active {
+  color:#FFFFFF;
+}
+
+ul.nice-menu li.over ul li a {
+  text-decoration:none;
+  padding:0 10px;
+  background:none;
+}
+
+ul.nice-menu li.over ul li a:hover {
+  text-decoration: underline;
+}

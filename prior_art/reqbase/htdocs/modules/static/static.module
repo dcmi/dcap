@@ -1,0 +1,1162 @@
+<?php
+
+/**
+ * @file
+ * Static site generator for Drupal.
+ */
+
+/**
+ * Value for expired content.
+ */
+define('STATIC_EXPIRED', 0);
+
+/**
+ * Default value for the root cache dir.
+ */
+define('STATIC_ROOT_CACHE_DIR', 'static');
+
+/**
+ * Default value for the normal cache dir.
+ */
+define('STATIC_NORMAL_DIR', 'normal');
+
+/**
+ * Define the default cron limit
+ */
+define('STATIC_DEFAULT_CRON_LIMIT', 60);
+
+include_once 'static.file.inc';
+
+/**
+ * Implements hook_permission().
+ */
+function static_permission() {
+  return array(
+    'administer static site' => array(
+      'title' => t('Administer static site'),
+      'description' => t('Perform administration tasks on the static built site.'),
+    ),
+    'pubish static site' => array(
+      'title' => t('Pubish static site'),
+      'description' => t('Perform administration tasks on the static built site.'),
+    ),
+  );
+}
+
+/**
+ * Implements hook_menu().
+ */
+function static_menu() {
+  $items['admin/config/system/static'] = array(
+    'title' => 'Static Generator',
+    'description' => 'The current status of the Static build.',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('static_admin_status'),
+    'access arguments' => array('administer static site'),
+    'file' => 'static.admin.inc',
+  );
+
+  $items['admin/config/system/static/status'] = array(
+    'title' => 'Status',
+    'type' => MENU_DEFAULT_LOCAL_TASK,
+    'weight' => -10,
+  );
+
+  $items['admin/config/system/static/settings'] = array(
+    'title' => 'Settings',
+    'description' => 'Configuration for the static generator.',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('static_admin_settings'),
+    'access arguments' => array('administer static site'),
+    'type' => MENU_LOCAL_TASK,
+    'weight' => 5,
+    'file' => 'static.admin.inc',
+  );
+
+  $items['admin/config/system/static/paths'] = array(
+    'title' => 'Paths',
+    'description' => 'List of the paths currently being tracked by the static module.',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('static_admin_paths_list'),
+    'access arguments' => array('administer static site'),
+    'type' => MENU_LOCAL_TASK,
+    'file' => 'static.admin.inc',
+  );
+
+  $items['admin/config/system/static/regenerate'] = array(
+    'title' => 'Regenerate',
+    'description' => 'Queue all items for regeneration.',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('static_admin_confirm', 4),
+    'access arguments' => array('administer static site'),
+    'type' => MENU_CALLBACK,
+    'file' => 'static.admin.inc',
+  );
+
+  $items['admin/config/system/static/clear'] = array(
+    'title' => 'Clear static cache',
+    'description' => 'Clear all the static files for the generator.',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('static_admin_confirm', 4),
+    'access arguments' => array('administer static site'),
+    'type' => MENU_CALLBACK,
+    'file' => 'static.admin.inc',
+  );
+
+  $items['static/generate/%static'] = array(
+    'title' => 'Status',
+    'page callback' => 'static_quick_generate_page',
+    'page arguments' => array(2),
+    'access arguments' => array('administer static site'),
+    'type' => MENU_CALLBACK,
+  );
+
+  return $items;
+}
+
+
+/**
+ * Page callback to generate a specific page.
+ */
+function static_quick_generate_page($static_info) {
+  // Force static to be 0 so it will regenerate.
+  $static_info['status'] = 0;
+  static_save_info($static_info);
+
+  $result = static_generate_file($static_info['path']);
+
+  if ($result) {
+    drupal_set_message('Successfully generated ' . $static_info['path']);
+  }
+  else {
+    drupal_set_message('Unable to generate ' . $static_info['path'], 'error');
+  }
+  // Go to either redirect location or home.
+  drupal_goto();
+}
+
+/**
+ * Implements hook_flush_caches().
+ */
+function static_flush_caches() {
+  // We can't get rid of the querystring but we can set it to nothing.
+  variable_set('css_js_query_string', "");
+}
+
+/**
+ * Static track paths.
+ *
+ * Use this function to tell the static module to track paths. This is useful
+ * for submodules to make sure that all paths get included.
+ */
+function static_track_paths($paths) {
+  // There probably is some way to optimize this.
+  foreach ($paths as $path) {
+    static_track_path($path);
+  }
+}
+
+/**
+ * Track a single path.
+ *
+ * $path can either be a string which represents the path or an
+ * info array.
+ *
+ * For multiple paths, use static_track_paths
+ */
+function static_track_path($path) {
+  if (is_array($path)) {
+    $info = static_get_info($path['path']);
+    // Merge the arrays.
+    $info = $path + $info;
+  }
+  else {
+    $info = static_get_info($path);
+  }
+  // Only process new paths.
+  if (!isset($info['id'])) {
+    static_save_info($info);
+  }
+}
+
+/**
+ * Refresh all known paths for the static module.
+ */
+function static_refresh_paths() {
+  // On larger sites this might run into php limit issues (memory and time).
+  $paths = module_invoke_all('static_refresh_paths');
+
+  drupal_alter('static_refresh_paths', $paths);
+
+  static_track_paths($paths);
+}
+
+/**
+ * Implements hook_static_refresh_paths().
+ *
+ * Return info about system paths.
+ */
+function static_static_refresh_paths() {
+  $paths = array();
+  $paths[''] = array(
+    'path' => '<front>',
+    'frequency' => 300,
+  );
+  $paths['node'] = array(
+    'path' => 'node',
+    'pager' => 'page',
+    'frequency' => 300,
+  );
+  $site_404 = variable_get('site_404', '');
+  if ($site_404 != '') {
+    $paths[$site_404] = array(
+      'type' => 'system',
+      'path' => $site_404,
+    );
+  }
+  $site_403 = variable_get('site_403', '');
+  if ($site_403 != '') {
+    $paths[$site_403] = array(
+      'type' => 'system',
+      'path' => $site_403,
+    );
+  }
+  return $paths;
+}
+
+/**
+ * Load a static path info.
+ */
+function static_get_info($path) {
+  $path_alias = array();
+
+  // Special case for the front page since it is weird.
+  if ($path == '' || $path == '<front>') {
+    $path_alias = array(
+      'source' => '<front>',
+      'alias' => '',
+    );
+  }
+  else {
+    // Split path into parts for path, query, fragment.
+    $path_parts = drupal_parse_url($path);
+
+    // Process aliases for the path portion.
+    if (isset($path_parts['path'])) {
+      // Ensure this is the normal path.
+      $source_path = drupal_get_normal_path($path_parts['path']);
+      $path_alias = path_load(array('source' => $source_path));
+
+      // Build the paths with the original options for query, fragment.
+      $url_options = array('alias' => TRUE) + $path_parts;
+      if ($path_alias) {
+        unset($url_options['path']);
+        foreach (array('source', 'alias') as $path_key) {
+          if (isset($path_alias[$path_key])) {
+            $path_alias[$path_key] = url($path_alias[$path_key], $url_options);
+            $path_alias[$path_key] = ltrim($path_alias[$path_key], '/');
+          }
+        }
+      }
+      elseif (!empty($path_parts['query'])) {
+        foreach (array('source', 'alias') as $path_key) {
+          $path_alias[$path_key] = $source_path . '?' . drupal_http_build_query($path_parts['query']);
+        }
+      }
+    }
+    else {
+      $source_path = drupal_get_normal_path($path);
+    }
+
+    if (empty($path_alias)) {
+      $path_alias = array(
+        'source' => $source_path,
+        'alias' => $source_path,
+      );
+    }
+  }
+
+  $info = db_select('static', 's')
+    ->fields('s')
+    ->condition('path', $path_alias['source'])
+    ->execute()
+    ->fetchAssoc();
+
+  // In case this is new.
+  if (!$info) {
+    $info = array(
+      'path' => $path_alias['source'],
+      'alias' => $path_alias['alias'],
+      'status' => STATIC_EXPIRED,
+    );
+  }
+
+  // Alias may have changed. Record it here.
+  $info['alias'] = $path_alias['alias'];
+
+  // Allow other modules to alter.
+  drupal_alter('static_info', $info);
+
+  return $info;
+}
+
+/**
+ * Load info by id.
+ */
+function static_load($id) {
+  $info = db_select('static', 's')
+    ->fields('s')
+    ->condition('id', $id)
+    ->execute()
+    ->fetchAssoc();
+
+  // Allow other modules to alter.
+  drupal_alter('static_info', $info);
+
+  return $info;
+}
+
+/**
+ * Save a static path.
+ */
+function static_save_info($info) {
+  // Allow other modules to modify before save.
+  drupal_alter('static_save_info', $info);
+
+  // Allow cancelling the save by returning FALSE.
+  if ($info) {
+    $keys = array();
+    if (isset($info['id'])) {
+      $keys[] = 'id';
+    }
+    drupal_write_record('static', $info, $keys);
+  }
+}
+
+/**
+ * Get the current status of the static generator.
+ */
+function static_get_status() {
+  $query = db_select('static', 's')
+    ->fields('s', array('status'));
+  $query->addExpression('count(id)', 'count');
+  $query->orderBy('status', 'ASC');
+  $results = $query->groupBy('status')
+    ->execute()
+    ->fetchAll();
+  return $results;
+}
+
+/**
+ * Implements hook_expire_cache().
+ */
+function static_expire_cache($paths) {
+  foreach ($paths as $path => $absolute) {
+    static_set_expired($path);
+  }
+}
+
+/**
+ * Function to set a path to regenerate.
+ */
+function static_set_expired($path) {
+  $paths = & drupal_static(__FUNCTION__);
+
+  $info = static_get_info($path);
+  if (!isset($paths[$info['path']])) {
+    $info['status'] = STATIC_EXPIRED;
+    $info['queued'] = 0;
+
+    static_save_info($info);
+
+    module_invoke_all('static_expire', $path);
+    watchdog('static', 'Static item manually expired: !id => !path', array('!id' => $info['id'], '!path' => $info['path']), WATCHDOG_DEBUG);
+
+    $paths[$info['path']] = TRUE;
+  }
+}
+
+/**
+ * Expire all dynamic pages.
+ */
+function static_expire_dynamic() {
+  $query = db_select('static', 's')
+    ->fields('s', array('id'))
+    ->condition('frequency', 0, '!=')
+    ->where('updated + frequency <= :request_time', array(':request_time' => REQUEST_TIME))
+    ->orderBy('updated')
+    ->addTag('static_expire_dynamic');
+
+  $items = $query->execute()->fetchAllKeyed(0, 0);
+  if ($items) {
+    static_expire_multiple($items);
+  }
+}
+
+/**
+ * Expire multiple items at once.
+ */
+function static_expire_multiple($items) {
+  $items = array_filter($items);
+  if (empty($items)) {
+    return;
+  }
+  db_update('static')
+    ->fields(array('status' => STATIC_EXPIRED))
+    ->condition('id', $items, 'IN')
+    ->execute();
+
+  watchdog('static', 'Static items automatically expired: !id', array('!id' => implode(',', $items)), WATCHDOG_DEBUG);
+}
+
+/**
+ * Delete multiple items at once.
+ */
+function static_delete_multiple($items) {
+  $items = array_filter($items);
+  if (empty($items)) {
+    return;
+  }
+  db_delete('static')
+    ->condition('id', $items, 'IN')
+    ->execute();
+  module_invoke_all('static_delete_multiple', $items);
+}
+
+/**
+ * Implements hook_cron().
+ */
+function static_cron() {
+  if (variable_get('static_cron', TRUE)) {
+    static_expire_dynamic();
+    $results = db_select('static', 's')
+      ->fields('s', array('path'))
+      ->condition('status', 0)
+      ->condition('queued', REQUEST_TIME - 3600, '<')
+      // Grab oldest first.
+      ->orderBy('updated', 'ASC')
+      ->addTag('static_cron_queue')
+      ->execute()
+      ->fetchAllKeyed(0, 0);
+    if ($results) {
+      foreach ($results as $path) {
+        // Put URLs in a queue for processing by cron.
+        $queue = DrupalQueue::get('static');
+        $queue->createItem($path);
+      }
+      // Mark all items as added to the queue.
+      db_update('static')
+        ->fields(array('queued' => REQUEST_TIME))
+        ->condition('path', $results)
+        ->execute();
+    }
+  }
+}
+
+/**
+ * Implements hook_cron_queue_info().
+ */
+function static_cron_queue_info() {
+  $queues['static'] = array(
+    'worker callback' => 'static_generate_file',
+    // Max run time to claim per cron run (in seconds).
+    'time' => variable_get('static_queue_seconds', 30),
+  );
+
+  return $queues;
+}
+
+/**
+ * Generate a static html file.
+ *
+ * Worker Callback for batches.
+ *
+ * This is the most important function that actually does the generation
+ * of the html file.
+ */
+function static_generate_file($path) {
+  global $base_url;
+
+  $time = -microtime(TRUE);
+
+  $info = static_get_info($path);
+  // If status is 1, we don't want to regenerate again. Only regenerated
+  // status 0. This can happen when items get left in the queue and are there
+  // for multiple runs.
+  if ($info['status']) {
+    return TRUE;
+  }
+  $absolute_url = urldecode(url($info['alias'], array(
+    'absolute' => TRUE,
+    'alias' => TRUE
+  )));
+
+  // If the file exists, try to copy it directly.
+  if (static_check_file($path)) {
+    $directory = dirname(static_get_normal_cache_dir() . '/' . $path);
+    if (!static_mkdir($directory)) {
+      return FALSE;
+    }
+    else {
+      static_file_copy_to_cache_dir($path);
+
+      $info['file'] = $path;
+
+      $info['updated'] = REQUEST_TIME;
+      $info['queued'] = 0;
+      $info['status'] = 200;
+      $info['status_message'] = 'File Copied';
+
+      static_save_info($info);
+
+      return TRUE;
+    }
+  }
+
+  $request = drupal_http_request($absolute_url, array(
+      'headers' => array('User-Agent' => 'Drupal Static (+http://drupal.org/project/static)'),
+      'timeout' => '300',
+    )
+  );
+
+  // Allow other modules to modify the response.
+  drupal_alter('static_response', $info, $request);
+
+  $status = $request->code;
+  $status_message = $request->status_message;
+  $data = $request->data;
+
+  // Safety check.
+  // If a PHP Fatal Error occurs with error_reporting off it will return
+  // an empty string with status 200. ESI can be blank.
+  if ($status == 200 && empty($data) && substr($info['path'], 0, 4) !== 'esi/') {
+    $status = 500;
+    $status_message = 'Empty Response';
+  }
+
+  if ($status == 200) {
+    // Reload the static info as it may have changed during the request.
+    // If the page has a pager it will have changed.
+    $info = static_get_info($path);
+
+    $newfile = static_filename($info);
+    // Check to see if a file previously existed but is different.
+    if (isset($info['file']) && $info['file'] != '' && $info['file'] != $newfile) {
+      static_redirect_page($info['file'], $newfile);
+    }
+
+    $info['file'] = $newfile;
+
+    $info['updated'] = REQUEST_TIME;
+    $info['queued'] = 0;
+    $info['status'] = $status;
+    $info['status_message'] = $status_message;
+
+    if (isset($info['pager']) && isset($info['pager_total'])) {
+      // We only want to add pager pages for the root page.
+      if (strpos($info['alias'], 'page=') === FALSE) {
+        $pager_total = intval($info['pager_total']);
+        for ($i = 1; $i < $pager_total; $i++) {
+          $pager_path = $info['path'] . '?' . $info['pager'] . '=' . $i;
+          $pager_alias = $info['alias'] . '?' . $info['pager'] . '=' . $i;
+          $pager_paths[$pager_path] = array(
+            'path' => $pager_path,
+            'alias' => $pager_alias,
+            'frequency' => 300,
+          );
+        }
+        if (isset($pager_paths)) {
+          static_track_paths($pager_paths);
+        }
+      }
+    }
+
+    // Only rewrite html files. Binary files should be passed through.
+    if (!empty($request->headers['content-type']) && substr($request->headers['content-type'], 0, 9) == 'text/html') {
+      // Drupal creates absolute urls for many links. We need to make these
+      // relative.
+      $data = str_replace($base_url, '', $data);
+
+      static_copy_linked_files($data);
+    }
+
+    // RSS feeds need the production site as they are absolute.
+    if (!empty($request->headers['content-type']) && substr($request->headers['content-type'], 0, 19) == 'application/rss+xml') {
+      // Change the absolute urls to point to the production site.
+      $data = str_replace($base_url, variable_get('static_prod_site', $base_url), $request->data);
+    }
+
+    // Set to 755 so ssi can include.
+    $result = static_write_file(static_get_normal_cache_dir() . '/' . $info['file'], $data, 0755);
+
+    if (!$result) {
+      $info['status'] = 500;
+      $info['status_message'] = 'Failed to write file.';
+
+      watchdog('static', 'Failed to write file !file', array('!file' => $info['file']), WATCHDOG_ERROR);
+    }
+    else {
+      // Allow other modules to respond to the file creation.
+      module_invoke_all('static_file', $info['file'], $data);
+
+      watchdog('static', 'Static item generated: !id, !path, !file.', array(
+        '!id' => $info['id'],
+        '!path' => $info['path'],
+        '!file' => $info['file'],
+      ), WATCHDOG_DEBUG);
+    }
+  }
+
+  else {
+    // This can happen if something is deleted. We want to remove the
+    // corresponding file.
+    $delete_statuses = array(
+      403,
+      404
+    );
+    drupal_alter('static_delete_statuses', $delete_statuses);
+    if (in_array($request->code, $delete_statuses) && $info['file']) {
+      @unlink(static_get_normal_cache_dir() . '/' . $info['file']);
+    }
+    $info['status'] = $status;
+    $info['status_message'] = $status_message;
+
+    watchdog('static',
+      'Static generation failed for !id, !file with status !status',
+      array(
+        '!id' => $info['id'],
+        '!file' => $info['file'],
+        '!status' => $status,
+      ),
+      WATCHDOG_INFO
+    );
+    $result = FALSE;
+  }
+
+  // Save all changes.
+  $time += microtime(TRUE);
+  $info['duration'] = $time;
+
+  static_save_info($info);
+
+  return $result;
+}
+
+/**
+ * Generate a filename.
+ */
+function static_filename($info) {
+  // Special case for index.html
+  if ($info['alias'] == '') {
+    $filename = 'index.html';
+  }
+  else {
+    $filename = $info['alias'];
+
+    // If the filename does not have .html, add it.
+    if (!pathinfo($filename, PATHINFO_EXTENSION) && substr_compare($filename, '.html', -5, 5) !== 0) {
+      $filename .= '.html';
+    }
+
+    // Replace the ? for querystrings on pagers with _ so that the web server
+    // can find it.
+    $filename = str_replace('?', '_', $filename);
+  }
+
+  // Allow other modules to modify the filename.
+  drupal_alter('static_filename', $filename, $info);
+
+  return $filename;
+}
+
+/**
+ * Find any linked files within the page and copy them over to the destination.
+ */
+function static_copy_linked_files($data, $source_dir = '') {
+  module_invoke_all('static_process', $data, $source_dir);
+  // Should find a way of caching the results so we aren't constantly
+  // checking common files.
+  $matches = array();
+  // Match include("/anything").
+  $includes = array();
+  preg_match_all('/include\(["\'][\/\.]([^"\']*)["\']\)/', $data, $includes);
+  if (isset($includes[1])) {
+    $matches += $includes[1];
+  }
+  // Match url("/anything").
+  // Regex based on drupal_build_css_cache().
+  // - Finds css files for "@import url()".
+  // - Finds files within css files - url(images/button.png).
+  // - Excludes data based images.
+  $imports = array();
+  preg_match_all('/url\(\s*[\'"]?(?!(?:data)+:)([^\'")]+)[\'"]?\s*\)/i', $data, $imports);
+  if (isset($imports[1])) {
+    $matches = array_merge($matches, $imports[1]);
+  }
+  // Match src="/{anything}".
+  $srcs = array();
+  preg_match_all('/src=["\'][\/\.]([^"\']*)["\']/i', $data, $srcs);
+  if (isset($srcs[1])) {
+    $matches = array_merge($matches, $srcs[1]);
+  }
+  // Match href="/{anything}.{ico|css|pdf|doc}(?{anything})" () querystring is
+  // optional.
+  $hrefs = array();
+  preg_match_all('/href="[\/\.]([^"]*\.(' . variable_get('static_href_link_types', 'ico|css|pdf|doc') . ')(\?[^"]*)?)"/i', $data, $hrefs);
+  if (isset($hrefs[1])) {
+    $matches = array_merge($matches, $hrefs[1]);
+  }
+  // Match href='/{anything}.{ico|css|pdf|doc}(?{anything})' () querystring is
+  // optional.
+  $hrefs = array();
+  preg_match_all("/href=\'[\/\.]([^']*\.(" . variable_get('static_href_link_types', 'ico|css|pdf|doc') . ")(\?[^']*)?)\'/i", $data, $hrefs);
+  if (isset($hrefs[1])) {
+    $matches = array_merge($matches, $hrefs[1]);
+  }
+  $files = array();
+  $matches = array_unique($matches);
+  foreach ($matches as $match) {
+    // Strip off the querystring.
+    $cleanfile = static_clean_file_path($match, $source_dir);
+    if ($cleanfile) {
+      $files[] = $cleanfile;
+    }
+  }
+
+  drupal_alter('static_copy_files', $files);
+
+  // Copy the files.
+  static_copy_files($files);
+}
+
+/**
+ * Callback to generate multiple files based on files with status=0.
+ */
+function static_generate_files($limit) {
+  // May be a way to do multiple requests at a time to optimize this.
+  $results = db_select('static', 's')
+    ->fields('s')
+    ->condition('status', STATIC_EXPIRED)
+    ->orderBy('IF(frequency = 0, 1, 0)', 'DESC')
+    ->orderBy('priority', 'DESC')
+    ->orderBy('updated', 'ASC')
+    ->range(0, $limit)
+    ->addTag('static_generate_files')
+    ->execute()
+    ->fetchAllAssoc('id');
+
+  $count = 0;
+  foreach ($results as $result) {
+    $success = static_generate_file($result->path);
+    if ($success) {
+      $count++;
+    }
+  }
+  return $count;
+}
+
+/**
+ * Set all pages to be regenerated.
+ */
+function static_regenerate() {
+  $items = db_select('static', 's')
+    ->fields('s', array('id'))
+    ->addTag('static_regenerate')
+    ->execute()
+    ->fetchAllKeyed(0, 0);
+
+  static_expire_multiple($items);
+
+  return TRUE;
+}
+
+/**
+ * Clear out all static pages.
+ */
+function static_clear() {
+  static_regenerate();
+
+  static_delete_dir(drupal_realpath(static_get_normal_cache_dir()));
+
+  // Call the requirements to make sure all the links gets linked again.
+  include_once drupal_get_path('module', 'static') . '/static.install';
+  static_requirements('runtime');
+
+  return TRUE;
+}
+
+/**
+ * Creates and sets a batch for generating items.
+ */
+function _static_batch_generating_create($batch_size) {
+  if ($batch_size > 0) {
+    $batch = array(
+      'title' => t('Generating pages'),
+      'operations' => array(
+        array('_static_batch_generating_callback', array($batch_size)),
+      ),
+      'progress_message' => t('Completed about @percentage% of the generating operation.'),
+      'finished' => '_static_batch_generating_finished',
+      'file' => drupal_get_path('module', 'static') . '/static.module',
+    );
+    batch_set($batch);
+    return TRUE;
+  }
+  drupal_set_message(t("Couldn't create a batch, please check the batch size."), 'warning');
+  return FALSE;
+}
+
+/**
+ * Batch API callback for the generating functionality.
+ */
+function _static_batch_generating_callback($total_limit, &$context) {
+  $status = array();
+  $query = db_select('static', 's');
+  $query->fields('s');
+  $query->condition('status', STATIC_EXPIRED);
+  $result = $query->execute();
+  $status['remaining'] = $result->rowCount();
+
+  // Persistent data among batch runs.
+  if (empty($context['sandbox'])) {
+    $context['sandbox']['progress'] = 0;
+    $context['sandbox']['generated'] = 0;
+
+    // How many items do we want to index? All or a limited set of items.
+    if (empty($total_limit)) {
+      $context['sandbox']['max'] = $status['remaining'];
+    }
+    else {
+      $context['sandbox']['max'] = $total_limit;
+    }
+  }
+
+  // Persistent data for results.
+  if (!isset($context['results']['generated'])) {
+    $context['results']['generated'] = 0;
+    $context['results']['not generated'] = 0;
+    $context['results']['start'] = time();
+  }
+
+  // We can safely process the static_batch_size nodes at a time without a
+  // timeout or out of memory error.
+  $limit = variable_get('static_batch_size', STATIC_DEFAULT_CRON_LIMIT);
+
+  // Reduce the limit for our final batch if we would be processing more
+  // than had been requested.
+  if ($limit + $context['sandbox']['progress'] > $context['sandbox']['max']) {
+    $limit = $context['sandbox']['max'] - $context['sandbox']['progress'];
+  }
+
+  if ($context['sandbox']['max'] >= ($context['sandbox']['progress'] + $limit)) {
+    $context['sandbox']['progress'] += $limit;
+  }
+  else {
+    $context['sandbox']['progress'] = $context['sandbox']['max'];
+  }
+
+  // Generate the items.
+  try {
+    $generated = static_generate_files($limit);
+    $context['sandbox']['generated'] += $generated;
+  }
+  catch (Exception $e) {
+    watchdog_exception('static', $e);
+    $vars['@message'] = $e->message;
+    $context['message'] = t('An error occurred during generating: @message.', $vars);
+    $context['finished'] = 1;
+    $context['sandbox']['not generated'] += $context['sandbox']['max'] - $context['sandbox']['progress'];
+    return;
+  }
+
+  // Display progress message.
+  if ($generated > 0) {
+    $msg_arguments = array(
+      '@current' => $context['sandbox']['progress'],
+      '@total' => $context['sandbox']['max'],
+      '@generated' => $context['sandbox']['generated'],
+    );
+    $context['message'] = t('Generated @generated items. Total generated: @current of @total items. ', $msg_arguments);
+  }
+
+  // Some items couldn't be generated.
+  if ($generated !== $limit) {
+    $context['sandbox']['not generated'] += $limit - $generated;
+  }
+
+  // Everything has been generated.
+  if ($generated === 0 || $context['sandbox']['progress'] >= $context['sandbox']['max']) {
+    $context['finished'] = 1;
+  }
+  else {
+    $context['finished'] = $context['sandbox']['progress'] / $context['sandbox']['max'];
+  }
+
+  // Put the total into the results section when we're finished so we can
+  // show it to the admin.
+  if ($context['finished']) {
+    $context['results']['count'] = $context['sandbox']['progress'];
+    $context['results']['generated'] = $context['sandbox']['generated'];
+    $context['results']['not generated'] = $context['sandbox']['not generated'];
+  }
+}
+
+/**
+ * Batch API finishing callback for the generating functionality.
+ */
+function _static_batch_generating_finished($success, $results) {
+  // Display result messages.
+  if ($success) {
+    if (!empty($results['generated'])) {
+      $total_time = time() - $results['start'];
+      $msg_tokens = array(
+        '@pages' => $results['generated'],
+        '@elapsed' => $total_time,
+        '@rate' => $total_time > 0 ? round($results['generated'] / $total_time, 2) : $results['generated'],
+      );
+      drupal_set_message(format_plural($results['generated'],
+        'Successfully generated 1 page in @elapsed seconds. (@rate pages per second)',
+        'Successfully generated @pages pages in @elapsed seconds. (@rate pages per second)',
+        $msg_tokens
+      ));
+
+      if (!empty($results['not generated'])) {
+        drupal_set_message(
+          format_plural($results['not generated'],
+            '1 page could not be generated. Check the logs for details.',
+            '@count pages could not be generated. Check the logs for details.'),
+          'warning'
+        );
+      }
+    }
+    else {
+      drupal_set_message(t("Couldn't generate pages. Check the logs for details."), 'error');
+    }
+  }
+  else {
+    drupal_set_message(t("An error occurred while trying to generate pages. Check the logs for details."), 'error');
+  }
+}
+
+/**
+ * Creates and sets a batch for generating items.
+ */
+function _static_batch_refresh_paths() {
+  $queue = DrupalQueue::get('static_refresh_paths');
+  // Make sure the queue is empty before we begin.
+  $queue->deleteQueue();
+  // Ensure the queue is created.
+  $queue->createQueue();
+
+  // On larger sites this might run into php limit issues (memory and time).
+  $paths = module_invoke_all('static_refresh_paths');
+
+  drupal_alter('static_refresh_paths', $paths);
+
+  foreach ($paths as $path) {
+    $queue->createItem($path);
+  }
+
+  $batch_size = $queue->numberOfItems();
+  if ($batch_size > 0) {
+    $batch = array(
+      'title' => t('Refreshing paths'),
+      'operations' => array(
+        array('_static_batch_refresh_paths_callback', array($batch_size)),
+      ),
+      'progress_message' => t('Completed about @percentage% of the refreshing operation.'),
+      'finished' => '_static_batch_refresh_paths_finished',
+      'file' => drupal_get_path('module', 'static') . '/static.module',
+    );
+    batch_set($batch);
+    return TRUE;
+  }
+  drupal_set_message(t("Couldn't refresh paths."), 'warning');
+  return FALSE;
+}
+
+/**
+ * Batch API callback for the generating functionality.
+ */
+function _static_batch_refresh_paths_callback($total_limit, &$context) {
+  $queue = DrupalQueue::get('static_refresh_paths');
+  $status = array();
+  $status['remaining'] = $queue->numberOfItems();
+
+  // Persistent data among batch runs.
+  if (empty($context['sandbox'])) {
+    $context['sandbox']['progress'] = 0;
+    $context['sandbox']['refreshed'] = 0;
+
+    // How many items do we want to index? All or a limited set of items.
+    if (empty($total_limit)) {
+      $context['sandbox']['max'] = $status['remaining'];
+    }
+    else {
+      $context['sandbox']['max'] = $total_limit;
+    }
+  }
+
+  // Persistent data for results.
+  if (!isset($context['results']['refreshed'])) {
+    $context['results']['refreshed'] = 0;
+  }
+
+  // We can safely process the static_batch_size nodes at a time without a
+  // timeout or out of memory error.
+  $limit = variable_get('static_batch_size', STATIC_DEFAULT_CRON_LIMIT);
+
+  // Reduce the limit for our final batch if we would be processing more
+  // than had been requested.
+  if ($limit + $context['sandbox']['progress'] > $context['sandbox']['max']) {
+    $limit = $context['sandbox']['max'] - $context['sandbox']['refreshed'];
+  }
+
+  // Refresh the items.
+  try {
+    for ($x = 0; $x < $limit; $x++) {
+      $item = $queue->claimItem();
+      static_track_path($item->data);
+      $queue->deleteItem($item);
+      $context['sandbox']['refreshed']++;
+    }
+  }
+  catch (Exception $e) {
+    watchdog_exception('static', $e);
+    $vars['@message'] = $e->message;
+    $context['message'] = t('An error occurred during refreshing: @message.', $vars);
+    $context['finished'] = 1;
+    return;
+  }
+
+  // Everything has been refreshed.
+  if ($queue->numberOfItems() == 0 || $context['sandbox']['refreshed'] >= $context['sandbox']['max']) {
+    $context['finished'] = 1;
+  }
+  else {
+    $context['finished'] = $context['sandbox']['refreshed'] / $context['sandbox']['max'];
+  }
+
+  // Put the total into the results section when we're finished so we can
+  // show it to the admin.
+  if ($context['finished']) {
+    $context['results']['refreshed'] = $context['sandbox']['refreshed'];
+  }
+}
+
+/**
+ * Batch API finishing callback for the refreshing paths functionality.
+ */
+function _static_batch_refresh_paths_finished($success, $results) {
+  // Display result messages.
+  if ($success) {
+    drupal_set_message(format_plural($results['refreshed'],
+      'Successfully refreshed 1 path.',
+      'Successfully refreshed @count paths.',
+      array('@count' => $results['refreshed'])
+    ));
+  }
+  else {
+    drupal_set_message(t("An error occurred while trying to refresh paths. Check the logs for details."), 'error');
+  }
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+function static_preprocess_pager(&$variables) {
+  // This is called during the page generation process for each page, not
+  // by the static generation system. We can capture how many pages there are
+  // here.
+  if (!isset($_GET['page']) && !path_is_admin($_GET['q'])) {
+    global $pager_total, $user;
+    $path = $_GET['q'];
+
+    $info = static_get_info($path);
+    if ($info) {
+      $pager_element = isset($variables['element']) ? $variables['element'] : NULL;
+      $current_pager_total = isset($pager_element) && isset($pager_total[$pager_element]) ? $pager_total[$pager_element] : NULL;
+
+      // Update info if the pager total has changed.
+      if (!isset($current_pager_total)) {
+        // Unset existing info total.
+        if (!empty($info['pager_total'])) {
+          $info['pager'] = 'page';
+          $info['pager_total'] = NULL;
+          static_save_info($info);
+        }
+      }
+      elseif (!isset($info['pager']) || $info['pager'] != 'page' ||
+        !isset($info['pager_total']) || $info['pager_total'] != $current_pager_total
+      ) {
+        // Update info pager total.
+
+        // Not sure this is the best way to check for anonymous user access.
+        // If we don't check anonymous access, this adds many admin pages.
+        $current_user = $user;
+        $user = drupal_anonymous_user();
+        $menu_item = menu_get_item($path);
+        // Can't use $menu_item['access'] directly since it was cached.
+        _menu_check_access($menu_item, $menu_item['map']);
+        $user = $current_user;
+
+        if ($menu_item['access']) {
+          // May be a better way of getting this but it is hardcoded in
+          // theme_pager_link().
+          $info['pager'] = 'page';
+          $info['pager_total'] = $current_pager_total;
+          static_save_info($info);
+        }
+      }
+    }
+  }
+}
+
+/**
+ * Implements hook_page_build().
+ *
+ * Add the static link and status on the bottom right of all pages for admins.
+ */
+function static_page_build(&$page) {
+  if (!user_access('pubish static site') || !variable_get('static_button', TRUE)) {
+    return;
+  }
+  $status = array(
+    STATIC_EXPIRED => 0,
+    'total' => 0,
+  );
+
+  $query = db_select('static', 's')
+    ->fields('s', array('status'));
+  // Don't count dynamic pages in the needs publishing list.
+  $query->condition('frequency', 0);
+  $query->addExpression('count(id)', 'count');
+  $query->orderBy('status', 'ASC');
+  $results = $query->groupBy('status')
+    ->execute()
+    ->fetchAll();
+
+  foreach ($results as $result) {
+    $status[$result->status] = $result->count;
+    $status['total'] += $result->count;
+  }
+  drupal_add_js(array('static' => $status), 'setting');
+  drupal_add_js(drupal_get_path('module', 'static') . '/js/static.js', array('every_page' => TRUE));
+  drupal_add_css($page['#attached']['css'][] = drupal_get_path('module', 'static') . '/css/static.css', array('every_page' => TRUE));
+}
+
+/**
+ * Return a list of possible statuses.
+ */
+function static_statuses() {
+  $statuses = array(
+    0 => 'Needs generation',
+    200 => 'Ok',
+    403 => 'Error - Forbidden',
+    404 => 'Error - Not Found',
+  );
+
+  drupal_alter('static_statuses', $statuses);
+
+  return $statuses;
+}

@@ -1,0 +1,171 @@
+/**
+ * @file
+ * Form Styling
+ */
+
+@import "base";
+
+fieldset {
+  border: 1px solid #ccc;
+}
+
+.vertical-tabs {
+  font-size: .8em;
+}
+
+.form-item { /* Wrapper for a form element (or group of form elements) and its label */
+  color: #666;
+  font-size: .9em;
+  margin: 1.5em 0;
+
+  input.error,
+  textarea.error,
+  select.error { /* Highlight the form elements that caused a form submission error */
+    border: 1px solid #c00;
+  }
+
+  label { /* The label for a form element */
+    padding: .3em 0;
+    display: block;
+    font-weight: bold;
+  }
+
+  label.option { /* The label for a radio button or checkbox */
+    display: inline;
+    font-weight: normal;
+  }
+
+  .form-required { /* The part of the label that indicates a required field */
+    color: #c00;
+  }
+
+  .description { /* The descriptive help text (separate from the label) */
+    padding: .5em 0;
+    color: #999;
+  }
+
+  .form-checkboxes & ,
+  .form-radios & { /* Pack groups of checkboxes and radio buttons closer together */
+    margin: 0; /* Drupal core uses "0.4em 0" */
+  }
+
+  .form-text {
+    border: 1px solid $grey;
+    color: $black;
+
+    @media (max-width: 40em) {
+      width: 100%;
+    }
+  }
+}
+
+.form-submit { /* The submit button */
+  background-color: $blue;
+  border: 0;
+  color: $white;
+  padding: .4em .9em;
+  font-size: .9em;
+  height: 30px;
+
+  &:hover {
+    background-color: $grey;
+  }
+
+  &:active {
+    background-color: $darker-blue;
+
+  }
+}
+
+#edit-submit {
+  background-color: $darker-blue;
+  &:hover {
+    background-color: $grey;
+  }
+}
+
+.container-inline {
+  div,
+  label { /* Inline labels and form divs */
+    display: inline;
+  }
+}
+
+a.button { /* Buttons used by contrib modules like Media */
+  @include appearance(button);
+}
+
+/*
+ * Password confirmation
+ */
+
+.password-parent,
+.confirm-parent {
+  margin: 0;
+}
+
+/*
+ * Drupal's default login form block
+ */
+
+#user-login-form {
+  text-align: left; /* LTR */
+}
+
+#user-login ul {
+  margin: 1.5em 0;
+}
+
+/*
+ * Drupal admin tables
+ *
+ * We overrode these styles in normalize.css, but restore them for the admin
+ * section of the site.
+ */
+
+form {
+  th {
+    text-align: left; /* LTR */
+    padding-right: 1em; /* LTR */
+    border-bottom: 3px solid #ccc;
+  }
+
+  tbody {
+    border-top: 1px solid #ccc;
+  }
+
+  tr.even {
+    background-color: #fff;
+  }
+
+  table .item-list ul {
+    margin: 0;
+  }
+}
+
+@if $legacy-support-for-ie6 or $legacy-support-for-ie7 {
+  .lt-ie8 tr.even,
+  .lt-ie8 tr.odd {
+    th,
+    td {
+      border-bottom: 1px solid #ccc; /* IE doesn't display borders on table rows */
+    }
+  }
+}
+
+/*
+ * Drupal core wrongly puts this in system.menus.css. Since we override that, add it back.
+ */
+
+td.menu-disabled {
+  background: #ccc;
+}
+
+// logintoboggan
+a.login-link:hover {
+  color: $white;
+}
+
+html.js input.form-autocomplete {
+  background-position: 100% 3px;
+}

@@ -1,0 +1,150 @@
+/**
+ * @file
+ * Styling and module support for module "DAN polaroid (dan_polaroid)".
+ *
+ * Project page on Drupal.org: @link http://drupal.org/project/dan_polaroid DAN polaroid @endlink
+ */
+
+@import "base";
+
+/*
+ * Layout
+ */
+
+/*
+ * No sidebars
+ */
+
+.no-sidebars {
+  .dan-polaroid {
+    width: 48.4%; // 2 polaroids in one row.
+
+    @media all and (min-width: 60em) {
+      width: 23.6%; // 4 polaroids in one row.
+    }
+
+    @media all and (min-width: 45em) and (max-width: 60em) {
+      width: 31.9%; // 3 polaroids in one row.
+    }
+
+    @media all and (max-width: 30em) {
+      width: 100%; // 1 polaroid in one row.
+      margin: 0.2em 0;
+    }
+  }
+}
+
+/*
+ * One sidebar
+ */
+
+.one-sidebar {
+  .dan-polaroid {
+    width: 31.9%; // 3 polaroids in one row.
+
+    @media all and (min-width: 45em) and (max-width: 60em) {
+      width: 48.4%; // 2 polaroids in one row.
+    }
+
+    @media all and (max-width: 45em) {
+      width: 100%; // 1 polaroid in one row.
+      margin: 0.2em 0;
+    }
+  }
+}
+
+/*
+ * Two sidebars
+ */
+
+.two-sidebars {
+  .dan-polaroid {
+    width: 48.4%; // 2 polaroids in one row.
+
+    @media all and (max-width: 45em) {
+      width: 100%; // 1 polaroid in one row.
+      margin: 0.2em 0;
+    }
+  }
+}
+
+/*
+ * Styling
+ */
+
+.dan-polaroid {
+  @include background(radial-gradient(#eaeaea, $white));
+  display: block;
+  float: left;
+  margin: 0.7%;
+  overflow: hidden;
+  padding: .5em;
+  position: relative;
+
+  /*
+   * Read more link
+   */
+
+  .read-more-link {
+    background: $blue;
+    color: $white;
+    display: block;
+    font-size: .8em;
+    opacity: .8;
+    padding: 0 .5em;
+    position: absolute;
+    right: .64em;
+    text-decoration: none;
+    top: .64em;
+
+    &:hover {
+      background-color: $grey;
+    }
+
+    &:active {
+      background-color: $darker-blue;
+    }
+  }
+
+  /*
+   * Image
+   */
+
+  img {
+    width: 100%;
+    height: auto;
+
+    &:hover {
+      opacity: 0.5;
+    }
+  }
+
+  /*
+   * Headline
+   */
+
+  h2 {
+    @include ellipsis;
+    font-size: 1em;
+    margin: 0;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  /*
+   * Text
+   */
+
+  .text {
+    @include ellipsis(false);
+    display: block;
+    font-size: .8em;
+    height: 5em;
+    line-height: 1.2em;
+    margin: 0;
+    overflow: hidden;
+    padding: 0;
+    word-wrap: break-word;
+  }
+
+}

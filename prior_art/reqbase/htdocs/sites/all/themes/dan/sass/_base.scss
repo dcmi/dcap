@@ -1,0 +1,59 @@
+// Legacy IE support
+$legacy-support-for-ie6: false;
+$legacy-support-for-ie7: false;
+$legacy-support-for-ie8: true;
+
+// Font faces, stacks and sizes.
+$base-font-size:   16px; // The font size set on the root html element.
+$base-line-height: 24px; // This line-height determines the basic unit of vertical rhythm.
+
+$h1-font-size: 1.5  * $base-font-size;
+$h2-font-size: 1.1  * $base-font-size;
+$h3-font-size: 1.0  * $base-font-size;
+$h4-font-size: 0.9  * $base-font-size;
+$h5-font-size: 0.8 * $base-font-size;
+$h6-font-size: 0.7 * $base-font-size;
+
+// Fonts
+$source-code: "Source Sans Pro", sans-serif;;
+$courier: Courier, "Courier New";
+
+// Now create some variables for the font stacks we want to use on this site.
+$base-font-family: $source-code; // The font family set on the html element.
+$font-body:        $source-code;
+$font-monospace:   $courier;
+
+// Colors
+$lighter-blue: #44BBCC;
+$blue: #009ee1;
+$darker-blue: #045a7f;
+$dark-blue: #006B99;
+$white: #fff;
+$lighter-grey: #eee;
+$grey: #999;
+$darker-grey: #666;
+$lighter-black: #424242;
+$black: #2c2c2c;
+$darker-black: #343434;
+
+$red: #e6332a;
+$green: #95c11f;
+$yellow: #f9b233;
+$purple: #bc00e3;
+$orange: #ff8700;
+
+// The amount lists, blockquotes and comments are indented.
+$indent-amount: 2em;
+
+@import "compass/support";  // Add Compass' IE and vendor prefix support variables.
+@import "compass/utilities/general/clearfix"; // Better than Drupal's clearfix.
+@import "compass/css3";     // Use one CSS3 mixin instead of multiple vendor prefixes.
+@import "compass/css3/images";
+@import "compass/css3/text-shadow";
+@import "compass/typography/vertical_rhythm"; // Helps set up a vertical rhythm.
+@import "zen";
+
+$use-mozilla-ellipsis-binding: true;
+@import "compass/typography/text/ellipsis";
+
+@import "custom";

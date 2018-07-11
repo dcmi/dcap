@@ -1,0 +1,45 @@
+/**
+ * @file
+ * Styling for comments
+ */
+
+#comments{
+  margin:30px 0;
+}
+
+#comments .comment{
+  position:relative;
+}
+
+#comments .comment h3 {
+  margin: 30px 0 10px;
+}
+
+#comments .comment .submitted {
+  position:static;
+}
+
+#comments .comment .submitted a.permalink{
+  float:right;
+}
+
+#comments .comment .content{
+  padding:20px;
+}
+
+h2.comment-form {
+  margin-top:20px;
+}
+
+#edit-comment-body .filter-wrapper{
+  border:0;
+}
+
+#edit-comment-body .filter-wrapper .form-item {
+    padding: 0 0 10px;
+    margin:0;
+}
+
+#edit-comment-body .filter-wrapper .filter-guidelines {
+  padding:0;
+}

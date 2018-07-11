@@ -1,0 +1,11 @@
+/* $Id: ie-rtl.css,v 1.2 2010/05/18 02:32:53 jensimmons Exp $ */
+
+fieldset legend {
+  left: 6px;
+}
+.tabs ul.primary li a.active {
+  padding: 0 10px 0 7px;
+}
+ul.action-links li a {
+  zoom: 1;
+}

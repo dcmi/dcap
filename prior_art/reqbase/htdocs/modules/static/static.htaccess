@@ -1,0 +1,49 @@
+# Don't show directory listings for URLs which map to a directory.
+Options -Indexes
+# Turn off the automatic append of slash for directories.
+DirectorySlash Off
+
+# Requires mod_expires to be enabled.
+<IfModule mod_expires.c>
+  # Enable expirations.
+  ExpiresActive On
+
+  # Cache all files for 2 weeks after access (A).
+  ExpiresDefault A1209600
+
+  <FilesMatch \.html$>
+    # While normally we would want html files to be cached, since they are
+    # regularly regenerated, old versions get left in browser cache.
+    # By turning it off for html files we allow refreshing the files.
+    ExpiresActive Off
+  </FilesMatch>
+
+  <FilesMatch ^esi\/>
+    # Don't cache esi either as it needs to change frequently.
+    ExpiresActive Off
+  </FilesMatch>
+
+</IfModule>
+
+<IfModule mod_include.c>
+  # Turn on SSI Includes and set executable html to use includes.
+  Options +Includes
+  XBitHack on
+</IfModule>
+
+<IfModule mod_rewrite.c>
+  RewriteEngine on
+  # 301 Redirects domain.com/file.html to domain.com/file.
+  RewriteCond %{THE_REQUEST} ^[A-Z]{3,}\s([^.]+)\.html [NC]
+  RewriteRule ^ %1 [R=301,L,NC]
+
+  # Internal redirect querystring parameters to files.
+  # domain.com/node?page=1 to domain.com node_page=1.html
+  RewriteCond %{REQUEST_FILENAME}_%{QUERY_STRING}\.html -s
+  RewriteRule ^ %{REQUEST_URI}_%{QUERY_STRING}\.html [L]
+
+  # Internally redirect paths to their html equivalents.
+  # domain.com/file to domain.com/file.html.
+  RewriteCond %{REQUEST_FILENAME}\.html -s
+  RewriteRule ^ %{REQUEST_URI}.html [L]
+</IfModule>

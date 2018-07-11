@@ -1,0 +1,92 @@
+<?php
+
+/**
+ * @file
+ * Integration between the static generator and managed files.
+ */
+
+/**
+ * Registers the file path for the static module.
+ */
+function static_file_track_file($file) {
+  if (!empty($file->uri)) {
+    $path = static_file_create_path($file->uri);
+    if ($path) {
+      static_track_path($path) ;
+    }
+  }
+}
+
+/**
+ * Implements hook_file_insert().
+ */
+function static_file_file_insert($file) {
+  static_file_track_file($file);
+}
+
+/**
+ * Implements hook_file_update().
+ */
+function static_file_file_update($file) {
+  static_file_track_file($file);
+}
+
+/**
+ * Implements hook_file_delete().
+ */
+function static_file_file_delete($file) {
+  if (!empty($file->uri)) {
+    if ($path = static_file_create_path($file->uri)) {
+      $item = static_get_info($path);
+      if (!empty($item->id)) {
+        static_delete_multiple(array($item->id => $item->id));
+      }
+    }
+  }
+}
+
+/**
+ * Implements hook_static_refresh_paths().
+ *
+ * Refresh all file paths for the static module.
+ */
+function static_file_static_refresh_paths() {
+  $paths = array();
+
+  $query = db_select('file_managed', 'f')
+      ->fields('f', array('uri'))
+      ->condition('f.status', FILE_STATUS_PERMANENT)
+      ->orderBy('f.fid', 'DESC')
+      ->addTag('static_file_refresh_paths')
+      ->distinct();
+
+  $result = $query->execute();
+  foreach($result as $record) {
+    $paths[] = static_file_create_path($record->uri);
+  }
+
+  return $paths;
+}
+
+/**
+ * Returns the path for a given file object.
+ */
+function static_file_create_path($file_uri) {
+  $path = '';
+  if ($file_uri) {
+    if ($stream_wrapper = file_stream_wrapper_get_instance_by_uri($file_uri)) {
+      // Create path similar to file_create_url() but with base url.
+      $file_path = str_replace('\\', '/', file_uri_target($file_uri));
+      $path = $stream_wrapper->getDirectoryPath() . '/' . $file_path;
+    }
+    elseif (drupal_substr($file_uri, 0, 1) == '/') {
+      $path = trim($file_uri, '/');
+    }
+    elseif ($url = file_create_url($file_uri)) {
+      // Fallback to full url.
+      $path = rawurldecode($url);
+    }
+  }
+
+  return $path;
+}

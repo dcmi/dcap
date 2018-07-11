@@ -1,0 +1,36 @@
+/**
+ * @file
+ * Styling and module support for core module "Search (search)".
+ */
+#block-search-form {
+  position: absolute;
+}
+
+#search-block-form {
+  margin: 1em 0 3em 0;
+}
+#search-block-form input[type="search"] {
+  display: none;
+  width: 10em;
+  font-size: 0.8em;
+  height: 30px;
+  color: #999999;
+}
+#search-block-form input[type="submit"] {
+  display: none;
+  color: white;
+  font-size: 1em;
+  height: 30px;
+}
+
+.show-search-form input[type="search"] {
+  display: block;
+}
+.show-search-form input[type="submit"] {
+  display: block;
+}
+
+/* node/search */
+#search-form input#edit-submit {
+  margin: 0;
+}

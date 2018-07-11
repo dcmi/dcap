@@ -1,0 +1,102 @@
+name = Fusion Core
+description = <a href="http://drupal.org/project/fusion">Fusion Core</a> is the grid-enabled base theme for powerful sub-themes.  With the <a href="http://drupal.org/project/fusion_accelerator">Fusion Accelerator</a> module, it enables easy point-and-click theming. By <a href="http://www.topnotchthemes.com">TopNotchThemes</a>
+core = 7.x
+engine = phptemplate
+
+; Uncomment once this bug is squashed in core: http://drupal.org/node/986888
+; hidden = TRUE
+
+stylesheets[all][] = css/fusion-style.css
+stylesheets[all][] = css/fusion-typography.css
+stylesheets[all][] = skins/core/fusion-core-skins.css
+
+fusion[api] = 2
+fusion[directory] = skins
+
+scripts[] = js/script.js
+
+regions[sidebar_first] = Sidebar first
+regions[sidebar_second] = Sidebar second
+regions[header_top] = Header top
+regions[header] = Header
+regions[main_menu] = Main menu
+regions[preface_top] = Preface top
+regions[preface_bottom] = Preface bottom
+regions[content] = Content
+regions[postscript_top] = Postscript top
+regions[postscript_bottom] = Postscript bottom
+regions[footer] = Footer
+regions[node_top] = Node top
+regions[node_bottom] = Node bottom
+regions[help] = Help
+regions[page_top] = Page top
+regions[page_bottom] = Page bottom
+
+features[] = logo
+features[] = name
+features[] = slogan
+features[] = node_user_picture
+features[] = comment_user_picture
+features[] = favicon
+
+; Default theme settings
+settings[theme_grid] = grid16-960
+settings[theme_grid_options][] = grid16-960
+settings[theme_grid_options][] = grid16-fluid
+settings[theme_grid_options][] = grid12-960
+settings[theme_grid_options][] = grid12-fluid
+settings[fluid_grid_width] = fluid-100
+settings[sidebar_layout] = sidebars-split
+settings[sidebar_first_width] = 3
+settings[sidebar_second_width] = 3
+settings[theme_font] = none
+settings[theme_font_size] = font-size-13
+settings[breadcrumb_display] = 1
+settings[search_snippet] = 1
+settings[search_info_type] = 1
+settings[search_info_user] = 1
+settings[search_info_date] = 1
+settings[search_info_comment] = 1
+settings[search_info_upload] = 1
+settings[block_config_link] = 1
+settings[grid_mask] = 0
+
+; Grid layout settings (Advanced)
+; Nested grid regions without full-width wrappers
+settings[grid_nested_regions][] = sidebar_first
+settings[grid_nested_regions][] = sidebar_second
+settings[grid_nested_regions][] = header
+settings[grid_nested_regions][] = preface_bottom
+settings[grid_nested_regions][] = content
+settings[grid_nested_regions][] = postscript_top
+settings[grid_nested_regions][] = node_top
+settings[grid_nested_regions][] = node_bottom
+settings[grid_nested_regions][] = help
+; Nested region width adjustments: adjacent regions to subtract for correct region width
+settings[grid_adjusted_regions][preface_bottom][] = sidebar_first
+settings[grid_adjusted_regions][help][] = sidebar_first
+settings[grid_adjusted_regions][help][] = sidebar_second
+settings[grid_adjusted_regions][content][] = sidebar_first
+settings[grid_adjusted_regions][content][] = sidebar_second
+settings[grid_adjusted_regions][node_top][] = sidebar_first
+settings[grid_adjusted_regions][node_top][] = sidebar_second
+settings[grid_adjusted_regions][node_bottom][] = sidebar_first
+settings[grid_adjusted_regions][node_bottom][] = sidebar_second
+settings[grid_adjusted_regions][postscript_top][] = sidebar_first
+; Nested group width adjustments: adjacent regions to subtract for correct group width
+settings[grid_adjusted_groups][main_group][] = sidebar_first
+settings[grid_adjusted_groups][content_group][] = sidebar_first
+settings[grid_adjusted_groups][content_group][] = sidebar_second
+; Nested region fluid width adjustments: regions outside a parent group to subtract to get correct parent width
+settings[grid_adjusted_regions_fluid][sidebar_second][] = sidebar_first
+settings[grid_adjusted_regions_fluid][content][] = sidebar_first
+settings[grid_adjusted_regions_fluid][content][] = sidebar_second
+; Nested group fluid width adjustments: regions inside a parent group to subtract to get remaining width
+settings[grid_adjusted_groups_fluid][content_group][] = sidebar_second
+
+; Information added by drupal.org packaging script on 2012-03-23
+version = "7.x-2.0-beta2"
+core = "7.x"
+project = "fusion"
+datestamp = "1332517846"
+

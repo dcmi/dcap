@@ -1,0 +1,47 @@
+/**
+ * @file grid12-1200.css
+ * Fusion Grid Layout - 12 column grid, 1200px width, 20px gutters
+ * -------------------------------------------------------------------- */
+
+/* grid widths */
+.grid12-1 {width: 100px;}
+.grid12-2 {width: 200px;}
+.grid12-3 {width: 300px;}
+.grid12-4 {width: 400px;}
+.grid12-5 {width: 500px;}
+.grid12-6 {width: 600px;}
+.grid12-7 {width: 700px;}
+.grid12-8 {width: 800px;}
+.grid12-9 {width: 900px;}
+.grid12-10 {width: 1000px;}
+.grid12-11 {width: 1100px;}
+.grid12-12 {width: 1200px;}
+
+/* block indents */
+.grid12-indent-1 {margin-left: 100px;}
+.grid12-indent-2 {margin-left: 200px;}
+.grid12-indent-3 {margin-left: 300px;}
+.grid12-indent-4 {margin-left: 400px;}
+.grid12-indent-5 {margin-left: 500px;}
+.grid12-indent-6 {margin-left: 600px;}
+.grid12-indent-7 {margin-left: 700px;}
+.grid12-indent-8 {margin-left: 800px;}
+.grid12-indent-9 {margin-left: 900px;}
+.grid12-indent-10 {margin-left: 1000px;}
+.grid12-indent-11 {margin-left: 1100px;}
+
+/* gutters (2 x margin) */
+.gutter {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+/* page min width */
+body,
+div.full-width {
+  min-width: 1200px;
+}
+
+body.grid-mask-enabled #grid-1200 {
+  display: block;
+}

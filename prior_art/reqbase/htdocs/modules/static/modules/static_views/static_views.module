@@ -1,0 +1,119 @@
+<?php
+
+/**
+ * @file
+ * Integration between the static generator and the views module.
+ */
+
+/**
+ * Implements hook_static_refresh_paths().
+ *
+ * Refresh all paths for the static module.
+ */
+function static_views_static_refresh_paths() {
+  $views = views_get_all_views();
+  $path_views = static_views_get_applicable_views($views, 'uses hook menu');
+  return static_views_discover_paths($path_views);
+}
+
+/**
+ * Implements hook_views_default_views_alter().
+ */
+function static_views_views_default_views_alter($views) {
+  $path_views = static_views_get_applicable_views($views, 'uses hook menu');
+  $paths = static_views_discover_paths($path_views);
+  static_track_paths($paths);
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function static_views_form_alter(&$form, &$form_state, $form_id) {
+  if ($form_id == 'views_ui_edit_form') {
+    $form['actions']['save']["#submit"][] = 'static_views_views_ui_edit_view_form_submit';
+  }
+}
+
+/**
+ * Submit callback when saving a view.
+ */
+function static_views_views_ui_edit_view_form_submit($form, $form_state) {
+  $path_views = static_views_get_applicable_views(array($form_state['view']), 'uses hook menu');
+  $paths = static_views_discover_paths($path_views);
+  static_track_paths($paths);
+}
+
+/**
+ * Search a list of views for any paths that should be added to static.
+ */
+function static_views_discover_paths($views) {
+  $paths = array();
+  foreach ($views as $data) {
+    list($view, $display_id) = $data;
+    $callbacks = array();
+    $result = $view->execute_hook_menu($display_id, $callbacks);
+    if (is_array($result)) {
+      foreach ($result as $path => $item) {
+        // Check access for anonymous to prevent adding admin pages.
+        // Force the current user to anonymous to ensure consistent permissions.
+        $original_user = $GLOBALS['user'];
+        $GLOBALS['user'] = drupal_anonymous_user();
+
+        if (call_user_func_array($item['access callback'], $item['access arguments'])) {
+          $paths[$path] = array(
+            'path' => $path,
+            'frequency' => 300,
+          );
+        }
+
+        // Restore the user.
+        $GLOBALS['user'] = $original_user;
+      }
+    }
+  }
+
+  return $paths;
+}
+
+/**
+ * Copied from views_get_applicable_views.
+ *
+ * Uses a parameter for views instead of all views.
+ */
+function static_views_get_applicable_views($views, $type) {
+  // @todo: Use a smarter flagging system so that we don't have to
+  // load every view for this.
+  $result = array();
+
+  foreach ($views as $view) {
+    // Skip disabled views.
+    if (!empty($view->disabled)) {
+      continue;
+    }
+
+    if (empty($view->display)) {
+      // Skip this view as it is broken.
+      vsm(t("Skipping broken view @view", array('@view' => $view->name)));
+      continue;
+    }
+
+    // Loop on array keys because something seems to muck with $view->display
+    // a bit in PHP4.
+    foreach (array_keys($view->display) as $id) {
+      $plugin = views_fetch_plugin_data('display', $view->display[$id]->display_plugin);
+      if (!empty($plugin[$type])) {
+        // This view uses hook menu. Clone it so that different handlers
+        // don't trip over each other, and add it to the list.
+        $v = $view->clone_view();
+        if ($v->set_display($id) && $v->display_handler->get_option('enabled')) {
+          $result[] = array($v, $id);
+        }
+        // In PHP 4.4.7 and presumably earlier, if we do not unset $v
+        // here, we will find that it actually overwrites references
+        // possibly due to shallow copying issues.
+        unset($v);
+      }
+    }
+  }
+  return $result;
+}

@@ -1,0 +1,15 @@
+name = Property Validation
+description = "Add validation rules to properties."
+package = Fields
+core = 7.x
+dependencies[] = field
+dependencies[] = ctools
+dependencies[] = entity
+files[] = property_validation_validator.inc
+
+; Information added by Drupal.org packaging script on 2015-06-20
+version = "7.x-2.6"
+core = "7.x"
+project = "field_validation"
+datestamp = "1434802401"
+

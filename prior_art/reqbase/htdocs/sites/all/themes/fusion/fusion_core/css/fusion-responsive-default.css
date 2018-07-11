@@ -1,0 +1,207 @@
+@media only screen and (min-width:1200px) {
+/**
+ * Fusion Grid Layout - 1200px width, 12 column grid, 30px gutters
+ * -------------------------------------------------------------------- */
+
+/* grid widths */
+body .grid12-1 {width: 100px;}
+body .grid12-2 {width: 200px;}
+body .grid12-3 {width: 300px;}
+body .grid12-4 {width: 400px;}
+body .grid12-5 {width: 500px;}
+body .grid12-6 {width: 600px;}
+body .grid12-7 {width: 700px;}
+body .grid12-8 {width: 800px;}
+body .grid12-9 {width: 900px;}
+body .grid12-10 {width: 1000px;}
+body .grid12-11 {width: 1100px;}
+body .grid12-12 {width: 1200px;}
+
+/* block indents */
+body .grid12-indent-1 {margin-left: 100px;}
+body .grid12-indent-2 {margin-left: 200px;}
+body .grid12-indent-3 {margin-left: 300px;}
+body .grid12-indent-4 {margin-left: 400px;}
+body .grid12-indent-5 {margin-left: 500px;}
+body .grid12-indent-6 {margin-left: 600px;}
+body .grid12-indent-7 {margin-left: 700px;}
+body .grid12-indent-8 {margin-left: 800px;}
+body .grid12-indent-9 {margin-left: 900px;}
+body .grid12-indent-10 {margin-left: 1000px;}
+body .grid12-indent-11 {margin-left: 1100px;}
+
+
+/* gutters (2 x margin) */
+.gutter {
+  margin-left: 15px;
+  margin-right: 15px;
+}
+
+
+/* page min width */
+body,
+div.full-width {
+  min-width: 1200px;
+}
+
+#grid-mask-overlay .block .gutter {
+  background-color: rgba(0, 73, 225, .12);
+  outline: none;
+}
+
+#label_sidebar {
+  display: block;
+}
+}
+
+@media only screen and (max-device-width: 1024px) and (orientation:landscape), only screen and (min-width:960px) and (max-width:1199px) and (min-device-width: 1100px) {
+/**
+ * Fusion Grid Layout - 960px width, 12 column grid, 20px gutters
+ * -------------------------------------------------------------------- */
+
+/* grid widths */
+body .grid12-1 {width: 80px;}
+body .grid12-2 {width: 160px;}
+body .grid12-3 {width: 240px;}
+body .grid12-4 {width: 320px;}
+body .grid12-5 {width: 400px;}
+body .grid12-6 {width: 480px;}
+body .grid12-7 {width: 560px;}
+body .grid12-8 {width: 640px;}
+body .grid12-9 {width: 720px;}
+body .grid12-10 {width: 800px;}
+body .grid12-11 {width: 880px;}
+body .grid12-12 {width: 960px;}
+
+/* block indents */
+body .grid12-indent-1 {margin-left: 80px;}
+body .grid12-indent-2 {margin-left: 160px;}
+body .grid12-indent-3 {margin-left: 240px;}
+body .grid12-indent-4 {margin-left: 320px;}
+body .grid12-indent-5 {margin-left: 400px;}
+body .grid12-indent-6 {margin-left: 480px;}
+body .grid12-indent-7 {margin-left: 560px;}
+body .grid12-indent-8 {margin-left: 640px;}
+body .grid12-indent-9 {margin-left: 720px;}
+body .grid12-indent-10 {margin-left: 800px;}
+body .grid12-indent-11 {margin-left: 880px;}
+
+
+/* gutters (2 x margin) */
+.gutter {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+
+/* page min width */
+body,
+div.full-width {
+  min-width: 960px;
+}
+
+#grid-mask-overlay .block .gutter {
+  background-color: rgba(213,95,28,.15);
+  outline: none;
+}
+
+#label_sidebar_tablet_landscape {
+  display: block;
+}
+}
+
+@media only screen and (max-device-width: 1024px) and (orientation:portrait), only screen and (min-width:768px) and (max-width:959px) and (min-device-width: 1100px) {
+/**
+ * Fusion Grid Layout - 768px width, 12 column grid, 20px gutters
+ * -------------------------------------------------------------------- */
+
+/* grid widths */
+body .grid12-1 {width: 64px;}
+body .grid12-2 {width: 128px;}
+body .grid12-3 {width: 192px;}
+body .grid12-4 {width: 256px;}
+body .grid12-5 {width: 320px;}
+body .grid12-6 {width: 384px;}
+body .grid12-7 {width: 448px;}
+body .grid12-8 {width: 512px;}
+body .grid12-9 {width: 576px;}
+body .grid12-10 {width: 640px;}
+body .grid12-11 {width: 704px;}
+body .grid12-12 {width: 768px;}
+
+/* block indents */
+body .grid12-indent-1 {margin-left: 64px;}
+body .grid12-indent-2 {margin-left: 128px;}
+body .grid12-indent-3 {margin-left: 192px;}
+body .grid12-indent-4 {margin-left: 256px;}
+body .grid12-indent-5 {margin-left: 320px;}
+body .grid12-indent-6 {margin-left: 384px;}
+body .grid12-indent-7 {margin-left: 448px;}
+body .grid12-indent-8 {margin-left: 512px;}
+body .grid12-indent-9 {margin-left: 576px;}
+body .grid12-indent-10 {margin-left: 640px;}
+body .grid12-indent-11 {margin-left: 704px;}
+
+
+/* gutters (2 x margin) */
+.gutter {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+
+/* page min width */
+body,
+div.full-width {
+  min-width: 768px;
+}
+
+#grid-mask-overlay .block .gutter {
+  background-color: rgba(11,186,40,.15);
+  outline: none;
+}
+
+#label_sidebar_tablet_portrait {
+  display: block;
+}
+}
+
+@media only screen and (max-width:759px) {
+/**
+ * Fusion Grid Layout - Mobile layout, 12 column grid, 10px gutters
+ * -------------------------------------------------------------------- */
+
+/* grid widths */
+body .grid12-1,
+body .grid12-2,
+body .grid12-3,
+body .grid12-4,
+body .grid12-5,
+body .grid12-6,
+body .grid12-7,
+body .grid12-8,
+body .grid12-9,
+body .grid12-10,
+body .grid12-11,
+body .grid12-12 {
+  clear: both;
+  width: 100%;
+}
+
+/* gutters (2 x margin) */
+.gutter {
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+
+
+#grid-mask-overlay .block .gutter {
+  background-color: rgba(220,220,70,.1);
+  outline: none;
+}
+
+#label_sidebar_phone_landscape {
+  display: block;
+}
+}

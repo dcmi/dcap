@@ -1,0 +1,110 @@
+/**
+ * @file
+ * Styling for page.tpl.php
+ */
+body {
+  background: #2c2c2c;
+  background: -webkit-gradient(radial, 50% 50%, 0, 50% 50%, 100, color-stop(0%, #343434), color-stop(100%, #2c2c2c));
+  background: -webkit-radial-gradient(#343434, #2c2c2c);
+  background: -moz-radial-gradient(#343434, #2c2c2c);
+  background: -o-radial-gradient(#343434, #2c2c2c);
+  background: -ms-radial-gradient(#343434, #2c2c2c);
+  background: radial-gradient(#343434, #2c2c2c);
+}
+
+#top a {
+  color: #999999;
+}
+#top ul {
+  margin: 0;
+}
+
+#navigation .table {
+  display: table;
+  width: 100%;
+}
+#navigation .table .row {
+  display: table-row;
+}
+#navigation #logo {
+  display: table-cell;
+  vertical-align: bottom;
+}
+#navigation #main-menu {
+  display: table-cell;
+  width: 100%;
+  text-align: right;
+  vertical-align: bottom;
+}
+
+h1#site-name a, h2#site-slogan {
+  color: #009ee1;
+  text-align: right;
+}
+
+h1#site-name {
+  font-size: 2.5em;
+  margin-bottom: 0;
+}
+h1#site-name a:hover {
+  color: #009ee1;
+  opacity: .7;
+  text-shadow: none;
+}
+
+h2#site-slogan {
+  font-size: 1.1em;
+  font-weight: normal;
+  margin-top: 0;
+}
+
+#logo:hover {
+  opacity: .5;
+}
+#logo img {
+  width: 10em;
+  height: auto;
+  max-width: none;
+  margin-bottom: 2em;
+}
+@media (max-width: 60em) {
+  #logo img {
+    margin-bottom: 1em;
+  }
+}
+@media (max-width: 53em) {
+  #logo img {
+    margin-bottom: 0;
+  }
+}
+@media (max-width: 24em) {
+  #logo img {
+    width: 9em;
+  }
+}
+@media (max-width: 22em) {
+  #logo img {
+    width: 8em;
+  }
+}
+@media (max-width: 20em) {
+  #logo img {
+    width: 7em;
+  }
+}
+@media (max-width: 16em) {
+  #logo img {
+    display: none;
+  }
+}
+
+#main {
+  background: white;
+}
+
+#content {
+  padding: 10px;
+}
+#content .print-link {
+  display: none;
+}

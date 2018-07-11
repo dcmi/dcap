@@ -1,0 +1,106 @@
+.fieldset-wrapper .fieldset-wrapper .fieldset-wrapper {
+  border: solid 1px #ddd;
+  margin-bottom: 1em;
+}
+.fieldset-wrapper .fieldset-wrapper .fieldset-description {
+  border-bottom: dashed 1px #333;
+  margin-bottom: 1em;
+  padding-bottom: 1em;
+}
+  .fieldset-wrapper .fieldset-wrapper .fieldset-description p { 
+    margin-top: 0;
+    margin-bottom: 1em;
+  }
+.fieldset-wrapper .fieldset-wrapper .fieldset-wrapper .fieldset-description {
+  border-bottom: none;
+}
+/*
+ * images used in place of labels for sidebar layouts.  
+ * idea from the most excellent adaptive themes project 
+ */
+.responsive label {
+  background-repeat: no-repeat;
+  margin-top: 4px;
+  text-indent: -99999em;
+  overflow: hidden;
+  display: block;
+  float: none;
+  text-align: center;
+}
+.responsive .form-item {
+  text-align: center;
+}
+
+/**
+ * desktop
+ */
+#edit-tnt-container .form-item-sidebar-layout .form-item {
+  float: left;
+  width: 200px;
+  margin-right: 30px;
+}
+#edit-sidebar-layout label {
+  background: url(../images/sidebars-desktop.png);
+  height: 160px;
+  width: 200px;  
+}
+  #edit-sidebar-layout label[for="edit-sidebar-layout-sidebars-both-first"] {
+    background-position: 0 -160px;
+  }
+  #edit-sidebar-layout label[for="edit-sidebar-layout-sidebars-both-last"] {
+    background-position: 0 -320px;
+  }
+
+/**
+ * tablet: landscape 
+ */
+#edit-tnt-container .form-item-sidebar-tablet-landscape-layout .form-item {
+  float: left;
+  width: 179px;
+  margin-right: 30px;
+}
+#edit-sidebar-tablet-landscape-layout label {
+  background: url(../images/sidebars-tablet-landscape.png);
+  height: 140px;
+  width: 179px;  
+}
+  #edit-sidebar-tablet-landscape-layout label[for="edit-sidebar-tablet-landscape-layout-sidebars-both-first"] {
+    background-position: 0 -140px;
+  }
+  #edit-sidebar-tablet-landscape-layout label[for="edit-sidebar-tablet-landscape-layout-sidebars-both-last"] {
+    background-position: 0 -279px;
+  }
+
+  
+/**
+ * tablet: portrait 
+ */
+#edit-tnt-container .form-item-sidebar-tablet-portrait-layout .form-item {
+  float: left;
+  width: 140px;
+  margin-right: 30px;
+}
+#edit-sidebar-tablet-portrait-layout label {
+  background: url(../images/sidebars-tablet-portrait.png);
+  height: 178px;
+  width: 140px;  
+}
+  #edit-sidebar-tablet-portrait-layout label[for="edit-sidebar-tablet-portrait-layout-sidebars-both-first"] {
+    background-position: 0 -178px;
+  }  
+  #edit-sidebar-tablet-portrait-layout label[for="edit-sidebar-tablet-portrait-layout-sidebars-both-last"] {
+    background-position: 0 -356px;
+  }  
+  
+/**
+ * smartphone: landscape
+ */
+ #edit-tnt-container .form-item-sidebar-phone-landscape-layout .form-item {
+   width: 103px;
+   margin-right: 30px;
+ }
+ #edit-sidebar-phone-landscape-layout label {
+   background: url(../images/sidebars-mobile-portrait.png);
+   height: 200px;
+   width: 103px;
+ }

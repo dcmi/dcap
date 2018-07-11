@@ -1,0 +1,13 @@
+name = Field Validation UI
+description = "UI for Field Validation."
+package = Fields
+core = 7.x
+dependencies[] = field_validation
+dependencies[] = ctools
+
+; Information added by Drupal.org packaging script on 2015-06-20
+version = "7.x-2.6"
+core = "7.x"
+project = "field_validation"
+datestamp = "1434802401"
+

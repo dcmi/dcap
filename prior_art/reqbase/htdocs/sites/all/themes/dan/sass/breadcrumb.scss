@@ -1,0 +1,43 @@
+/**
+ * @file
+ * Breadcrumb
+ */
+
+@import "base";
+
+#breadcrumb {
+  .breadcrumb {
+    margin-top: .3em;
+    white-space: nowrap;
+  }
+
+  a {
+    vertical-align: middle;
+    font-size: 0.8em;
+
+    @media (max-width: 53em) {
+      font-size: 0.7em;
+    }
+
+    vertical-align: middle;
+    color: $white;
+
+    &:hover {
+      @include text-shadow(0 0 10px $white, 0 0 10px $white);
+    }
+  }
+
+  .separator {
+    background-image: inline-image("breadcrumb.png");
+    background-repeat: no-repeat;
+    display: inline-block;
+    height: 16px;
+    margin: 0 .5em -0.3em .5em;
+    width: 16px;
+  }
+
+  .breadcrumb-link {
+    display: inline-block;
+    margin: 0 0 .5em;
+  }
+}

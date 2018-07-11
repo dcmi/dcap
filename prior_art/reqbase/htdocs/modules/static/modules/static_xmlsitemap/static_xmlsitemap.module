@@ -1,0 +1,42 @@
+<?php
+
+/**
+ * @file
+ * Use the xmlsitemap link info to fill out a list of pages to be built.
+ */
+
+/**
+ * Implements hook_xmlsitemap_link_insert().
+ */
+function static_xmlsitemap_xmlsitemap_link_insert($link) {
+  // Don't track links that are not access, status off or contain a wildcard.
+  if ($link['access'] && $link['status'] && strpos($link['loc'], '%') === FALSE) {
+    static_track_paths(array($link['loc']));
+  }
+}
+
+/**
+ * Implements hook_xmlsitemap_link_update().
+ */
+function static_xmlsitemap_xmlsitemap_link_update($link) {
+  // Don't track links that are not access, status off or contain a wildcard.
+  if ($link['access'] && $link['status'] && strpos($link['loc'], '%') === FALSE) {
+    static_track_paths(array($link['loc']));
+  }
+}
+
+/**
+ * Implements hook_static_refresh_paths().
+ *
+ * Refresh all paths for the static module.
+ */
+function static_xmlsitemap_static_refresh_paths() {
+  $results = db_select('xmlsitemap', 'x')
+      ->fields('x', array('loc'))
+      ->condition('access', 1)
+      ->condition('status', 1)
+      ->condition('loc', '\%', 'NOT LIKE')
+      ->execute()
+      ->fetchAllKeyed(0, 0);
+  return $results;
+}

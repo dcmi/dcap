@@ -1,0 +1,42 @@
+/**
+ * @file
+ * Styling and module support for module "Caption filter (caption_filter)".
+ *
+ * Project page on Drupal.org: @link http://drupal.org/project/caption_filter Caption filter @endlink
+ */
+.caption img {
+  width: 100%;
+}
+.caption p {
+  margin: .25em 0;
+}
+.caption img,
+.caption object {
+  margin-bottom: .5em;
+  display: block;
+}
+.caption .caption-inner {
+  padding: .7em;
+  background: #eeeeee;
+  font-size: 0.857em;
+  text-align: center;
+}
+
+.caption-left {
+  float: left;
+  margin: 0 1em 1em 0;
+}
+
+.caption-right {
+  float: right;
+  margin: 0 0 1em 1em;
+}
+
+.caption-center {
+  display: block;
+  text-align: center;
+}
+
+.caption-center .caption-inner {
+  display: inline-block;
+}

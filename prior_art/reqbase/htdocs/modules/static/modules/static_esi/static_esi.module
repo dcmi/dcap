@@ -1,0 +1,108 @@
+<?php
+
+/**
+ * @file
+ * Tell static about all esi links.
+ */
+
+/**
+ * Implements hoo_static_filename_alter().
+ *
+ * Have static generate files without .html extension as this is what
+ * the esi path is expecting. This works since they aren'te html pages.
+ */
+function static_esi_static_filename_alter(&$filename, $info) {
+  if (strpos($filename, 'esi/') === 0) {
+    $filename = $info['alias'];
+  }
+}
+
+/**
+ * Implements hook_esi_block_url_alter().
+ */
+function static_esi_esi_block_url_alter(&$url) {
+  static_track_paths(
+    array(
+      array(
+        'path' => $url,
+        'frequency' => static_esi_get_block_frequency($url),
+      ),
+    )
+  );
+}
+
+/**
+ * Implements hook_context_block_url_alter().
+ */
+function static_esi_esi_context_url_alter($url) {
+  static_track_paths(
+    array(
+      array(
+        'path' => $url,
+        'frequency' => static_esi_get_block_frequency($url),
+      ),
+    )
+  );
+}
+
+/**
+ * Get the esi_ttl from the block url.
+ */
+function static_esi_get_block_frequency($url) {
+  list($theme, $region, $module, $delta) = explode(':', arg(2, $url));
+  $block = block_load($module, $delta);
+  if ($block->esi_enabled) {
+    return $block->esi_ttl;
+  }
+  else {
+    return 0;
+  }
+}
+
+/**
+ * Implements hook_panels_block_url_alter().
+ */
+function static_esi_esi_panels_url_alter($url) {
+  // TODO: Do we need to do something to the url to simplify it?
+  static_track_paths(array($url));
+}
+
+/**
+ * Implements hook_static_refresh_paths().
+ *
+ * Refresh all paths for the static module.
+ */
+function static_esi_static_refresh_paths() {
+  // Not sure what to do here or if this is necessary. As pages are being
+  // generated all links should be captured by the above hooks.
+  return array();
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function static_esi_form_block_admin_configure_alter(&$form, $form_state) {
+  $form['#submit'][] = 'static_esi_block_admin_configure_form_submit';
+}
+
+/**
+ * Submit handler for block_admin_configure().
+ *
+ * When a block is saved, clear the static cache for that block.
+ */
+function static_esi_block_admin_configure_form_submit($form, $form_state) {
+  if (isset($form_state['values']['esi_enabled']) && $form_state['values']['esi_enabled'] == 1) {
+    $block = block_load($form_state['values']['module'], $form_state['values']['delta']);
+    $block->delta = esi_block__new_delta($form_state['values']['module'], $form_state['values']['delta']);
+    static_set_expired(esi_block_url($block));
+    // Update all esi entries from this block with the new ttl.
+    if (isset($form_state['values']['esi_ttl'])) {
+      db_update('static')
+        ->fields(array(
+          'frequency' => $form_state['values']['esi_ttl'],
+        ))
+        ->condition('path', 'esi/block/%%:' . db_like($form_state['values']['module'] . ':' . $form_state['values']['delta']) . '%%', 'LIKE')
+        ->execute();
+    }
+  }
+}

@@ -1,0 +1,13 @@
+; $ID:$
+
+name = "Node Connect"
+description = Allows for referenced nodes to be created and edited from the node reference field
+core = "7.x"
+dependencies[] = node_reference
+
+; Information added by Drupal.org packaging script on 2014-06-30
+version = "7.x-1.0-alpha3"
+core = "7.x"
+project = "nodeconnect"
+datestamp = "1404147828"
+

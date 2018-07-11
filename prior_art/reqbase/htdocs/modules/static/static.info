@@ -1,0 +1,16 @@
+name = Static Generator
+description = Generates a static version of the site.
+package = Performance and scalability
+core = 7.x
+
+configure = admin/config/system/static/settings
+
+recommends[] = expire
+
+
+; Information added by Drupal.org packaging script on 2015-02-24
+version = "7.x-1.x-dev"
+core = "7.x"
+project = "static"
+datestamp = "1424793484"
+

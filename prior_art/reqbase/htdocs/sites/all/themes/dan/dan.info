@@ -1,0 +1,42 @@
+name = Day and night
+description = A reponsive theme based on ZEN.
+core = 7.x
+base theme = zen
+
+stylesheets[all][] = css/fonts.css
+stylesheets[all][] = css/layout.css
+
+stylesheets[all][] = css/blocks.css
+stylesheets[all][] = css/book.css
+stylesheets[all][] = css/breadcrumb.css
+stylesheets[all][] = css/fields.css
+stylesheets[all][] = css/forms.css
+stylesheets[all][] = css/menu.css
+stylesheets[all][] = css/messages.css
+stylesheets[all][] = css/navigation.css
+stylesheets[all][] = css/normalize.css
+stylesheets[all][] = css/nodes.css
+stylesheets[all][] = css/page.css
+stylesheets[all][] = css/pager.css
+stylesheets[all][] = css/print.css
+stylesheets[all][] = css/localtasks.css
+stylesheets[all][] = css/table.css
+
+regions[top_first] = Top First
+regions[top_second] = Top Second
+
+regions[highlighted] = Highlighted
+regions[content] = Content
+regions[sidebar_first] = Sidebar first
+regions[sidebar_second] = Sidebar second
+
+regions[footer] = Footer
+regions[bottom_first] = Bottom First
+regions[bottom_second] = Bottom Second
+
+; Information added by drupal.org packaging script on 2013-07-28
+version = "7.x-1.2"
+core = "7.x"
+project = "dan"
+datestamp = "1375028767"
+

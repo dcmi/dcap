@@ -1,0 +1,52 @@
+/**
+ * @file grid12-320.css
+ * Fusion Grid Layout - 12 column grid, 320px width, 20px gutters
+ * -------------------------------------------------------------------- */
+
+/* grid widths */
+.grid12-1 {width: 26px;}
+.grid12-2 {width: 53px;}
+.grid12-3 {width: 80px;}
+.grid12-4 {width: 106px;}
+.grid12-5 {width: 133px;}
+.grid12-6 {width: 160px;}
+.grid12-7 {width: 186px;}
+.grid12-8 {width: 213px;}
+.grid12-9 {width: 240px;}
+.grid12-10 {width: 266px;}
+.grid12-11 {width: 293px;}
+.grid12-12 {width: 320px;}
+
+/* block indents */
+.grid12-indent-1 {margin-left: 26px;}
+.grid12-indent-2 {margin-left: 53px;}
+.grid12-indent-3 {margin-left: 80px;}
+.grid12-indent-4 {margin-left: 106px;}
+.grid12-indent-5 {margin-left: 133px;}
+.grid12-indent-6 {margin-left: 160px;}
+.grid12-indent-7 {margin-left: 186px;}
+.grid12-indent-8 {margin-left: 213px;}
+.grid12-indent-9 {margin-left: 240px;}
+.grid12-indent-10 {margin-left: 266px;}
+.grid12-indent-11 {margin-left: 293px;}
+
+/* gutters (2 x margin) */
+.gutter {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+/* page min width */
+body,
+div.full-width {
+  min-width: 320px;
+}
+
+#grid-mask-overlay .block .gutter {
+  background-color: rgba(7,24,113,.1);
+  outline: none;
+}
+
+body.grid-mask-enabled #grid-320 {
+  display: block;
+}

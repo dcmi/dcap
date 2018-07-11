@@ -1,0 +1,31 @@
+/**
+ * @file
+ * Styling and module support for module "LoginToboggan (logintoboggan)".
+ *
+ * Project page on Drupal.org: @link http://drupal.org/project/logintoboggan LoginToboggan @endlink
+ */
+
+@import "base";
+
+.toboggan-unified {
+  .login-link {
+    background-color: $blue;
+    border: 0;
+    color: $white;
+    padding: .4em .9em;
+    font-size: .9em;
+    height: 30px;
+
+    &.lt-active {
+      background-color: $darker-blue;
+
+      &:hover {
+        background-color: $grey;
+      }
+    }
+
+    &:hover {
+      background-color: $grey;
+    }
+  }
+}

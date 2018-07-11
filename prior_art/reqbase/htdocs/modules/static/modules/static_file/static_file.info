@@ -1,0 +1,14 @@
+name = Static File
+description = Automatically discover all managed files.
+package = Performance and scalability
+core = 7.x
+
+dependencies[] = static
+
+
+; Information added by Drupal.org packaging script on 2015-02-24
+version = "7.x-1.x-dev"
+core = "7.x"
+project = "static"
+datestamp = "1424793484"
+

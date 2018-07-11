@@ -1,0 +1,35 @@
+/**
+ * @file
+ * Pager
+ */
+
+@import "base";
+
+.pager {
+  li a {
+    color: $blue;
+    font-weight: 900;
+    font-size: 1em;
+
+    &:hover {
+      color: $grey;
+      text-decoration: none;
+    }
+  }
+
+  .pager-current,
+  .pager-item {
+    display: none !important;
+  }
+}
+
+li a.active {
+  color: $red;
+}
+
+
+.polaroid-gallery {
+  .pager li a {
+    font-size: 8em;
+  }
+}

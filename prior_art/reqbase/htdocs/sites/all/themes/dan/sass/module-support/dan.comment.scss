@@ -1,0 +1,108 @@
+/**
+ * @file
+ * Styling and module support for core module "Comment (comment)".
+ */
+
+@import "base";
+
+.comment {
+  margin-bottom: 1.5em;
+  display: table;
+  vertical-align: top;
+
+  h2.title {
+    margin-bottom: 1em;
+  }
+
+  div.user-picture img {
+    margin-left: 0; /* LTR */
+  }
+
+  .attribution {
+    display: table-cell;
+    padding: 0 2em 0 0; /* LTR */
+    vertical-align: top;
+    overflow: hidden;
+
+    img {
+      margin: 0;
+    }
+
+    .username {
+      white-space: nowrap;
+    }
+  }
+
+  .submitted {
+    p {
+      margin: 4px 0;
+      font-size: 1.071em;
+      line-height: 1.2;
+    }
+
+    .comment-time {
+      font-size: 0.786em;
+      color: #68696b;
+    }
+
+    .comment-permalink {
+      font-size: 0.786em;
+      text-transform: lowercase;
+    }
+  }
+
+  .content {
+    font-size: 0.929em;
+    line-height: 1.6;
+  }
+
+  .comment-arrow {
+    background-image: inline-image("comment-arrow.png");
+    height: 40px;
+    margin-top: 10px;
+    position: absolute;
+    width: 20px;
+    top: 0;
+    left: -20px;
+  }
+
+  .comment-text {
+    padding: 1em;
+    background: $blue;
+    display: table-cell;
+    vertical-align: top;
+    position: relative;
+    width: 100%;
+    color: $white;
+
+    h2, h3, h4, a {
+      color: $white;
+    }
+
+    a {
+      border-bottom: 1px dotted $white;
+    }
+  }
+
+  .indented {
+    margin-left: 2.5em; /* LTR */
+  }
+
+  ul.links {
+    padding: 0 0 0.25em 0;
+
+    li {
+      padding: 0 0.5em 0 0; /* LTR */
+    }
+  }
+}
+
+.comment-unpublished {
+  margin-right: .4em; /* LTR */
+  padding: .4em .2em .4em .4em; /* LTR */
+
+  .comment-text .comment-arrow {
+    border-left: 1px solid #fff4f4;
+    border-right: 1px solid #fff4f4;
+  }
+}

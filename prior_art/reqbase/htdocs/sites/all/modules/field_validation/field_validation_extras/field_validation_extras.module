@@ -1,0 +1,15 @@
+<?php
+
+/**
+ * @file
+ * A collection of validators that provide more function for Field Validation.
+ */
+
+/**
+ * Implementation of hook_ctools_plugin_directory().
+ */
+function field_validation_extras_ctools_plugin_directory($module, $plugin) {
+  if ($module == 'field_validation' && $plugin == 'validator') {
+    return 'plugins/' . $plugin;
+  }
+}

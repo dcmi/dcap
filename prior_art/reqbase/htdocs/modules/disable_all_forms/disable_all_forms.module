@@ -1,0 +1,27 @@
+<?php
+
+/**
+ * Disable all form elements and invalidate submissions.
+ */
+function disable_all_forms_form_alter(&$form, &$form_state, $form_id) {
+  global $user;
+
+  if ($user->uid != 1) {
+    $form['#after_build'][] = '_disable_all_forms_recursive';
+    if ($form_id !== 'views_exposed_form') {
+      $form['#validate'][] = '_disable_all_forms_invalidate';
+    }
+  }
+}
+
+function _disable_all_forms_recursive(&$element) {
+  foreach (element_children($element) as $name) {
+    $element[$name]['#attributes']['disabled'] = 'disabled';
+    _disable_all_forms_recursive($element[$name]);
+  }
+  return $element;
+}
+
+function _disable_all_forms_invalidate($form, $form_state) {
+  form_set_error('', t('All forms are disabled. How did you submit something?'));
+}

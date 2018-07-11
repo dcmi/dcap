@@ -1,0 +1,269 @@
+/**
+ * @file
+ * Layout
+ *
+ * @section id_and_css CSS id and class structure
+ *
+ * - #page
+ *   - #header
+ *     - #secondary-menu
+ *     - #top
+ *       - .region-top-first
+ *       - .region-top-second
+ *     - #name-and-slogan
+ *     - #navigation
+ *       - a#logo
+ *       - #main-menu
+ *   - #breadcrumb
+ *   - #main
+ *     - #content
+ *       - .region-highlighted
+ *       - .region-content
+ *     - #sidebars
+ *       - .region-sidebar-first
+ *       - .region-sidebar-second
+ *   - #footer
+ *     - .region-footer
+ *     - #tertiary-menu
+ *     - #bottom
+ *       - .region-bottom-first
+ *       - .region-bottom-second
+ */
+* {
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+/*
+ * Center the page.
+ */
+#page {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 60em;
+}
+
+/*
+ * Apply the shared properties of grid items in a single, efficient ruleset.
+ */
+#secondary-menu,
+.region-top-first,
+.region-top-second,
+#navigation,
+#content,
+.region-sidebar-first,
+.region-sidebar-second,
+.region-bottom-first,
+.region-bottom-second,
+.region-footer {
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  box-sizing: border-box;
+  word-wrap: break-word;
+}
+
+/*
+ * Containers for grid items and flow items.
+ */
+#top:before, #top:after,
+#navigation:before,
+#navigation:after,
+#main:before,
+#main:after,
+#bottom:before,
+#bottom:after {
+  content: "";
+  display: table;
+}
+#top:after,
+#navigation:after,
+#main:after,
+#bottom:after {
+  clear: both;
+}
+
+/*
+ * Narrow
+ */
+@media all and (min-width: 30em) and (max-width: 60em) {
+  /*
+   * The layout when there is only one sidebar, the left one.
+   */
+  .sidebar-first #content {
+    float: left;
+    width: 66.66667%;
+    margin-left: 33.33333%;
+    margin-right: -100%;
+  }
+  .sidebar-first .region-sidebar-first {
+    float: left;
+    width: 33.33333%;
+    margin-left: 0%;
+    margin-right: -33.33333%;
+  }
+
+  /*
+   * The layout when there is only one sidebar, the right one.
+   */
+  .sidebar-second #content {
+    float: left;
+    width: 66.66667%;
+    margin-left: 0%;
+    margin-right: -66.66667%;
+  }
+  .sidebar-second .region-sidebar-second {
+    float: left;
+    width: 33.33333%;
+    margin-left: 66.66667%;
+    margin-right: -100%;
+  }
+
+  /*
+   * The layout when there are two sidebars.
+   */
+  .two-sidebars #content {
+    float: left;
+    width: 66.66667%;
+    margin-left: 33.33333%;
+    margin-right: -100%;
+  }
+  .two-sidebars .region-sidebar-first {
+    float: left;
+    width: 33.33333%;
+    margin-left: 0%;
+    margin-right: -33.33333%;
+  }
+  .two-sidebars .region-sidebar-second {
+    /* Start a new row and span all 3 columns. */
+    float: left;
+    width: 100%;
+    margin-left: 0%;
+    margin-right: -100%;
+    padding-left: 0;
+    padding-right: 0;
+    clear: left;
+  }
+  .two-sidebars .region-sidebar-second .block {
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    box-sizing: border-box;
+    word-wrap: break-word;
+  }
+  .two-sidebars .region-sidebar-second .block:nth-child(3n+1) {
+    float: left;
+    width: 33.33333%;
+    margin-left: 0%;
+    margin-right: -33.33333%;
+    clear: left;
+  }
+  .two-sidebars .region-sidebar-second .block:nth-child(3n+2) {
+    float: left;
+    width: 33.33333%;
+    margin-left: 33.33333%;
+    margin-right: -66.66667%;
+  }
+  .two-sidebars .region-sidebar-second .block:nth-child(3n) {
+    float: left;
+    width: 33.33333%;
+    margin-left: 66.66667%;
+    margin-right: -100%;
+  }
+}
+/*
+ * Medium to Large
+ */
+@media all and (min-width: 45em) {
+  .region-top-first {
+    float: left;
+    width: 50%;
+    margin-left: 0%;
+    margin-right: -50%;
+  }
+
+  .region-top-second {
+    float: left;
+    width: 50%;
+    margin-left: 50%;
+    margin-right: -100%;
+  }
+
+  .region-bottom-first {
+    float: left;
+    width: 50%;
+    margin-left: 0%;
+    margin-right: -50%;
+  }
+
+  .region-bottom-second {
+    float: left;
+    width: 50%;
+    margin-left: 50%;
+    margin-right: -100%;
+  }
+}
+/*
+ * Large
+ */
+@media all and (min-width: 60em) {
+  /*
+   * The layout when there is only one sidebar, the left one.
+   */
+  .sidebar-first #content {
+    float: left;
+    width: 66.66667%;
+    margin-left: 33.33333%;
+    margin-right: -100%;
+  }
+  .sidebar-first .region-sidebar-first {
+    float: left;
+    width: 33.33333%;
+    margin-left: 0%;
+    margin-right: -33.33333%;
+  }
+
+  /*
+   * The layout when there is only one sidebar, the right one.
+   */
+  .sidebar-second #content {
+    float: left;
+    width: 66.66667%;
+    margin-left: 0%;
+    margin-right: -66.66667%;
+  }
+  .sidebar-second .region-sidebar-second {
+    float: left;
+    width: 33.33333%;
+    margin-left: 66.66667%;
+    margin-right: -100%;
+  }
+
+  /*
+   * The layout when there are two sidebars.
+   */
+  .two-sidebars #content {
+    float: left;
+    width: 50%;
+    margin-left: 25%;
+    margin-right: -75%;
+  }
+  .two-sidebars .region-sidebar-first {
+    float: left;
+    width: 25%;
+    margin-left: 0%;
+    margin-right: -25%;
+  }
+  .two-sidebars .region-sidebar-second {
+    float: left;
+    width: 25%;
+    margin-left: 75%;
+    margin-right: -100%;
+  }
+}

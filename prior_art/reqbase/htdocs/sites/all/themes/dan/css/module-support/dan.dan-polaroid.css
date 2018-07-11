@@ -1,0 +1,144 @@
+/**
+ * @file
+ * Styling and module support for module "DAN polaroid (dan_polaroid)".
+ *
+ * Project page on Drupal.org: @link http://drupal.org/project/dan_polaroid DAN polaroid @endlink
+ */
+/*
+ * Layout
+ */
+/*
+ * No sidebars
+ */
+.no-sidebars .dan-polaroid {
+  width: 48.4%;
+}
+@media all and (min-width: 60em) {
+  .no-sidebars .dan-polaroid {
+    width: 23.6%;
+  }
+}
+@media all and (min-width: 45em) and (max-width: 60em) {
+  .no-sidebars .dan-polaroid {
+    width: 31.9%;
+  }
+}
+@media all and (max-width: 30em) {
+  .no-sidebars .dan-polaroid {
+    width: 100%;
+    margin: 0.2em 0;
+  }
+}
+
+/*
+ * One sidebar
+ */
+.one-sidebar .dan-polaroid {
+  width: 31.9%;
+}
+@media all and (min-width: 45em) and (max-width: 60em) {
+  .one-sidebar .dan-polaroid {
+    width: 48.4%;
+  }
+}
+@media all and (max-width: 45em) {
+  .one-sidebar .dan-polaroid {
+    width: 100%;
+    margin: 0.2em 0;
+  }
+}
+
+/*
+ * Two sidebars
+ */
+.two-sidebars .dan-polaroid {
+  width: 48.4%;
+}
+@media all and (max-width: 45em) {
+  .two-sidebars .dan-polaroid {
+    width: 100%;
+    margin: 0.2em 0;
+  }
+}
+
+/*
+ * Styling
+ */
+.dan-polaroid {
+  background: -webkit-gradient(radial, 50% 50%, 0, 50% 50%, 100, color-stop(0%, #eaeaea), color-stop(100%, #ffffff));
+  background: -webkit-radial-gradient(#eaeaea, #ffffff);
+  background: -moz-radial-gradient(#eaeaea, #ffffff);
+  background: -o-radial-gradient(#eaeaea, #ffffff);
+  background: -ms-radial-gradient(#eaeaea, #ffffff);
+  background: radial-gradient(#eaeaea, #ffffff);
+  display: block;
+  float: left;
+  margin: 0.7%;
+  overflow: hidden;
+  padding: .5em;
+  position: relative;
+  /*
+   * Read more link
+   */
+  /*
+   * Image
+   */
+  /*
+   * Headline
+   */
+  /*
+   * Text
+   */
+}
+.dan-polaroid .read-more-link {
+  background: #009ee1;
+  color: white;
+  display: block;
+  font-size: .8em;
+  opacity: .8;
+  padding: 0 .5em;
+  position: absolute;
+  right: .64em;
+  text-decoration: none;
+  top: .64em;
+}
+.dan-polaroid .read-more-link:hover {
+  background-color: #999999;
+}
+.dan-polaroid .read-more-link:active {
+  background-color: #045a7f;
+}
+.dan-polaroid img {
+  width: 100%;
+  height: auto;
+}
+.dan-polaroid img:hover {
+  opacity: 0.5;
+}
+.dan-polaroid h2 {
+  white-space: nowrap;
+  overflow: hidden;
+  -ms-text-overflow: ellipsis;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  -moz-binding: url('../xml/ellipsis.xml#ellipsis');
+  font-size: 1em;
+  margin: 0;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.dan-polaroid .text {
+  overflow: hidden;
+  -ms-text-overflow: ellipsis;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  -moz-binding: url('../xml/ellipsis.xml#ellipsis');
+  display: block;
+  font-size: .8em;
+  height: 5em;
+  line-height: 1.2em;
+  margin: 0;
+  overflow: hidden;
+  padding: 0;
+  word-wrap: break-word;
+}

@@ -1,0 +1,36 @@
+/**************************************************************************
+ * This is a boilerplate for customizing each display of a responsive
+ * layout.  These will only work properly using the theme's default media
+ * queries.  If you've made changes to the default settings, replace the
+ * media queries found in this file with the ones generated inside of
+ * sites/default/files/fusion/[theme-name].responsive.grid.css.
+ *
+ * Steps to activate responsive.css:
+ * 1. Add your custom CSS to this file
+ * 2. Rename this file to responsive.css
+ * 3. Clear cached data at admin/settings/performance
+ **************************************************************************/
+
+/* Desktop display. */
+@media only screen and (min-width:1200px) {
+  /* Uncomment this style for an easy visual confirmation that your
+   * css file is being included.  It will change the header background to
+   * orange. */
+  /*
+  #header-group-wrapper {
+    background-color: orange !important;
+  }
+  */
+}
+
+/* iPad: landscape. */
+@media only screen and (max-device-width: 1024px) and (orientation:landscape), only screen and (min-width:960px) and (max-width:1199px) and (min-device-width: 1100px) {
+}
+
+/* iPad: portrait. */
+@media only screen and (max-device-width: 1024px) and (orientation:portrait), only screen and (min-width:768px) and (max-width:959px) and (min-device-width: 1100px) {
+}
+
+/* Mobile display. */
+@media only screen and (max-width:759px) {
+}

@@ -1,0 +1,31 @@
+/**
+ * @file
+ * Localtasks
+ */
+ul.tabs {
+  padding: 0;
+  line-height: 2.5;
+}
+ul.tabs.primary {
+  font-size: .9em;
+  list-style: none;
+}
+ul.tabs.primary a {
+  color: white;
+}
+ul.tabs.primary li {
+  display: inline;
+}
+ul.tabs.primary li a {
+  background: #009ee1;
+  padding: .4em .9em;
+}
+ul.tabs.primary li a:hover {
+  background-color: #999999;
+}
+ul.tabs.primary li.active a {
+  background: #045a7f;
+}
+ul.tabs.primary li.active a:hover {
+  background-color: #999999;
+}

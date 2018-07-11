@@ -1,0 +1,244 @@
+/* Skinr styles
+/-------------------------------------------------------------- */
+
+/* Skinr selectable helper classes */
+.fusion-clear {
+  clear: both;
+}
+
+div.fusion-right {
+  float: right; /* LTR */
+}
+
+div.fusion-center {
+  float: none;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.fusion-center-content .inner {
+  text-align: center;
+}
+
+.fusion-center-content .inner ul.menu {
+  display: inline-block;
+  text-align: center;
+}
+
+/* required to override drupal core */
+.fusion-center-content #user-login-form {
+  text-align: center;
+}
+
+.fusion-right-content .inner {
+  text-align: right; /* LTR */
+}
+
+/* required to override drupal core */
+.fusion-right-content #user-login-form {
+  text-align: right; /* LTR */
+}
+
+/* Large, bold callout text style */
+.fusion-callout .inner {
+  font-weight: bold;
+}
+
+/* Extra padding on block */
+.fusion-padding .inner {
+  padding: 30px;
+}
+
+/* Adds 1px border and padding */
+.fusion-border .inner {
+  border-width: 1px;
+  border-style: solid;
+  padding: 10px;
+}
+
+/* Single line menu with separators */
+.fusion-inline-menu .inner ul.menu {
+  margin-left: 0; /* LTR */
+}
+
+.fusion-inline-menu .inner ul.menu li {
+  border-right-style: solid;
+  border-right-width: 1px;
+  display: inline;
+  margin: 0;
+  padding: 0;
+  white-space: nowrap;
+}
+
+.fusion-inline-menu .inner ul.menu li a {
+  padding: 0 8px 0 5px; /* LTR */
+}
+
+.fusion-inline-menu .inner ul li.last {
+  border: none;
+}
+
+/* Hide second level (and beyond) menu items */
+.fusion-inline-menu .inner ul li.expanded ul {
+  display: none;
+}
+
+/* Multi-column menu style with bolded top level menu items */
+.fusion-multicol-menu .inner ul {
+  margin-left: 0; /* LTR */
+  text-align: left; /* LTR */
+}
+
+.fusion-multicol-menu .inner ul li {
+  border-right: none;
+  display: block;
+  font-weight: bold;
+}
+
+.fusion-multicol-menu .inner ul li.last {
+  border-right: none;
+}
+
+.fusion-multicol-menu .inner ul li.last a {
+  padding-right: 0; /* LTR */
+}
+
+.fusion-multicol-menu .inner ul li.expanded,
+.fusion-multicol-menu .inner ul li.leaf {
+  float: left; /* LTR */
+  list-style-image: none;
+  margin-left: 50px; /* LTR */
+}
+
+.fusion-multicol-menu .inner ul.menu li.first {
+  margin-left: 0; /* LTR */
+}
+
+.fusion-multicol-menu .inner ul li.expanded li.leaf {
+  float: none;
+  margin-left: 0; /* LTR */
+}
+
+.fusion-multicol-menu .inner ul li.expanded ul {
+  display: block;
+  margin-left: 0; /* LTR */
+}
+
+.fusion-multicol-menu .inner ul li.expanded ul li {
+  border: none;
+  margin-left: 0; /* LTR */
+  text-align: left; /* LTR */
+}
+
+.fusion-multicol-menu .inner ul.menu li ul.menu li {
+  font-weight: normal;
+}
+
+/* Split list across multiple columns */
+.fusion-2-col-list .inner .item-list ul li,
+.fusion-2-col-list .inner ul.menu li {
+  float: left; /* LTR */
+  width: 50%;
+}
+
+.fusion-3-col-list .inner .item-list ul li,
+.fusion-3-col-list .inner ul.menu li {
+  float: left; /* LTR */
+  width: 33%;
+}
+
+.fusion-2-col-list .inner .item-list ul.pager li,
+.fusion-3-col-list .inner .item-list ul.pager li {
+  float: none;
+  width: auto;
+}
+
+/* List with bottom border
+    Fixes a common issue when list items have bottom borders and appear to be
+    doubled when nested lists end and begin. This removes the extra border-bottom
+ */
+.fusion-list-bottom-border .inner ul li {
+  list-style: none;
+  list-style-type: none;
+  list-style-image: none;
+}
+
+.fusion-list-bottom-border .inner ul li,
+.fusion-list-bottom-border .view-content div.views-row {
+  padding: 0 0 0 10px; /* LTR */
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  line-height: 216.7%; /* 26px */
+}
+
+.fusion-list-bottom-border .inner ul {
+  margin: 0;
+}
+
+.fusion-list-bottom-border .inner ul li ul {
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+}
+
+.fusion-list-bottom-border .inner ul li ul li.last {
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  margin-bottom: -1px;
+  margin-top: -1px;
+}
+
+/* List with no bullet and extra padding
+    This is a common style for menus, which removes the bullet and adds more
+    vertical padding for a simple list style
+ */
+.fusion-list-vertical-spacing .inner ul,
+.fusion-list-vertical-spacing div.views-row-first {
+  margin-left: 0;
+  margin-top: 10px;
+}
+
+.fusion-list-vertical-spacing .inner ul li,
+.fusion-list-vertical-spacing div.views-row {
+  line-height: 133.3%; /* 16px/12px */
+  margin-bottom: 10px;
+  padding: 0;
+}
+
+.fusion-list-vertical-spacing .inner ul li {
+  list-style: none;
+  list-style-image: none;
+  list-style-type: none;
+}
+
+.fusion-list-vertical-spacing .inner ul li ul {
+  margin-left: 10px; /* LTR */
+}
+
+/* Bold all links */
+.fusion-bold-links .inner a {
+  font-weight: bold;
+}
+
+/* Float imagefield images left and add margin */
+.fusion-float-imagefield-left .field-type-image,
+.fusion-float-imagefield-left .image-insert {
+  float: left; /* LTR */
+  margin: 0 15px 15px 0; /* LTR */
+}
+
+/* Clear float on new Views item so each row drops to a new line */
+.fusion-float-imagefield-left .views-row {
+  clear: left; /* LTR */
+}
+
+/* Float imagefield images right and add margin */
+.fusion-float-imagefield-right .field-type-image,
+.fusion-float-imagefield-right .image-insert {
+  float: right; /* LTR */
+  margin: 0 0 15px 15px; /* LTR */
+}
+
+/* Clear float on new Views item so each row drops to a new line */
+.fusion-float-imagefield-right .views-row {
+  clear: right; /* LTR */
+}

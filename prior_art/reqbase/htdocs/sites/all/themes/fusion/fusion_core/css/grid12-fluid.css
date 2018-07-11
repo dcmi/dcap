@@ -1,0 +1,89 @@
+
+/* Layout - 16 column grid, fluid width, 20px gutters
+-------------------------------------------------------------- */
+
+/* grid widths */
+.grid12-1 {width: 8.33%;}
+.grid12-2 {width: 16.67%;}
+.grid12-3 {width: 25%;}
+.grid12-4 {width: 33.33%;}
+.grid12-5 {width: 41.67%;}
+.grid12-6 {width: 50%;}
+.grid12-7 {width: 58.33%;}
+.grid12-8 {width: 66.67%;}
+.grid12-9 {width: 75%;}
+.grid12-10 {width: 83.33%;}
+.grid12-11 {width: 91.67%;}
+.grid12-12 {width: 100%;}
+
+/* grid widths, minus 0.1% to prevent float under in IE6 & IE7 */
+.ie6 .grid12-1, .ie7 .grid12-1 {width: 8.23%;}
+.ie6 .grid12-2, .ie7 .grid12-2 {width: 16.57%;}
+.ie6 .grid12-3, .ie7 .grid12-3 {width: 24.9%;}
+.ie6 .grid12-4, .ie7 .grid12-4 {width: 33.23%;}
+.ie6 .grid12-5, .ie7 .grid12-5 {width: 41.57%;}
+.ie6 .grid12-6, .ie7 .grid12-6 {width: 49.9%;}
+.ie6 .grid12-7, .ie7 .grid12-7 {width: 58.23%;}
+.ie6 .grid12-8, .ie7 .grid12-8 {width: 66.57%;}
+.ie6 .grid12-9, .ie7 .grid12-9 {width: 74.9%;}
+.ie6 .grid12-10, .ie7 .grid12-10 {width: 83.23%;}
+.ie6 .grid12-11, .ie7 .grid12-11 {width: 91.57%;}
+.ie6 .grid12-12, .ie7 .grid12-12 {width: 99.9%;}
+
+/* block indents */
+.grid12-indent-1 {margin-left: 8.33%;}
+.grid12-indent-2 {margin-left: 16.67%;}
+.grid12-indent-3 {margin-left: 25%;}
+.grid12-indent-4 {margin-left: 33.33%;}
+.grid12-indent-5 {margin-left: 41.67%;}
+.grid12-indent-6 {margin-left: 50%;}
+.grid12-indent-7 {margin-left: 58.33%;}
+.grid12-indent-8 {margin-left: 66.67%;}
+.grid12-indent-9 {margin-left: 75%;}
+.grid12-indent-10 {margin-left: 83.33%;}
+.grid12-indent-11 {margin-left: 91.67%;}
+
+/* block indents, minus 0.1% to prevent float under in IE6 & IE7 */
+.ie6 .grid12-indent-1, .ie7 .grid12-indent-1 {margin-left: 8.23%;}
+.ie6 .grid12-indent-2, .ie7 .grid12-indent-2 {margin-left: 16.57%;}
+.ie6 .grid12-indent-3, .ie7 .grid12-indent-3 {margin-left: 24.9%;}
+.ie6 .grid12-indent-4, .ie7 .grid12-indent-4 {margin-left: 33.23%;}
+.ie6 .grid12-indent-5, .ie7 .grid12-indent-5 {margin-left: 41.57%;}
+.ie6 .grid12-indent-6, .ie7 .grid12-indent-6 {margin-left: 49.9%;}
+.ie6 .grid12-indent-7, .ie7 .grid12-indent-7 {margin-left: 58.23%;}
+.ie6 .grid12-indent-8, .ie7 .grid12-indent-8 {margin-left: 66.57%;}
+.ie6 .grid12-indent-9, .ie7 .grid12-indent-9 {margin-left: 74.9%;}
+.ie6 .grid12-indent-10, .ie7 .grid12-indent-10 {margin-left: 83.23%;}
+.ie6 .grid12-indent-11, .ie7 .grid12-indent-11 {margin-left: 91.57%;}
+
+/* gutters (2 x margin) */
+.gutter {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+/* page min width */
+body,
+div.full-width {
+  min-width: 780px;
+}
+
+/* region max-min width */
+.region {
+  max-width: 1320px;   /* 960px + 360px */
+  min-width: 780px;    /* 960px - 180px */
+}
+
+/* allow nested regions to be smaller */
+.region.nested {
+  min-width: 0;
+}
+
+/* theme setting: set fluid grid width on top-level full-width elements */
+.fluid-100 .full-width .grid12-12 {width: 100%;}
+.fluid-95 .full-width .grid12-12 {width: 95%;}
+.fluid-90 .full-width .grid12-12 {width: 90%;}
+.fluid-85 .full-width .grid12-12 {width: 85%;}
+
+/* now reset all nested full-width elements back to 100% */
+#page .grid12-12 .grid12-12 {width: 100%;}

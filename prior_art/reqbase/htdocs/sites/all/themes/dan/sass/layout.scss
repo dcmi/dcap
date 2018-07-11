@@ -1,0 +1,230 @@
+/**
+ * @file
+ * Layout
+ *
+ * @section id_and_css CSS id and class structure
+ *
+ * - #page
+ *   - #header
+ *     - #secondary-menu
+ *     - #top
+ *       - .region-top-first
+ *       - .region-top-second
+ *     - #name-and-slogan
+ *     - #navigation
+ *       - a#logo
+ *       - #main-menu
+ *   - #breadcrumb
+ *   - #main
+ *     - #content
+ *       - .region-highlighted
+ *       - .region-content
+ *     - #sidebars
+ *       - .region-sidebar-first
+ *       - .region-sidebar-second
+ *   - #footer
+ *     - .region-footer
+ *     - #tertiary-menu
+ *     - #bottom
+ *       - .region-bottom-first
+ *       - .region-bottom-second
+ */
+
+@import "base";
+
+* {
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+$zen-column-count:  12;
+$zen-gutter-width:  1em;
+
+$zen-auto-include-item-base: false;
+
+/*
+ * Center the page.
+ */
+
+#page {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 60em;
+}
+
+/*
+ * Apply the shared properties of grid items in a single, efficient ruleset.
+ */
+
+#secondary-menu,
+.region-top-first,
+.region-top-second,
+#navigation,
+#content,
+.region-sidebar-first,
+.region-sidebar-second,
+.region-bottom-first,
+.region-bottom-second,
+.region-footer {
+  @include zen-grid-item-base();
+}
+
+/*
+ * Containers for grid items and flow items.
+ */
+
+#top,
+#navigation,
+#main,
+#bottom {
+  @include zen-grid-container();
+}
+
+
+/*
+ * Narrow
+ */
+
+@media all and (min-width: 30em) and (max-width: 60em) {
+
+  /*
+   * The layout when there is only one sidebar, the left one.
+   */
+
+  .sidebar-first {
+    #content {
+      @include zen-grid-item(8, 5);
+    }
+
+    .region-sidebar-first {
+      @include zen-grid-item(4, 1);
+    }
+  }
+
+  /*
+   * The layout when there is only one sidebar, the right one.
+   */
+
+  .sidebar-second {
+    #content {
+      @include zen-grid-item(8, 1);
+    }
+
+    .region-sidebar-second {
+      @include zen-grid-item(4, 9);
+    }
+  }
+
+  /*
+   * The layout when there are two sidebars.
+   */
+
+  .two-sidebars {
+    #content {
+      @include zen-grid-item(8, 5);
+    }
+
+    .region-sidebar-first {
+      @include zen-grid-item(4, 1);
+    }
+
+    .region-sidebar-second { /* Start a new row and span all 3 columns. */
+      @include zen-grid-item(12, 1);
+      @include zen-nested-container(); // Since we're making every block in this region be a grid item.
+      @include zen-clear();
+
+      .block {
+        @include zen-grid-item-base();
+      }
+      .block:nth-child(3n+1) {
+        @include zen-grid-item(4, 1);
+        @include zen-clear();
+      }
+      .block:nth-child(3n+2) {
+        @include zen-grid-item(4, 5);
+      }
+      .block:nth-child(3n) {
+        @include zen-grid-item(4, 9);
+      }
+    }
+  }
+}
+
+
+/*
+ * Medium to Large
+ */
+
+@media all and (min-width: 45em) {
+  .region-top-first {
+    @include zen-grid-item(6, 1);
+  }
+
+  .region-top-second {
+    @include zen-grid-item(6, 7);
+  }
+
+  .region-bottom-first {
+    @include zen-grid-item(6, 1);
+  }
+
+  .region-bottom-second {
+    @include zen-grid-item(6, 7);
+  }
+}
+
+
+/*
+ * Large
+ */
+
+@media all and (min-width: 60em) {
+
+  /*
+   * The layout when there is only one sidebar, the left one.
+   */
+
+  .sidebar-first {
+    #content {
+      @include zen-grid-item(8, 5);
+    }
+
+    .region-sidebar-first {
+      @include zen-grid-item(4, 1);
+    }
+  }
+
+  /*
+   * The layout when there is only one sidebar, the right one.
+   */
+
+  .sidebar-second {
+    #content {
+      @include zen-grid-item(8, 1);
+    }
+
+    .region-sidebar-second {
+      @include zen-grid-item(4, 9);
+    }
+  }
+
+  /*
+   * The layout when there are two sidebars.
+   */
+
+  .two-sidebars {
+    #content {
+      @include zen-grid-item(6, 4);
+    }
+
+    .region-sidebar-first {
+      @include zen-grid-item(3, 1);
+    }
+
+    .region-sidebar-second {
+      @include zen-grid-item(3, 10);
+    }
+  }
+}

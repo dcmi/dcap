@@ -1,0 +1,18 @@
+name = Hierarchical Select Entity Reference
+description = Use the hierarchical select widget for entity reference fields, using taxonomy to provide hierarchy if appropriate, otherwise flat.
+package = Form Elements
+core = 7.x
+dependencies[] = hierarchical_select
+dependencies[] = hs_taxonomy
+dependencies[] = entityreference
+dependencies[] = entity
+dependencies[] = ctools
+dependencies[] = options
+dependencies[] = field
+
+; Information added by Drupal.org packaging script on 2015-05-29
+version = "7.x-3.0-beta2"
+core = "7.x"
+project = "hierarchical_select"
+datestamp = "1432903085"
+

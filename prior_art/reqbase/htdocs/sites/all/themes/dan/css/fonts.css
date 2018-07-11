@@ -1,0 +1,69 @@
+@import url("http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,900,400italic");
+/**
+ * @file
+ * Font
+ */
+body {
+  color: #424242;
+  font-family: "Source Sans Pro", sans-serif;
+  font-weight: 400;
+}
+
+a {
+  color: #009ee1;
+  text-decoration: none;
+}
+a:hover {
+  opacity: .7;
+  text-decoration: none;
+}
+
+.submitted {
+  font-size: 0.8em;
+  color: #424242;
+}
+.submitted a {
+  text-decoration: none;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #009ee1;
+  font-family: "Source Sans Pro", sans-serif;
+  font-weight: 900;
+}
+h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
+  color: #009ee1;
+  text-decoration: none;
+}
+
+@media (max-width: 20em) {
+  ol, ul {
+    padding-left: 1.4em;
+  }
+}
+li {
+  list-style: square;
+}
+
+hr {
+  display: block;
+  clear: both;
+  margin: 1.5em 0;
+}
+
+pre {
+  font-family: Courier, "Courier New";
+}
+
+blockquote {
+  background: #eeeeee url("../images/quotes-bottom.png") no-repeat;
+  background-position: 1em 1em;
+  color: #009ee1;
+  margin: 1em;
+  font-size: 1.2em;
+  font-weight: bold;
+  padding: 1em 1em 1em 5em;
+}
+blockquote p {
+  color: #009ee1;
+}

@@ -1,0 +1,66 @@
+name = Bluez
+description = A corporate theme with pre-defined configurable slider, blocks and Footer options. Developed by <a href="http://in.linkedin.com/in/ujvalshah">Ujval Shah</a>
+core = 7.x
+engine = phptemplate
+
+; STYLESHEETS
+;----------------------------------------------------
+stylesheets[all][] = css/style.css
+stylesheets[all][] = css/slider.css
+
+; REGIONS
+;----------------------------------------------------
+
+regions[header]         = Header - Inner Pages Only
+regions[content_top]    = Content Top
+regions[content]        = Content
+regions[sidebar_first]  = Right Sidebar
+regions[help]           = Help
+regions[bottom]         = Bottom
+regions[footer]         = Footer
+
+; FEATURES
+;----------------------------------------------------
+features[] = logo
+features[] = name
+features[] = slogan
+features[] = node_user_picture
+features[] = comment_user_picture
+features[] = comment_user_verification
+features[] = favicon
+features[] = main_menu
+features[] = secondary_menu
+
+; SETTINGS
+;----------------------------------------------------
+settings[footer_copyright]   = 1
+settings[footer_developed]   = 1
+settings[footer_developedby]   = Ujval Shah
+settings[footer_developedby_url]   = http://in.linkedin.com/in/ujvalshah
+settings[slideshow_display]  = 1
+settings[display]        = 1
+settings[breadcrumbs]    = 1
+settings[slide1_title]   = "Solution that you need"
+settings[slide1_desc]    = "Lorem ipsum dolor sit amet, consectetur adipiscing elit"
+settings[slide2_title]   = "Be successful it's easy"
+settings[slide2_desc]    = "Lorem ipsum dolor sit amet, consectetur adipiscing elit"
+settings[slide3_title]   = "We work for your profit"
+settings[slide3_desc]    = "Lorem ipsum dolor sit amet, consectetur adipiscing elit"
+settings[twitter]        = "https://twitter.com/ujval99"
+settings[facebook]       = "http://www.facebook.com/ujvalshah"
+settings[linkedin]       = "http://in.linkedin.com/in/ujvalshah"
+settings[welcome_title]  = "Welcome to Bluez"
+settings[welcome_text]   = <blockquote>In vel lorem et odio dictum dapibus. Vestibulum vitae sapien id mauris sollicitudin gravida. Vivamus nec risus nec turpis elementum molestie. Duis viverra pretium sapien.</blockquote>
+settings[colonetitle]    = "This is column One"
+settings[colone]         = <div class="image_wrapper"><img src="sites/all/themes/bluez/images/promoted/col1.jpg"></div>Lorem ipsum dolor sit amet, <a href="#">consectetur adipiscing</a> elit. Fusce vel iaculis felis. Nulla nec turpis neque. In vel lorem et odio dictum dapibus. Vestibulum vitae sapien id mauris sollicitudin gravida. Vivamus nec risus nec turpis elementum molestie. Duis viverra pretium sapien.
+settings[coltwotitle]    = "This is column Two"
+settings[coltwo]         = <div class="image_wrapper"><img src="sites/all/themes/bluez/images/promoted/col2.jpg"></div>Lorem ipsum dolor sit amet, <a href="#">consectetur adipiscing</a> elit. Fusce vel iaculis felis. Nulla nec turpis neque. In vel lorem et odio dictum dapibus. Vestibulum vitae sapien id mauris sollicitudin gravida. Vivamus nec risus nec turpis elementum molestie. Duis viverra pretium sapien.
+settings[colthreetitle]  = "This is column Three"
+settings[colthree]       = <div class="image_wrapper"><img src="sites/all/themes/bluez/images/promoted/col3.jpg"></div>Lorem ipsum dolor sit amet, <a href="#">consectetur adipiscing</a> elit. Fusce vel iaculis felis. Nulla nec turpis neque. In vel lorem et odio dictum dapibus. Vestibulum vitae sapien id mauris sollicitudin gravida. Vivamus nec risus nec turpis elementum molestie. Duis viverra pretium sapien.
+
+; Information added by drupal.org packaging script on 2013-07-01
+version = "7.x-1.0"
+core = "7.x"
+project = "bluez"
+datestamp = "1372682158"
+

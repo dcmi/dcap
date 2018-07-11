@@ -1,0 +1,123 @@
+<?php
+
+/**
+ * @file
+ * Install file for the Hierarchical Select Taxonomy module.
+ */
+
+
+/**
+ * Implementation of hook_uninstall().
+ */
+function hs_taxonomy_uninstall() {
+  db_delete('variable')
+  ->condition('name', 'taxonomy_hierarchical_select_%', 'LIKE')
+  ->execute();
+  variable_del('taxonomy_override_selector');
+}
+
+/**
+ * Implementation of hook_enable().
+ */
+function hs_taxonomy_enable() {
+  variable_set('taxonomy_override_selector', TRUE);
+  drupal_set_message(t("Drupal core's taxonomy selects are now overridden on the
+                        Taxonomy Term form. They've been replaced by
+                        Hierarchical Selects for better scalability.<br />
+                        You can <a href=\"!configure-url\">configure</a> it to
+                        be used on node forms too!",
+                        array(
+                          '!configure-url' => url('admin/config/content/hierarchical_select/configs'),
+                        )));
+}
+
+/**
+ * Implementation of hook_disable().
+ */
+function hs_taxonomy_disable() {
+  variable_set('taxonomy_override_selector', FALSE);
+  drupal_set_message(t("Drupal core's taxonomy selects are now restored.
+                        Please remember that they're not scalable!."),
+                     'warning');
+}
+
+
+//----------------------------------------------------------------------------
+// Schema updates.
+
+/**
+ * Upgrade path from Drupal 6 to Drupal 7 version of Hierarchical Select:
+ * - delete the taxonomy_override_selector variable if it exists.
+ */
+function hs_taxonomy_update_7300() {
+  variable_del('taxonomy_override_selector');
+}
+
+/**
+ * Apparently, taxonomy_override_selector still exists in *one* location in
+ * Drupal 7 core: on the form_taxonomy_form_term form (where you can create or
+ * edit a Taxonomy term).
+ */
+function hs_taxonomy_update_7301() {
+  variable_set('taxonomy_override_selector', TRUE);
+}
+
+/**
+ * Convert Taxonomy vocabulary config IDs to use machine name instead of serial
+ * vocabulary ID.
+ */
+function hs_taxonomy_update_7302() {
+  require_once DRUPAL_ROOT . '/' . drupal_get_path('module', 'hierarchical_select') . '/includes/common.inc';
+
+  $vocabularies = taxonomy_vocabulary_get_names();
+
+  foreach ($vocabularies as $machine_name => $vocabulary) {
+    $old_config_id = "taxonomy-{$vocabulary->vid}";
+    $new_config_id = "taxonomy-{$machine_name}";
+
+    $old_config = variable_get('hs_config_' . $old_config_id, NULL);
+
+    if (!empty($old_config)) {
+      hierarchical_select_common_config_set($new_config_id, $old_config);
+      hierarchical_select_common_config_del($old_config_id);
+    }
+  }
+}
+
+/**
+ * Convert Taxonomy vocabulary config IDs to use field name.
+ */
+function hs_taxonomy_update_7303() {
+  require_once DRUPAL_ROOT . '/' . drupal_get_path('module', 'hierarchical_select') . '/includes/common.inc';
+
+  foreach (field_info_instances() as $entity_type => $bundles) {
+    foreach ($bundles as $bundle => $field_list) {
+      foreach ($field_list as $field_name => $instance) {
+        if ($instance['widget']['type'] == 'taxonomy_hs') {
+          $field_info = field_info_field($field_name);
+          $allowed_value = $field_info['settings']['allowed_values'][0];
+          $vocabulary_name = $allowed_value['vocabulary'];
+          $old_config_id = "taxonomy-{$vocabulary_name}";
+          $new_config_id = "taxonomy-{$field_name}";
+          $old_config = hierarchical_select_common_config_get($old_config_id);
+          if (!empty($old_config)) {
+            hierarchical_select_common_config_set($new_config_id, $old_config);
+          }
+        }
+      }
+    }
+  }
+}
+
+/**
+ * Cleanup old-named configs.
+ */
+function hs_taxonomy_update_7304() {
+  require_once DRUPAL_ROOT . '/' . drupal_get_path('module', 'hierarchical_select') . '/includes/common.inc';
+
+  $vocabularies = taxonomy_get_vocabularies();
+  foreach ($vocabularies as $vid => $vocabulary) {
+    $old_config_id = "taxonomy-{$vocabulary->machine_name}";
+    hierarchical_select_common_config_del($old_config_id);
+  }
+}

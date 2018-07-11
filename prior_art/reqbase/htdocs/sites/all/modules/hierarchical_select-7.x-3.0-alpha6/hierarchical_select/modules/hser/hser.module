@@ -1,0 +1,118 @@
+<?php
+
+/**
+ * @file
+ * Allows hierarchical select to be used with entity reference fields.
+ */
+
+/**
+ * Implements hook_field_widget_info().
+ */
+function hser_field_widget_info() {
+  return array(
+    'hser_hierarchy' => array(
+      'label' => t('Hierarchical Select'),
+      'field types' => array('entityreference'),
+      'behaviors' => array(
+        'multiple values' => FIELD_BEHAVIOR_CUSTOM,
+      ),
+      'settings' => array(
+        'editable' => FALSE,
+      ),
+    ),
+  );
+}
+
+/**
+ * Implements hook_field_widget_settings_form().
+ */
+function hser_field_widget_settings_form($field, $instance) {
+  $widget = $instance['widget'];
+  $settings = $widget['settings'] + field_info_widget_settings($widget['type']);
+
+  $form = array();
+
+  if ($widget['type'] == 'hser_hierarchy') {
+    $form['editable'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('Editable'),
+      '#default_value' => $settings['editable'],
+      '#description' => t('Select this to allow users to use the hierarchical select widget to create new terms in the selected vocabulary.'),
+    );
+  }
+
+  return $form;
+}
+
+
+/**
+ * Implements hook_field_widget_form().
+ */
+function hser_field_widget_form(&$form, &$form_state, $field, $instance, $langcode, $items, $delta, $element) {
+  if ($field['settings']['target_type'] == 'taxonomy_term') {
+    $vocabularies = $field['settings']['handler_settings']['target_bundles'];
+    if ((count($vocabularies) == 1) && ($vocabulary = taxonomy_vocabulary_machine_name_load(reset($vocabularies)))) {
+      $default_value = array();
+      foreach ($items as $item) {
+        $default_value[] = $item['target_id'];
+      }
+      $element += array(
+        '#type' => 'hierarchical_select',
+        '#size' => 1,
+        '#default_value' => $default_value,
+        '#element_validate' => array('_hser_element_validate'),
+        '#config' => array(
+          'module' => 'hs_taxonomy',
+          'params' => array(
+            'vid' => $vocabulary->vid,
+          ),
+          'save_lineage' => FALSE,
+          'enforce_deepest' => FALSE,
+          'entity_count' => FALSE,
+          'require_entity' => FALSE,
+          'resizable' => FALSE,
+          'level_labels' => array('status' => FALSE),
+          'dropbox' => array(
+            'status' => ($field['cardinality'] != 1),
+            'limit' => $field['cardinality'],
+          ),
+          'editability' => array(
+            'status' => $instance['widget']['settings']['editable'],
+            'allow_new_levels' => TRUE,
+            'max_levels' => 0,
+          ),
+          'render_flat_select' => FALSE,
+        ),
+      );
+      return $element;
+    }
+  }
+  // If we reach this point, we decided that hierarchical_select would not be
+  // appropriate for some reason (not taxonomy, no vocabulary selected, etc).
+  // So instead we fall back to a normal select widget.
+  $instance['widget']['type'] = 'options_select';
+  return options_field_widget_form($form, $form_state, $field, $instance, $langcode, $items, $delta, $element);
+}
+
+/**
+ * Element validation callback for field widget hierarchical select element.
+ */
+function _hser_element_validate($element, &$form_state, $form) {
+  $value = array();
+  foreach ($element['#value'] as $delta => $target_id) {
+    $value[$delta]['target_id'] = $target_id;
+  }
+  form_set_value($element, $value, $form_state);
+}
+
+/**
+ * Implements hook_node_validate().
+ *
+ * Temporary workaround for https://drupal.org/node/1293166 - remove when that
+ * bug is fixed.
+ */
+function hser_node_validate($node, $form, &$form_state) {
+  if (arg(0) == 'hierarchical_select_ajax') {
+    form_set_error('');
+  }
+}

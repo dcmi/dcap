@@ -1,0 +1,40 @@
+/**
+ * @file
+ * Localtasks
+ */
+
+@import "base";
+
+ul.tabs {
+  padding: 0;
+  line-height: 2.5;
+
+  &.primary {
+    font-size: .9em;
+    list-style: none;
+
+    a {
+      color: $white;
+    }
+
+    li {
+      display: inline;
+
+      a {
+        background: $blue;
+        padding: .4em .9em;
+
+        &:hover {
+          background-color: $grey;
+        }
+      }
+      &.active a {
+        background: $darker-blue;
+
+        &:hover {
+          background-color: $grey;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,47 @@
+<?php
+
+/**
+ * @file
+ * Integration between the static generator and the node module.
+ */
+
+/**
+ * Implements hook_node_insert().
+ */
+function static_node_node_insert($node) {
+  static_track_path('node/' . $node->nid) ;
+}
+
+/**
+ * Implements hook_node_update().
+ */
+function static_node_node_update($node) {
+  static_track_path('node/' . $node->nid) ;
+}
+
+/**
+ * Implements hook_node_delete().
+ */
+function static_node_node_delete($node) {
+  $item = static_get_info('node/' . $node->nid);
+  if ($item->id) {
+    static_delete_multiple(array($item->id => $item->id));
+  }
+}
+
+/**
+ * Implements hook_static_refresh_paths().
+ *
+ * Refresh all paths for the static module.
+ */
+function static_node_static_refresh_paths() {
+  $paths = array();
+  $result = db_select('node', 'n')
+    ->fields('n', array('nid'))
+    ->addTag('static_node_refresh_paths')
+    ->execute();
+  foreach($result as $record) {
+    $paths[] = 'node/' . $record->nid;
+  }
+  return $paths;
+}

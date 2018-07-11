@@ -1,0 +1,820 @@
+<?php
+
+/**
+ * @file
+ * Allows administrators to create blockd of node add/edit forms.
+ *
+ * Administrators can expose any node creation/edit forms in block
+ * and create however many instances of the same as possible. saving
+ * of each and every one will be through ajax. Additionally administrators
+ * may choose to show/hide particular fields on a per block basis.
+ */
+
+/**
+ * Implements hook_permission().
+ */
+function afb_permission() {
+  return array(
+    'administer advanced form blocks' => array(
+      'title' => t('Administer advanced form blocks'),
+    ),
+  );
+}
+
+/**
+ * Implements hook_menu().
+ */
+function afb_menu() {
+  $items = array();
+
+  $items['admin/settings/advanced-form-blocks'] = array(
+    'title' => 'Advanced Form Block Settings',
+    'description' => 'Create Node Forms',
+    'page callback' => 'afb_admin_page',
+    'access arguments' => array('administer advanced form blocks'),
+    'type' => MENU_NORMAL_ITEM,
+  );
+
+  $items['autocomplete/advanced-form-block'] = array(
+    'page callback' => 'afb_autocomplete',
+    'type' => MENU_CALLBACK,
+    'access arguments' => array('administer advanced form blocks'),
+  );
+
+  return $items;
+}
+
+/**
+ * Displays the form listing existing created blocks in a tableselect fomat.
+ */
+function afb_existing_blocks_display_form($form, $form_state) {
+  $form = array();
+
+  $result = db_select('afb_blocks_data', 'n')
+                  ->fields('n', array('delta',
+                    'title',
+                    'form_type',
+                    'content_type',
+                    'nid'))
+                  ->execute();
+  $count = $result->rowCount();
+  // Save the query to matches.
+  foreach ($result as $row) {
+    $entries[] = array(
+      'delta' => $row->delta,
+      'title' => check_plain($row->title),
+      'form_type' => check_plain($row->form_type),
+      'content_type' => check_plain($row->content_type),
+      'nid' => $row->nid,
+    );
+  }
+
+  $header = array('title' => t('title'),
+            'form_type' => t('form type'),
+            'content_type' => t('content type'),
+            'nid' => t('nid'));
+  $options = array();
+  if (!empty($entries)) {
+    foreach ($entries as $entry) {
+      $options[$entry['delta']] = array(
+        'title' => $entry['title'],
+        'form_type' => $entry['form_type'],
+        'content_type' => $entry['content_type'],
+        'nid' => $entry['nid'],
+      );
+    }
+  }
+
+  $form['table'] = array(
+    '#type' => 'tableselect',
+    '#header' => $header,
+    '#options' => $options,
+    '#empty' => t('No form blocks found'),
+  );
+
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => t('Delete Selected'),
+    '#submit' => array('afb_existing_blocks_display_form_submit'),
+  );
+  return $form;
+}
+
+/**
+ * Displays the form enabling the creation of new blocks.
+ */
+function afb_new_block_create_form($form, $form_state) {
+  $form = array();
+
+  $form['title'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Title of the Block'),
+    '#description' => t('Enter the Desired title'),
+    '#size' => 60,
+    '#required' => TRUE,
+    '#default' => empty($form_state['values']['title']) ? NULL : $form_state['values']['title'],
+  );
+
+  $form['block_type'] = array(
+    '#type' => 'select',
+    '#title' => t('Type of the Block'),
+    '#description' => t('Node Add or Node edit type block'),
+    '#options' => drupal_map_assoc(array(t('Add'), t('Edit'))),
+    '#default' => empty($form_state['values']['block_type']) ? 'Add' : $form_state['values']['block_type'],
+    '#required' => TRUE,
+    '#ajax' => array(
+      'wrapper' => 'input-fields',
+      'callback' => 'afb_create_block_ajax_handler',
+    ),
+  );
+
+  $form['input_fields'] = array(
+    '#type' => 'container',
+    '#prefix' => '<div id="input-fields">',
+    '#suffix' => '</div>',
+  );
+
+  if (isset($form_state['values']['block_type']) && $form_state['values']['block_type'] === 'Add') {
+    $node_type_options = node_type_get_types();
+    foreach ($node_type_options as $key => $val) {
+      $types[] = $key;
+    }
+    $form['input_fields']['content_type'] = array(
+      '#type' => 'select',
+      '#title' => t('Content type'),
+      '#description' => t('Node Add or Node edit Content type'),
+      '#options' => drupal_map_assoc($types),
+      '#default' => empty($form_state['values']['content_type']) ? NULL : $form_state['values']['content_type'],
+      '#required' => TRUE,
+    );
+  }
+
+  if (isset($form_state['values']['block_type']) && $form_state['values']['block_type'] === 'Edit') {
+    $form['input_fields']['nid'] = array(
+      '#type' => 'textfield',
+      '#title' => t('Name of the referanced node'),
+      '#autocomplete_path' => 'autocomplete/advanced-form-block',
+      '#description' => t('Node Add or Node edit type block'),
+      '#default' => empty($form_state['values']['nid']) ? NULL : $form_state['values']['nid'],
+      '#required' => TRUE,
+    );
+  }
+
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => t('Create'),
+    '#submit' => array('afb_new_block_create_form_submit'),
+  );
+
+  return $form;
+}
+
+/**
+ * Ajax handler for the block creation form.
+ */
+function afb_create_block_ajax_handler($form, $form_state) {
+  return $form['input_fields'];
+}
+
+/**
+ * Returns the page containing existing block list with block creation form.
+ */
+function afb_admin_page() {
+  $output = render(drupal_get_form('afb_existing_blocks_display_form'));
+  $output .= render(drupal_get_form('afb_new_block_create_form'));
+
+  return $output;
+}
+
+/**
+ * Submit handler for the existing block list form facilitating its deletion.
+ */
+function afb_existing_blocks_display_form_submit($form, $form_state) {
+  foreach ($form_state['values']['table'] as $key => $val) {
+    if ($val != 0) {
+      afb_block_delete($val);
+      db_delete('afb_blocks_data')
+              ->condition('delta', $val)
+              ->execute();
+    }
+  }
+}
+
+/**
+ * Submit handler for the create block form facilitating its deletion.
+ */
+function afb_new_block_create_form_submit($form, $form_state) {
+  $v = $form_state['values'];
+  $nids = !empty($v['nid']) ? $v['nid'] : 0;
+  $data = serialize(array());
+  if (!empty($v['content_type'])) {
+    $type = $v['content_type'];
+  }
+  else {
+    $node = node_load($nids);
+    $type = $node->type;
+  }
+  $nid = db_insert('afb_blocks_data')
+                  ->fields(array('title',
+                    'content_type',
+                    'form_type',
+                    'nid',
+                    'data'))
+                  ->values(array(
+                    'title' => $v['title'],
+                    'content_type' => $type,
+                    'form_type' => $v['block_type'],
+                    'nid' => $nids,
+                    'data' => $data,
+                  ))
+                  ->execute();
+  if (isset($nid)) {
+    drupal_set_message(t('The Block has been succesfully created'));
+  }
+  else {
+    drupal_set_message(t('Error creating the block'));
+  }
+}
+
+/**
+ * Autocomplete function displaying each node names.
+ */
+function afb_autocomplete($string) {
+  $matches = array();
+  $result = db_select('node', 'n')
+                  ->fields('n', array('title', 'nid'))
+                  ->condition('title', '%' . db_like($string) . '%', 'LIKE')
+                  ->addTag('node_access')
+                  ->execute();
+
+  // Save the query to matches.
+  foreach ($result as $row) {
+    $matches[$row->nid] = check_plain($row->title);
+  }
+
+  // Return the result to the form in json.
+  drupal_json_output($matches);
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function afb_form_alter(&$form, &$form_state, $form_id) {
+  if (isset($form['#node']->ajax_form)) {
+    if (isset($form['#node']->nid)) {
+      $type = $form['#node']->nid;
+    }
+    else {
+      $type = $form['#node']->type;
+    }
+    $delta = $form['#node']->delta;
+
+    $block_detail_array = afb_get_node_form_block_data($delta);
+
+    $type = $block_detail_array->content_type;
+    $fields_data = field_info_instances("node", $type);
+    $block_detail_data = unserialize($block_detail_array->data);
+
+    $fields = empty($block_detail_data['node_fields']) ? array() : $block_detail_data['node_fields'];
+    $tabs = empty($block_detail_data['vertical_tabs']) ? array() : $block_detail_data['vertical_tabs'];
+
+    if (isset($tabs['Publishing options']) && $tabs['Publishing options'] === 0) {
+      $form['options']['status'] = array(
+        '#type' => 'value',
+        '#value' => 1,
+      );
+      $form['options']['promote'] = array(
+        '#type' => 'value',
+        '#value' => 1,
+      );
+      $form['options']['sticky'] = array(
+        '#type' => 'value',
+        '#value' => 0,
+      );
+      $form['options']['#type'] = 'container';
+      $form['options']['#title'] = '';
+    }
+
+    foreach ($fields as $key => $value) {
+      if ($value === 0 && $fields_data[$key]['required'] != TRUE) {
+        $form[$key]['#access'] = FALSE;
+      }
+    }
+    $form['#after_build'][] = 'afb_after_build';
+    $rand = rand();
+    $form['actions']['submit'] = FALSE;
+    $form['actions']['preview'] = FALSE;
+    $form['actions']['delete'] = FALSE;
+    $form['changed']['#default_value'] = time() + 300;
+    $form['#id'] = !empty($form['#node']->form_id) ? $form['#node']->form_id : $form['#id'];
+    $form['ajax-submit'] = array(
+      '#type' => 'submit',
+      '#value' => t('Save Node'),
+      '#weight' => 50,
+      '#id' => 'ajax-submit-random-' . $rand,
+      '#ajax' => array(
+        'wrapper' => !empty($form['#node']->form_id) ? $form['#node']->form_id : $form['#id'],
+        'callback' => 'afb_ajax_handler',
+        'effect' => 'fade',
+      ),
+      '#submit' =>
+      array(
+        1 => 'node_form_submit',
+      ),
+    );
+  }
+  if (strpos($form_id, '_node_form') !== FALSE) {
+    /* Make sure we have necessary includes.
+     * see the issue http://drupal.org/node/1167076 and
+     * http://drupal.org/node/1167076#comment-6257338.
+     * The solution based on Sun's advice.
+     */
+    if (empty($form_state['build_info']['files']) || !in_array('modules/node/node.pages.inc', $form_state['build_info']['files'])) {
+      form_load_include($form_state, 'inc', 'node', 'node.pages');
+    }
+  }
+}
+
+/**
+ * Ajax Handler that returns the forms in each individual blocks.
+ */
+function afb_ajax_handler($form, $form_state) {
+  if (isset($form['#node']->nid)) {
+    $id = $form['#id'];
+    module_load_include('inc', 'node', 'node.pages');
+    $node = node_load($form['#node']->nid);
+    $form_state['build_info']['args'][0]->form_id = $id;
+    $form = drupal_rebuild_form($node->type . '_node_form', $form_state, $form);
+    $form['#id'] = $id;
+    return $form;
+  }
+  else {
+    $node = $form_state['node'];
+    if (!empty($node->nid)) {
+      $id = $form['#id'];
+      $new_node = (object) array(
+        'uid' => $node->uid,
+        'name' => $node->name,
+        'type' => $node->type,
+        'language' => $node->language,
+        'ajax_form' => 1,
+        'delta' => $node->delta,
+        'form_id' => $id,
+      );
+      $new_form_state = array();
+      $new_form_state['build_info']['args'] = array($new_node);
+      $new_form_state['values'] = array();
+      $new_form_state['method'] = $form_state['method'];
+      form_load_include($new_form_state, 'inc', 'node', 'node.pages');
+
+      $form = drupal_rebuild_form($node->type . '_node_form', $new_form_state);
+      $form['#id'] = $id;
+      return $form;
+    }
+    else {
+      return $form;
+    }
+  }
+}
+
+/**
+ * Alters the image widget to induce custom process function.
+ */
+function afb_field_widget_form_alter(&$element, &$form_state, $context) {
+  foreach (element_children($element) as $key) {
+    if (isset($element[$key]['#type'])) {
+      if ($element[$key]['#type'] == 'managed_file') {
+        $element[$key]['#process'][] = 'afb_advanced_process';
+      }
+    }
+  }
+}
+
+/**
+ * Custom process function overriding the default image widget one.
+ */
+function afb_advanced_process($element, &$form_state, $form) {
+  $fid = isset($element['#value']['fid']) ? $element['#value']['fid'] : 0;
+  $rand = rand();
+  // Set some default element properties.
+  $element['#progress_indicator'] = empty($element['#progress_indicator']) ? 'none' : $element['#progress_indicator'];
+  $element['#file'] = $fid ? file_load($fid) : FALSE;
+  $element['#tree'] = TRUE;
+
+  $ajax_settings = array(
+    'path' => 'file/ajax/' . implode('/', $element['#array_parents']) . '/' . $form['form_build_id']['#value'],
+    'wrapper' => $element['#id'] . '-ajax-wrapper-' . $rand,
+    'effect' => 'fade',
+    'progress' => array(
+      'type' => $element['#progress_indicator'],
+      'message' => $element['#progress_message'],
+    ),
+  );
+
+  // Set up the buttons first since we need to check if they were clicked.
+  $element['upload_button'] = array(
+    '#name' => implode('_', $element['#parents']) . '_upload_button',
+    '#type' => 'submit',
+    '#value' => t('Upload'),
+    '#validate' => array(),
+    '#submit' => array('file_managed_file_submit'),
+    '#limit_validation_errors' => array($element['#parents']),
+    '#ajax' => $ajax_settings,
+    '#weight' => -5,
+    '#id' => drupal_html_id('test-upload-123-' . rand()),
+  );
+
+  $ajax_settings['progress']['type'] ? $ajax_settings['progress']['type'] == 'bar' : 'throbber';
+  $ajax_settings['progress']['message'] = NULL;
+  $ajax_settings['effect'] = 'none';
+  $element['remove_button'] = array(
+    '#name' => implode('_', $element['#parents']) . '_remove_button',
+    '#type' => 'submit',
+    '#value' => t('Remove'),
+    '#validate' => array(),
+    '#submit' => array('file_managed_file_submit'),
+    '#limit_validation_errors' => array($element['#parents']),
+    '#ajax' => $ajax_settings,
+    '#weight' => -5,
+    '#id' => drupal_html_id('test-remove-' . rand()),
+  );
+
+  $element['fid'] = array(
+    '#type' => 'hidden',
+    '#value' => $fid,
+  );
+
+  // Add progress bar support to the upload if possible.
+  if ($element['#progress_indicator'] == 'bar' && $implementation = file_progress_implementation()) {
+    $upload_progress_key = mt_rand();
+
+    if ($implementation == 'uploadprogress') {
+      $element['UPLOAD_IDENTIFIER'] = array(
+        '#type' => 'hidden',
+        '#value' => $upload_progress_key,
+        '#attributes' => array('class' => array('file-progress')),
+      );
+    }
+    elseif ($implementation == 'apc') {
+      $element['APC_UPLOAD_PROGRESS'] = array(
+        '#type' => 'hidden',
+        '#value' => $upload_progress_key,
+        '#attributes' => array('class' => array('file-progress')),
+      );
+    }
+
+    // Add the upload progress callback.
+    $element['upload_button']['#ajax']['progress']['path'] = 'file/progress/' . $upload_progress_key;
+  }
+
+  // The file upload field itself.
+  $element['upload'] = array(
+    '#name' => 'files[' . implode('_', $element['#parents']) . ']',
+    '#type' => 'file',
+    '#title' => t('Choose a file'),
+    '#title_display' => 'invisible',
+    '#size' => 22,
+    '#theme_wrappers' => array(),
+    '#weight' => -10,
+    '#id' => drupal_html_id('test-upload-' . rand()),
+  );
+
+  if ($fid && $element['#file']) {
+    $element['filename'] = array(
+      '#type' => 'markup',
+      '#markup' => theme('file_link', array('file' => $element['#file'])) . ' ',
+      '#weight' => -10,
+    );
+  }
+
+  // Add the extension list to the page as JavaScript settings.
+  if (isset($element['#upload_validators']['file_validate_extensions'][0])) {
+    $extension_list = implode(',', array_filter(explode(' ', $element['#upload_validators']['file_validate_extensions'][0])));
+    $element['upload']['#attached']['js'] = array(
+      array(
+        'type' => 'setting',
+        'data' => array('file' => array('elements' => array('#' . $element['#id'] . '-upload' => $extension_list))),
+      ),
+    );
+  }
+
+  // Prefix and suffix used for Ajax replacement.
+  $element['#prefix'] = '<div id="' . $element['#id'] . '-ajax-wrapper-' . $rand . '">';
+  $element['#suffix'] = '</div>';
+  return $element;
+}
+
+/**
+ * Implements hook_after_build().
+ */
+function afb_after_build($form, &$form_state) {
+  $delta = $form['#node']->delta;
+  $block_detail_array = afb_get_node_form_block_data($delta);
+  $block_detail_data = unserialize($block_detail_array->data);
+  $tabs = empty($block_detail_data['vertical_tabs']) ? array() : $block_detail_data['vertical_tabs'];
+  foreach ($tabs as $key => $value) {
+    if ($value === 0) {
+      switch ($key) {
+        case 'Revision information';
+          $form['revision_information']['#access'] = FALSE;
+          break;
+
+        case 'Authoring information';
+          $form['author']['#access'] = FALSE;
+          break;
+
+        case 'Comment settings';
+          $form['comment_settings']['#access'] = FALSE;
+          break;
+
+        case 'Menu settings';
+          $form['menu']['#access'] = FALSE;
+          break;
+
+        case 'URL path settings';
+          $form['path']['#access'] = FALSE;
+          break;
+
+        case 'Advanced Form block';
+          $form['advanced_afb_edit']['#access'] = FALSE;
+          break;
+
+        default:
+          break;
+      }
+    }
+  }
+
+  return $form;
+}
+
+/**
+ * Deletes a block instance from the block tables.
+ */
+function afb_block_delete($delta) {
+  db_update('block')->fields(array('region' => '-1'))->condition('delta', $delta)->execute();
+  db_delete('block_custom')
+          ->condition('bid', $delta)
+          ->execute();
+  db_delete('block')
+          ->condition('module', 'afb')
+          ->condition('delta', $delta)
+          ->execute();
+  db_delete('block_role')
+          ->condition('module', 'afb')
+          ->condition('delta', $delta)
+          ->execute();
+  $data = afb_get_node_form_block_data($delta);
+  drupal_set_message(t('The %name block has been removed.', array('%name' => $data->title)));
+  cache_clear_all();
+  return;
+}
+
+/**
+ * Implements hook_block_info().
+ */
+function afb_block_info() {
+  $blocks = array();
+  $result_add = db_select('afb_blocks_data', 'n')
+                  ->fields('n', array('delta', 'title', 'content_type'))
+                  ->condition('n.form_type', 'Add', '=')
+                  ->execute();
+  foreach ($result_add as $row) {
+    $blocks[$row->delta] = array(
+      'info' => t('@name (Add Form Block) Type: @type', array('@name' => $row->title, '@type' => $row->content_type)),
+      'cache' => DRUPAL_NO_CACHE,
+    );
+  }
+
+  $result_edit = db_select('afb_blocks_data', 'n')
+                  ->fields('n', array('delta', 'title', 'content_type', 'nid'))
+                  ->condition('n.form_type', 'Edit', '=')
+                  ->execute();
+  foreach ($result_edit as $row) {
+    $blocks[$row->delta] = array(
+      'info' => t('@name (Edit Form Block) Nid: @nid', array('@name' => $row->title, '@nid' => $row->nid)),
+      'cache' => DRUPAL_NO_CACHE,
+    );
+  }
+
+  return $blocks;
+}
+
+/**
+ * Returns the data object retrieved from the advanced form block tables.
+ */
+function afb_get_node_form_block_data($delta) {
+  $result = db_select('afb_blocks_data', 'n')
+                  ->fields('n', array('delta',
+                    'title',
+                    'content_type',
+                    'form_type',
+                    'nid',
+                    'data'))
+                  ->condition('n.delta', $delta, '=')
+                  ->execute();
+  foreach ($result as $row) {
+    $result_obj = $row;
+  }
+
+  return $result_obj;
+}
+
+/**
+ * Implements hook_block_view().
+ */
+function afb_block_view($delta = '') {
+  $block_info = afb_get_node_form_block_data($delta);
+  if ($block_info->form_type === 'Add') {
+    return afb_get_add_block($delta);
+  }
+  elseif ($block_info->form_type === 'Edit') {
+    return afb_get_edit_block($delta);
+  }
+}
+
+/**
+ * Generate a block containing a node edit form.
+ */
+function afb_get_edit_block($delta) {
+  $block_info = afb_get_node_form_block_data($delta);
+  $nid = $block_info->nid;
+  $node = node_load($nid);
+  if (node_access('update', $node->type)) {
+    global $user;
+    $block = array();
+    module_load_include('inc', 'node', 'node.pages');
+    $node->ajax_form = 1;
+    $node->delta = $delta;
+    $form = drupal_get_form($node->type . '_node_form', $node);
+    $block['subject'] = t('@type form nid @nid', array('@type' => $node->type, '@nid' => $node->title));
+    $block['content']['form'] = $form;
+    return $block;
+  }
+}
+
+/**
+ * Generate a block containing a node entry form.
+ */
+function afb_get_add_block($delta) {
+  $block_info = afb_get_node_form_block_data($delta);
+  $type = $block_info->content_type;
+  if (node_access('create', $type)) {
+    global $user;
+    $block = array();
+    module_load_include('inc', 'node', 'node.pages');
+    $node = (object) array(
+      'uid' => $user->uid,
+      'name' => (isset($user->name) ? $user->name : ''),
+      'type' => $type,
+      'language' => LANGUAGE_NONE,
+      'ajax_form' => '1');
+    $node->delta = $delta;
+    $form = drupal_get_form($type . '_node_form', $node);
+    $block['subject'] = t('@type form', array('@type' => $type));
+    $block['content']['form'] = $form;
+    return $block;
+  }
+}
+
+/**
+ * Implements hook_block_configure().
+ */
+function afb_block_configure($delta = '') {
+  $block_info = afb_get_node_form_block_data($delta);
+  if ($block_info->form_type === 'Add') {
+    $form = afb_configure_node_add_block($delta);
+    return $form;
+  }
+  elseif ($block_info->form_type === 'Edit') {
+    $form = afb_configure_node_edit_block($delta);
+    return $form;
+  }
+}
+
+/**
+ * Presents the node add type blocks settings form.
+ */
+function afb_configure_node_add_block($delta) {
+  $block_info = afb_get_node_form_block_data($delta);
+  $type = $block_info->content_type;
+  $fields = field_info_instances("node", $type);
+  foreach ($fields as $key => $value) {
+    if ($value['required'] != TRUE) {
+      $field_options[] = $key;
+    }
+  }
+  module_load_include('inc', 'node', 'node.pages');
+  $vertical_tab_options = array(t('Revision information'),
+    t('Authoring information'),
+    t('Publishing options'),
+    t('Comment settings'),
+    t('Menu settings'),
+    t('URL path settings'),
+  );
+
+  $block_detail_array = afb_get_node_form_block_data($delta);
+  $block_detail_data = unserialize($block_detail_array->data);
+
+  $fields = empty($block_detail_data['node_fields']) ? $field_options : $block_detail_data['node_fields'];
+  $tabs = empty($block_detail_data['vertical_tabs']) ? $vertical_tab_options : $block_detail_data['vertical_tabs'];
+
+  $form['node_fields'] = array(
+    '#type' => 'checkboxes',
+    '#title' => t('Select the fields you want to keep in the block'),
+    '#options' => drupal_map_assoc($field_options),
+    '#default_value' => $fields,
+  );
+
+  $form['vertical_tabs'] = array(
+    '#type' => 'checkboxes',
+    '#title' => t('Select the vertical tab components you want to keep in the block'),
+    '#options' => drupal_map_assoc($vertical_tab_options),
+    '#default_value' => $tabs,
+  );
+  return $form;
+}
+
+/**
+ * Presents the node edit type blocks settings form.
+ */
+function afb_configure_node_edit_block($delta) {
+  $block_info = afb_get_node_form_block_data($delta);
+  $nid = $block_info->nid;
+  $node = node_load($nid);
+  $node->ajax_form = 1;
+  $fields = field_info_instances("node", $node->type);
+  foreach ($fields as $key => $value) {
+    if ($value['required'] != TRUE) {
+      $field_options[] = t($key);
+    }
+  }
+  module_load_include('inc', 'node', 'node.pages');
+  $vertical_tab_options = array(t('Revision information'),
+    t('Authoring information'),
+    t('Publishing options'),
+    t('Comment settings'),
+    t('Menu settings'),
+    t('URL path settings'),
+  );
+
+  $block_detail_array = afb_get_node_form_block_data($delta);
+  $block_detail_data = unserialize($block_detail_array->data);
+
+  $fields = empty($block_detail_data['node_fields']) ? $field_options : $block_detail_data['node_fields'];
+  $tabs = empty($block_detail_data['vertical_tabs']) ? $vertical_tab_options : $block_detail_data['vertical_tabs'];
+
+  $vertical_tab_default = variable_get('vertical_tabs_selection_' . $node->nid, '');
+  $form['node_fields'] = array(
+    '#type' => 'checkboxes',
+    '#title' => t('Select the fields you want to keep in the block'),
+    '#options' => drupal_map_assoc($field_options),
+    '#default_value' => $fields,
+  );
+
+  $form['vertical_tabs'] = array(
+    '#type' => 'checkboxes',
+    '#title' => t('Select the vertical tab components you want to keep in the block'),
+    '#options' => drupal_map_assoc($vertical_tab_options),
+    '#default_value' => $tabs,
+  );
+  return $form;
+}
+
+/**
+ * Implements hook_block_save().
+ */
+function afb_block_save($delta = '', $edit = array()) {
+  $data = serialize(array(
+                         'node_fields' => $edit['node_fields'],
+                         'vertical_tabs' => $edit['vertical_tabs']));
+  $num_updated = db_update('afb_blocks_data')
+                  ->fields(array(
+                    'data' => $data,
+                  ))
+                  ->condition('delta', $delta, '=')
+                  ->execute();
+}
+
+/**
+ * Implements hook_node_delete().
+ */
+function afb_node_delete($node) {
+  $result = db_select('afb_blocks_data', 'n')
+                  ->fields('n', array('delta', 'nid'))
+                  ->condition('n.nid', $node->nid, '=')
+                  ->execute();
+  $count = $result->rowCount();
+  if ($count > 0) {
+    foreach ($result as $row) {
+      $deltas[] = $row->delta;
+    }
+    foreach ($deltas as $delta) {
+      afb_block_delete($delta);
+    }
+    $nid = array($node->nid);
+    db_delete('afb_blocks_data')
+            ->condition('nid', $nid)
+            ->execute();
+  }
+}

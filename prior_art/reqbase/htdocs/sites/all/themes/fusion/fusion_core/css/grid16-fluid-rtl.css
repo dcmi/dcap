@@ -1,0 +1,36 @@
+
+/* Layout - 16 column grid, fluid width, 20px gutters - RTL
+-------------------------------------------------------------- */
+/* block indents */
+.grid16-indent-1 {margin-right: 6.25%;}
+.grid16-indent-2 {margin-right: 12.5%;}
+.grid16-indent-3 {margin-right: 18.75%;}
+.grid16-indent-4 {margin-right: 25%;}
+.grid16-indent-5 {margin-right: 31.25%;}
+.grid16-indent-6 {margin-right: 37.5%;}
+.grid16-indent-7 {margin-right: 43.75%;}
+.grid16-indent-8 {margin-right: 50%;}
+.grid16-indent-9 {margin-right: 56.25%;}
+.grid16-indent-10 {margin-right: 62.5%;}
+.grid16-indent-11 {margin-right: 68.75%;}
+.grid16-indent-12 {margin-right: 75%;}
+.grid16-indent-13 {margin-right: 81.25%;}
+.grid16-indent-14 {margin-right: 87.5%;}
+.grid16-indent-15 {margin-right: 93.75%;}
+
+/* block indents, minus 0.1% to prevent float under in IE6 & IE7 */
+.ie6 .grid16-indent-1, .ie7 .grid16-indent-1 {margin-right: 6.15%;}
+.ie6 .grid16-indent-2, .ie7 .grid16-indent-2 {margin-right: 12.4%;}
+.ie6 .grid16-indent-3, .ie7 .grid16-indent-3 {margin-right: 18.65%;}
+.ie6 .grid16-indent-4, .ie7 .grid16-indent-4 {margin-right: 24.9%;}
+.ie6 .grid16-indent-5, .ie7 .grid16-indent-5 {margin-right: 31.15%;}
+.ie6 .grid16-indent-6, .ie7 .grid16-indent-6 {margin-right: 37.4%;}
+.ie6 .grid16-indent-7, .ie7 .grid16-indent-7 {margin-right: 43.65%;}
+.ie6 .grid16-indent-8, .ie7 .grid16-indent-8 {margin-right: 49.9%;}
+.ie6 .grid16-indent-9, .ie7 .grid16-indent-9 {margin-right: 56.15%;}
+.ie6 .grid16-indent-10, .ie7 .grid16-indent-10 {margin-right: 62.4%;}
+.ie6 .grid16-indent-11, .ie7 .grid16-indent-11 {margin-right: 68.65%;}
+.ie6 .grid16-indent-12, .ie7 .grid16-indent-12 {margin-right: 74.9%;}
+.ie6 .grid16-indent-13, .ie7 .grid16-indent-13 {margin-right: 81.15%;}
+.ie6 .grid16-indent-14, .ie7 .grid16-indent-14 {margin-right: 87.4%;}
+.ie6 .grid16-indent-15, .ie7 .grid16-indent-15 {margin-right: 93.65%;}

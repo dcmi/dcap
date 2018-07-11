@@ -1,0 +1,262 @@
+<?php
+
+/**
+ * @file
+ * Install file for static module.
+ */
+
+/**
+ * Implements hook_schema().
+ */
+function static_schema() {
+  $schema['static'] = array(
+    'description' => 'The base table for static resources.',
+    'fields' => array(
+      'id' => array(
+        'description' => 'Primary key with type; a unique id for the item.',
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'path' => array(
+        'description' => 'The URL to the item relative to the Drupal path.',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => '',
+      ),
+      'alias' => array(
+        'description' => 'The alias of the URL.',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => '',
+      ),
+      'file' => array(
+        'description' => 'The file the page was exported to.',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => '',
+      ),
+      'status' => array(
+        'description' => 'An integer that represents result of the fetch query.',
+        'type' => 'int',
+        'size' => 'normal',
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+      'status_message' => array(
+        'description' => 'The message from the fetch query.',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => '',
+      ),
+      'frequency' => array(
+        'description' => 'Number of seconds between when this should be regenerated on a schedule (cron).',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+      'pager' => array(
+        'description' => 'If this url allows paging, set the querystring for paging here.',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => '',
+      ),
+      'pager_total' => array(
+        'description' => 'The total number of pages for this page.',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => FALSE,
+      ),
+      'updated' => array(
+        'description' => 'The UNIX timestamp of last generate of the file.',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+      'duration' => array(
+        'description' => 'The duration of the last generation in microseconds.',
+        'type' => 'float',
+        'not null' => FALSE,
+      ),
+      'queued' => array(
+        'description' => 'The UNIX timestamp of when added to queue.',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+      'priority' => array(
+        'description' => 'The priority of the request. Higher numbers go first.',
+        'type' => 'int',
+        'unsigned' => FALSE,
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+    ),
+    'primary key' => array('id', 'path'),
+    'indexes' => array(
+      'path' => array('path'),
+    ),
+  );
+
+  return $schema;
+}
+
+/**
+ * Implements hook_requirements().
+ */
+function static_requirements($phase) {
+  global $base_url;
+  $requirements = array();
+  $t = get_t();
+  // Check the server's ability to use static.
+  if ($phase == 'runtime') {
+    // Check cache directories.
+    $cache_directories = array(
+      static_get_normal_cache_dir(),
+    );
+    foreach ($cache_directories as $cache_directory) {
+      static_mkdir($cache_directory);
+      if (!is_dir($cache_directory)) {
+        $requirements['static_default'] = array(
+          'title'       => $t('Static'),
+          'description' => $t('!cache_dir: does not exist.', array('!cache_dir' => $cache_directory)),
+          'severity'    => REQUIREMENT_ERROR,
+          'value'       => $t('Cache path'),
+        );
+      }
+      if (is_dir($cache_directory) && (!is_writable($cache_directory))) {
+        $requirements['static_permissions'] = array(
+          'title'       => $t('Static'),
+          'description' => $t('Directory %dir credentials - Permissions: %fp. Owner %fo. Group %fg.<br /> Your credentials - Group ID: %gid. User ID: %uid. Current script owner: %user.', array('%dir' => getcwd() . '/' . $cache_directory, '%gid' => getmygid(), '%uid' => getmyuid(), '%user' => get_current_user(), '%fp' => substr(sprintf('%o', fileperms($cache_directory)), -4), '%fo' => fileowner($cache_directory), '%fg' => filegroup($cache_directory) )),
+          'severity'    => REQUIREMENT_ERROR,
+          'value'       => $t('Can not write to file-system'),
+        );
+      }
+      if (variable_get('static_install_htaccess', TRUE)) {
+        if (is_dir($cache_directory) && is_writable($cache_directory) && !file_exists($cache_directory . '/.htaccess')) {
+          if (!static_create_htaccess($cache_directory)) {
+            $requirements['static_htaccess'] = array(
+              'title'       => $t('Static'),
+              'description' => $t('Could not create .htaccess file.<br /> Attempted to create %file but did not have permission.', array('%file' => $cache_directory . '/.htaccess')),
+              'severity'    => REQUIREMENT_ERROR,
+              'value'       => $t('Can not write to file-system'),
+            );
+          }
+        }
+      }
+    }
+    if (empty($requirements)) {
+      $requirements['static'] = array(
+        'title'       => $t('Static'),
+        'severity'    => 0,
+        'value'       => $t('Static installed correctly, should be working if properly <a href="@settings">configured</a>.', array('@settings' => url('admin/config/system/static'))),
+      );
+    }
+  }
+  return $requirements;
+}
+
+/**
+ * Create the htaccess file in the cache directory.
+ */
+function static_create_htaccess($cache_directory) {
+  $oldumask = umask(0);
+  $result = copy(drupal_get_path('module', 'static') . '/static.htaccess', $cache_directory . '/.htaccess');
+  umask($oldumask);
+  return $result;
+}
+
+/**
+ * Change the status fields to match responses.
+ */
+function static_update_7000() {
+  db_change_field('static', 'status', 'status', array(
+    'description' => 'An integer that represents result of the fetch query.',
+    'type' => 'int',
+    'size' => 'normal',
+    'not null' => TRUE,
+    'default' => 0,
+  ));
+  db_add_field('static', 'status_message', array(
+    'description' => 'The message from the fetch query.',
+    'type' => 'varchar',
+    'length' => 255,
+    'not null' => TRUE,
+    'default' => '',
+  ));
+  db_update('static')
+    ->fields(array('status' => 0))
+    ->execute();
+}
+
+/**
+ * Add queued field.
+ */
+function static_update_7001() {
+  db_add_field('static', 'queued', array(
+    'description' => 'The UNIX timestamp of when added to queue.',
+    'type' => 'int',
+    'unsigned' => TRUE,
+    'not null' => TRUE,
+    'default' => 0,
+  ));
+  db_update('static')
+    ->fields(array('queued' => 0))
+    ->execute();
+}
+
+/**
+ * Replace dynamic field with frequency.
+ */
+function static_update_7002() {
+  db_add_field('static', 'frequency', array(
+    'description' => 'Number of seconds between when this should be regenerated on a schedule (cron).',
+    'type' => 'int',
+    'not null' => TRUE,
+    'default' => 0,
+  ));
+  db_update('static')
+    ->fields(array('frequency' => 0))
+    ->execute();
+  db_update('static')
+    ->fields(array('frequency' => variable_get('static_dynamic_cache_time', 300)))
+    ->condition('dynamic', 1)
+    ->execute();
+  db_drop_field('static', 'dynamic');
+
+  variable_del('static_dynamic_cache_time');
+}
+
+/**
+ * Add priority field.
+ */
+function static_update_7003() {
+  db_add_field('static', 'priority', array(
+    'description' => 'The priority of the request. Higher numbers go first.',
+    'type' => 'int',
+    'unsigned' => FALSE,
+    'not null' => TRUE,
+    'default' => 0,
+  ));
+  db_update('static')
+    ->fields(array('priority' => 0))
+    ->execute();
+}
+
+/**
+ * Add duration field.
+ */
+function static_update_7004() {
+  db_add_field('static', 'duration', array(
+    'description' => 'The duration of the last generation in microseconds.',
+    'type' => 'float',
+    'not null' => FALSE,
+  ));
+}

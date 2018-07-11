@@ -1,0 +1,88 @@
+<?php
+
+/**
+ * @file
+ * Add validation rules to field instance.
+ */
+
+/**
+ * Implements hook_field_attach_validate().
+ */
+function field_validation_field_attach_validate($entity_type, $entity, &$errors) {
+  list($id, $vid, $bundle) = entity_extract_ids($entity_type, $entity);
+  
+  //Using ctools to get validation rules of this bundle.
+  ctools_include('export');
+  $rules = ctools_export_load_object('field_validation_rule', 'conditions', array('entity_type' => $entity_type, 'bundle' => $bundle));
+  if ($rules) {
+    foreach ($rules as $rule) {
+      //Disabled by Ctools.
+      if (!empty($rule->disabled)) {
+        continue;
+      }
+      ctools_include('plugins');
+      $plugin = ctools_get_plugins('field_validation', 'validator', $rule->validator);
+      $class = ctools_plugin_get_class($plugin, 'handler');
+      if (empty($class)) {
+        continue;
+      }
+      if (!is_subclass_of($rule->validator, 'field_validation_validator')) {
+        drupal_set_message(t("Plugin '@validator' should extends 'field_validation_validator'.", array('@validator' => $rule->validator)));
+        continue;
+      }
+      $field_name = $rule->field_name;
+      $field = field_info_field($field_name);
+      $instance = field_info_instance($entity_type, $field_name, $bundle);
+      $languages = field_available_languages($entity_type, $field);
+      foreach ($languages as $langcode) {
+        $items = isset($entity->{$field_name}[$langcode]) ? $entity->{$field_name}[$langcode] : array();
+        foreach ($items as $delta => $item) {
+          $value = isset($item[$rule->col]) ? $item[$rule->col] : '';
+          $validator = new $class($entity_type, $entity, $field, $instance, $langcode, $items, $delta, $item, $value, $rule, $errors);
+          if ($validator->bypass_validation()) {
+             break;
+          }
+          if ($validator->pass_condition() == FALSE) {
+             break;
+          }
+          $break = $validator->validate();
+          if (!empty($break)) {
+            break;
+          }
+        }
+      }
+    }
+  }
+}
+
+/**
+ * Implements hook_ctools_plugin_type().
+ */
+function field_validation_ctools_plugin_type() {
+  return array(
+    'validator' => array(
+      'use hooks' => FALSE,
+      'cache' => TRUE,
+    ),
+  );
+}
+
+/**
+ * Implementation of hook_ctools_plugin_directory().
+ */
+function field_validation_ctools_plugin_directory($module, $plugin) {
+  if ($module == 'field_validation' && $plugin == 'validator') {
+    return 'plugins/' . $plugin;
+  }
+}
+
+/**
+ * Implementation of hook_ctools_plugin_api().
+ *
+ * Tell Ctools that we support the default_field_validation_rules API.
+ */
+function field_validation_ctools_plugin_api($owner, $api) {
+  if ($owner == 'field_validation' && $api == 'default_field_validation_rules') {
+    return array('version' => 2);
+  }
+}

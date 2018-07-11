@@ -1,0 +1,12 @@
+#static-generator {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  background: rgba(0,0,0,0.6);
+  color: white;
+  padding: 10px;
+}
+
+#static-generator a {
+  color: white;
+}

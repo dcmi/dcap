@@ -1,0 +1,95 @@
+<?php
+
+/**
+ * @file
+ * property_validation installation file
+ */
+
+/**
+ * Implements hook_schema().
+ */
+function property_validation_schema() {
+  $schema['property_validation_rule'] = array(
+    'description' => 'Stores rule definitions',
+    'export' => array(
+      'key' => 'name',
+      'key name' => 'Name',
+      'primary key' => 'ruleid',
+      'identifier' => 'rule', 
+      'default hook' => 'default_property_validation_rule',
+      'api' => array(
+        'owner' => 'property_validation',
+        'api' => 'default_property_validation_rules',
+        'minimum_version' => 2,
+        'current_version' => 2,
+      ),
+    ),
+    'fields' => array(
+      'ruleid' => array(
+        'type' => 'serial',
+        'description' => 'Unique identifier of the validation rule',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'no export' => TRUE,
+      ),
+      'rulename' => array(
+        'type' => 'varchar',
+        'description' => 'Name of the validation rule',
+        'not null' => TRUE,
+        'default' => '',
+        'length' => 255,
+      ),
+      'name' => array(
+        'type' => 'varchar',
+        'description' => 'Machine name of the validation rule',
+        'not null' => TRUE,
+        'default' => '',
+        'length' => 32,
+      ),
+      'property_name' => array(
+        'type' => 'varchar',
+        'length' => 32,
+        'not null' => TRUE,
+        'default' => ''
+      ),
+      'entity_type' => array(
+        'type' => 'varchar',
+        'length' => 32,
+        'not null' => TRUE,
+        'default' => ''
+      ),
+      'bundle' => array(
+        'type' => 'varchar',
+        'length' => 128,
+        'not null' => TRUE,
+        'default' => ''
+      ),
+      'validator' => array(
+        'type' => 'varchar',
+        'description' => 'The validator key',
+        'not null' => TRUE,
+        'default' => '',
+        'length' => 255,
+      ),
+      'settings' => array(
+        'type' => 'text',
+        'size' => 'big',
+        'description' => 'Serialized settings for the validator to be used',
+        'serialize' => TRUE,
+        'object default' => array(),
+      ),
+      'error_message' => array(
+        'type' => 'varchar',
+        'description' => 'Rule error message',
+        'not null' => FALSE,
+        'length' => 255,
+      ),
+    ),
+    'primary key' => array('ruleid'),
+    'indexes' => array(
+      'field_name_bundle' => array('property_name', 'entity_type', 'bundle'),
+    ),
+  );
+
+  return $schema;
+}

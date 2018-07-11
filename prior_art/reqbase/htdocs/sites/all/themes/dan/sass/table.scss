@@ -1,0 +1,45 @@
+/**
+ * @file
+ * Table
+ */
+
+@import "base";
+
+table {
+  width: 100%;
+}
+
+tbody {
+  border-top: 2px solid $blue;
+}
+
+th {
+  border-bottom: 2px solid $blue;
+}
+
+tr {
+  font-size: .9em;
+
+  &.even,
+  &.odd {
+    border-bottom: 1px solid $blue;
+  }
+
+  &.even {
+    background-color: #f3f3f3;
+  }
+
+  &.odd {
+    background-color: $white;
+  }
+}
+
+td {
+  padding: .4em;
+  vertical-align: top;
+
+  p {
+    margin: 0;
+    padding: 0;
+  }
+}

@@ -1,0 +1,30 @@
+/**
+ * @file Styling and module support for module "Printer, email and PDF versions
+ * (print)".
+ *
+ * Project page on Drupal.org: @link http://drupal.org/project/print Printer, email and PDF versions @endlink
+ */
+article footer ul.links {
+  display: block !important;
+  clear: both;
+  margin: .6em 0;
+}
+
+.links .print-page, .links .print-mail, .links .print-pdf {
+  background-repeat: no-repeat;
+  display: inline-block;
+  font-size: 0.8em;
+  padding-left: 2em;
+  padding-right: .5em;
+  white-space: nowrap;
+  background-position: 0 .4em;
+}
+.links .print-page {
+  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAfxJREFUeNqkU89LG1EQnrc7G7KXZF0oFsJ6FJriqVBLe+jJv0BoTyJYFLTSW40NvfcXFWPUs0YvLVT/BIXeemikvw6xtJBDBaNpgg023X3vdea1kRK1EZzlJczOfPO++XZGaK3hPIZBTwCCHsu2ko7j1Gzb/i9ASlkPf4WeVBKK794CAhHQQsPo2GhifW0d4vH4qWBma1lWYufbDsimNO9EKpWiX4Ct98Uk+bUzsK73X7nmNZtN2PpQBBEEwU1EfIoOXqUWwLY6tEDUqQUIo/CNjOSUSF9O7xPQd9ABYYkzCaeV5gIQhmEV0UbfdV3oJN4x9SVyIR9bt8ZiMXj56kVHYKPRgFuDt1lMwxiVUvxp4PDnob7ef6OL/BoHTzKK1UfujPSRgGW+kLGo5J8CbEPDQ4nCUgGmH2SgfbyYZ252LqFIxCiKTMuMRaWVqSSEMEkceP5sxqj9rzGr1oxwvjmERc9LwsHBD1OAB4UDU5n7xOA4h3wuf5TDrBmLmex0dX5u3q/sVoDXgoOPHz0x/ycxaOV0X+yGyXuTVVH5vjtA8UU6FxbyC33LS4Vy9mEWoH3JqL/ZmZzefL3R9XdiP9OZEL7v8yKZnIm748HK8mqZ/XYG3KIbd/Xe/p7F9FmxT6WPIDzPO7ph+0up0z7UL/WmvSiMjLP9tQS/BRgAG0TxQpGwHLwAAAAASUVORK5CYII=');
+}
+.links .print-mail {
+  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAidJREFUeNqkU0FrE0EUfjO7m002p5BbW7KRmiZuskg9iJdcKtSAolA02kbUX1BLMQ2iBDyrVXpRvOpB7EWrP0DITWgg2UAl7bUhroKnaDbZ3fHN1I0WUZC85bH7Zr9v3rff2yGMMRgnKIwZsp7UT1JC92RZ3pRkaY4A+SeB4eW53gfXdc/5zE9IE5MTjUgkcvrNu9fS/n5H7/V6ENWioGnaHxnRIpAzc/D02ZNPW1tv5yVJqpDZE7MMHwBV1F68fA4bjzbyOzsfgZDDSrhXySNJWKuU69dK123P8wqe7wFVFAXC4TBgkV8sLsHyynJtJj0DKBEQJJI/67oO5cqtemnxqu16bkENq8C51Pd90Y0XCM5fvngFVlZvjjY5ICdg7Xa5vlQs2VgXOJZzOJcGXSilEAqFhJJLC0W4W73zPp1JC3L1XnUb1XWH7vAQmfPkQOJoLJIMU1OT5vzcmW00toZOR8+fvWAnEolTtm0LDOcEd5LNZRn3IAjDMKDRbDCn7xAc7Ss099tgOLgRUkJgHjfZbnuX8O48+v0+kMyxDFNVVSxkswZYrRYftQANB0Mxdy6bT+pnA9Zut8V7x3F+eYAbQbNpMfxJRh1kRYbgm/kY+bplWWT66DTjtfAuFouBwTsjGb1A5MHMfz8jATlYb1ktkkqlWDweB7r++OGXTqfzXZAx0DQB/lsGm3W7XefB+n2bfP5qm8jbxEz/5znaw1wg4x7nHwIMAOjWRFwq6D1JAAAAAElFTkSuQmCC');
+}
+.links .print-pdf {
+  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAclJREFUeNqEU7tKA0EUvfua3U22SESLNEJEiGCjaKLisxEEtVE/QC0t7Xxho40fYK1+g0I0iFYKWtj6qmx9ICYRN/sY5w7OmiEJuXDZ3Ttnzpw5965CKQWMdEd6XNf1PU3TcgooUB1BGIDv+wka0tXbu5ttUW9NtIEiCHp7e94JMVsMYoCiyASu68L8wlz74cHRi+d5u9c3V5uCQBUgg5CWuBMH27ZrkhACqqZBPBYHx3E2BrNDO2JfRMCkg6qqgIrCMJSSSecY3dCRgJMM9A9yEl0QIDAIAqgX6MHS8uIXy5q1yIPcQI6i3HqBHpRLZU4kVFYqFXh6fFIiBXh6IwW4ybItrjI6+c/oplfA+kn+mL9PT81wMlGXCBopQKl44N9VKHZE4GUFQX0FvudL79gtgZfaGFK5dUiWzWXh9DwfERQuzmBkdJivIV7qQqYrQ03TjMBYZ1MH7o97Wf4uz2ItZsdOmJljhmHwqz3cP/x3AYel2mUkQKdZTlimdcm+LWZgN9ak4RIbkskkFEtFeUgYmP8bqtLHwbrOa0iOeMmD9a21j1QqxRerE9uGkjHFECEO8ZIHb5+vk+yxz7ITmsczyxX2NxZ+BRgAgZj8WSrF5ykAAAAASUVORK5CYII=');
+}

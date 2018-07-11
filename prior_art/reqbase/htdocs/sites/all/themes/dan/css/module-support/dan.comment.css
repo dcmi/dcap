@@ -1,0 +1,92 @@
+/**
+ * @file
+ * Styling and module support for core module "Comment (comment)".
+ */
+.comment {
+  margin-bottom: 1.5em;
+  display: table;
+  vertical-align: top;
+}
+.comment h2.title {
+  margin-bottom: 1em;
+}
+.comment div.user-picture img {
+  margin-left: 0;
+  /* LTR */
+}
+.comment .attribution {
+  display: table-cell;
+  padding: 0 2em 0 0;
+  /* LTR */
+  vertical-align: top;
+  overflow: hidden;
+}
+.comment .attribution img {
+  margin: 0;
+}
+.comment .attribution .username {
+  white-space: nowrap;
+}
+.comment .submitted p {
+  margin: 4px 0;
+  font-size: 1.071em;
+  line-height: 1.2;
+}
+.comment .submitted .comment-time {
+  font-size: 0.786em;
+  color: #68696b;
+}
+.comment .submitted .comment-permalink {
+  font-size: 0.786em;
+  text-transform: lowercase;
+}
+.comment .content {
+  font-size: 0.929em;
+  line-height: 1.6;
+}
+.comment .comment-arrow {
+  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAoCAMAAADJ7yrpAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAAZQTFRFAJ7h////pSwg8QAAAAJ0Uk5T/wDltzBKAAAAVklEQVR42pTTMQ4AIAgEweX/n5aeaaScxIhwNrdKlixZsmTJkiVLlixZsmTJkiVLluyjeNwXuSU372d6IB6dh+x1eHFescPg2DhgjqJD63j7I6w+AQYAeAgBfVzq0oYAAAAASUVORK5CYII=');
+  height: 40px;
+  margin-top: 10px;
+  position: absolute;
+  width: 20px;
+  top: 0;
+  left: -20px;
+}
+.comment .comment-text {
+  padding: 1em;
+  background: #009ee1;
+  display: table-cell;
+  vertical-align: top;
+  position: relative;
+  width: 100%;
+  color: white;
+}
+.comment .comment-text h2, .comment .comment-text h3, .comment .comment-text h4, .comment .comment-text a {
+  color: white;
+}
+.comment .comment-text a {
+  border-bottom: 1px dotted white;
+}
+.comment .indented {
+  margin-left: 2.5em;
+  /* LTR */
+}
+.comment ul.links {
+  padding: 0 0 0.25em 0;
+}
+.comment ul.links li {
+  padding: 0 0.5em 0 0;
+  /* LTR */
+}
+
+.comment-unpublished {
+  margin-right: .4em;
+  /* LTR */
+  padding: .4em .2em .4em .4em;
+  /* LTR */
+}
+.comment-unpublished .comment-text .comment-arrow {
+  border-left: 1px solid #fff4f4;
+  border-right: 1px solid #fff4f4;
+}

@@ -1,0 +1,74 @@
+<?php
+
+/**
+ * @file
+ * Add validation rules to field instance.
+ */
+
+/**
+ * Implements hook_field_attach_validate().
+ */
+function property_validation_field_attach_validate($entity_type, $entity, &$errors) {
+  list($id, $vid, $bundle) = entity_extract_ids($entity_type, $entity);
+  
+  //Using ctools to get validation rules of this bundle.
+  ctools_include('export');
+  $rules = ctools_export_load_object('property_validation_rule', 'conditions', array('entity_type' => $entity_type, 'bundle' => $bundle));
+  if ($rules) {
+    foreach ($rules as $rule) {
+      //Disabled by Ctools.
+      if (!empty($rule->disabled)) {
+        continue;
+      }
+      ctools_include('plugins');
+      $plugin = ctools_get_plugins('property_validation', 'validator', $rule->validator);
+      $class = ctools_plugin_get_class($plugin, 'handler');
+      if (empty($class)) {
+        continue;
+      }
+      if (!is_subclass_of($rule->validator, 'property_validation_validator')) {
+        drupal_set_message(t("Plugin '@validator' should extends 'property_validation_validator'.", array('@validator' => $rule->validator)));
+        continue;
+      }
+      $property_name = $rule->property_name;
+      $value = isset($entity->{$property_name}) ? $entity->{$property_name} : '';
+      $validator = new $class($entity_type, $entity, $value, $rule, $errors);
+      $validator->validate();
+    }
+  }
+}
+
+/**
+ * Implements hook_ctools_plugin_type().
+ */
+function property_validation_ctools_plugin_type() {
+  return array(
+    'validator' => array(
+      'use hooks' => FALSE,
+    ),
+  );
+}
+
+/**
+ * Implementation of hook_ctools_plugin_directory().
+ */
+function property_validation_ctools_plugin_directory($module, $plugin) {
+  if ($module == 'property_validation' && $plugin == 'validator') {
+    return 'plugins/' . $plugin;
+  }
+  if ($module == 'ctools' && $plugin == 'export_ui') {
+    return 'plugins/' . $plugin;
+  }
+}
+
+/**
+ * Implementation of hook_ctools_plugin_api().
+ *
+ * Tell Ctools that we support the default_field_validation_rules API.
+ */
+function property_validation_ctools_plugin_api($owner, $api) {
+  if ($owner == 'property_validation' && $api == 'default_property_validation_rules') {
+    return array('version' => 2);
+  }
+}
+

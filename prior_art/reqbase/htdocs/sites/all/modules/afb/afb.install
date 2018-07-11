@@ -1,0 +1,59 @@
+<?php
+/**
+ * @file
+ * Define schema for Advanced Form Block module.
+ */
+
+/**
+ * Implements hook_schema().
+ */
+function afb_schema() {
+  $schema = array();
+
+  $schema['afb_blocks_data'] = array(
+    'description' => 'Table for storing information about advanced form block instances.',
+    'fields' => array(
+      'delta' => array(
+        'description' => 'Unique key for each created block instance.',
+        'type' => 'serial',
+        'not null' => TRUE,
+      ),
+      'title' => array(
+        'description' => 'The title used to display a advanced form block instance in the instance administration.',
+        'type' => 'varchar',
+        'length' => 64,
+        'not null' => TRUE,
+        'default' => '',
+      ),
+      'content_type' => array(
+        'description' => 'content type of add or edit advanced form block',
+        'type' => 'varchar',
+        'length' => 64,
+        'not null' => FALSE,
+        'default' => '',
+      ),
+      'form_type' => array(
+        'description' => 'node add or edit advanced form block',
+        'type' => 'varchar',
+        'length' => 64,
+        'not null' => FALSE,
+        'default' => 'Add',
+      ),
+      'nid' => array(
+        'description' => 'The node id if the block type is of node edit form and 0 otherwise',
+        'type' => 'int',
+        'not null' => FALSE,
+      ),
+      'data' => array(
+        'type' => 'blob',
+        'size' => 'big',
+        'not null' => FALSE,
+        'serialize' => TRUE,
+        'description' => 'Serialized data containing settings of each advanced form block.',
+      ),
+    ),
+    'primary key' => array('delta'),
+  );
+
+  return $schema;
+}

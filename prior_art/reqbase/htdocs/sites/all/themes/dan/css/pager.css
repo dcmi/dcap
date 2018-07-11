@@ -1,0 +1,25 @@
+/**
+ * @file
+ * Pager
+ */
+.pager li a {
+  color: #009ee1;
+  font-weight: 900;
+  font-size: 1em;
+}
+.pager li a:hover {
+  color: #999999;
+  text-decoration: none;
+}
+.pager .pager-current,
+.pager .pager-item {
+  display: none !important;
+}
+
+li a.active {
+  color: #e6332a;
+}
+
+.polaroid-gallery .pager li a {
+  font-size: 8em;
+}

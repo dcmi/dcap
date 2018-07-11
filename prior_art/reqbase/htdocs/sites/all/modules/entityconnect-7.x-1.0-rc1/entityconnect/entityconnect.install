@@ -1,0 +1,42 @@
+<?php
+
+/**
+ * @file
+ * Install, update & uninstall functions for the Entity Connect module.
+ */
+
+/**
+ * Implements hook_requirements().
+ */
+function entityconnect_requirements($phase) {
+  $requirements = array();
+
+  switch ($phase) {
+    case 'install':
+      $t = get_t();
+      $path = drupal_get_path('module', 'entityconnect') . '/entityconnect.info';
+      $info = drupal_parse_info_file($path);
+
+      $requirements['entityconnect'] = array();
+      $requirements['entityconnect']['title'] = $info['name'];
+      $requirements['entityconnect']['value'] = $info['version'];
+
+      if (module_exists('entityreference')) {
+        $requirements['entityconnect']['severity'] = REQUIREMENT_OK;
+      }
+      elseif (module_exists('node_reference') || module_exists('user_reference')) {
+        $requirements['entityconnect']['severity'] = REQUIREMENT_OK;
+      }
+      else {
+        $requirements['entityconnect']['severity'] = REQUIREMENT_WARNING;
+        $requirements['entityconnect']['description'] = $t(
+          'Neither Entityreference nor References module is installed or activated.
+          Entityconnect needs at least one of those modules to work.'
+        );
+      }
+
+      break;
+  }
+
+  return $requirements;
+}

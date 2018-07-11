@@ -1,0 +1,44 @@
+<?php
+
+/**
+ * @file
+ * Install file for Static file.
+ */
+
+/**
+ * Update helper function to register all files.
+ */
+function static_file_update_track_all_files(&$sandbox, $query_limit = NULL) {
+  drupal_load('module', 'static');
+  drupal_load('module', 'static_file');
+  $query_limit = $query_limit ? $query_limit : 50;
+
+  $query = db_select('file_managed', 'f')
+    ->fields('f', array('fid', 'uri'))
+    ->condition('status', FILE_STATUS_PERMANENT)
+    ->orderBy('fid', 'ASC');
+
+  if (!isset($sandbox['progress'])) {
+    $sandbox['progress'] = 0;
+    $count_query = $query->countQuery();
+    $sandbox['max'] = $count_query->execute()->fetchField();
+  }
+  if (!isset($sandbox['current_fid'])) {
+    $sandbox['current_fid'] = 0;
+  }
+
+  // Set conditions for this pass.
+  $query->condition('fid', $sandbox['current_fid'], '>');
+  $query->range(0, $query_limit);
+
+  $result = $query->execute()->fetchCol();
+  foreach ($result as $record) {
+    static_file_track_file($record);
+
+    // Update progress.
+    $sandbox['progress']++;
+    $sandbox['current_fid'] = $record->fid;
+  }
+
+  $sandbox['#finished'] = empty($sandbox['max']) ? 1 : ($sandbox['progress'] / $sandbox['max']);
+}

@@ -1,0 +1,45 @@
+name = CorporateClean
+description = A flexible, recolorable theme with many regions supported by <a href="http://www.morethanthemes.com/" target="_blank">More Than (just) Themes</a>. If you like this theme, we encourage you to try also our other <a href="http://www.morethanthemes.com" target="_blank">Premium</a> and <a href="http://drupalizing.com" target="_blank">Free</a> Drupal themes.
+version = VERSION
+core = 7.x
+
+stylesheets[all and (min-width: 980px)][] = css/960.css
+stylesheets[all and (min-width: 760px) and (max-width: 980px)][] = css/720.css
+stylesheets[all and (max-width: 760px)][] = css/mobile.css
+stylesheets[all][] = style.css
+stylesheets[all][] = color/colors.css
+
+regions[navigation] = Navigation
+regions[search_area] = Search area
+regions[highlighted] = Highlighted
+regions[content] = Content
+regions[sidebar_first] = First sidebar
+regions[sidebar_second] = Second sidebar
+regions[banner] = Banner
+regions[footer_first] = Footer first
+regions[footer_second] = Footer second
+regions[footer_third] = Footer third
+regions[footer] = Footer
+regions[footer_bottom_right] = Footer bottom right
+regions[help] = Help
+regions[page_top] = Page top
+regions[page_bottom] = Page bottom
+
+settings[breadcrumb_display]= 1
+settings[breadcrumb_home]= 1
+settings[breadcrumb_separator]= '/'
+settings[slideshow_display]= 1
+settings[slideshow_js]= 1
+settings[slideshow_effect]='scrollHorz'
+settings[slideshow_effect_time]='10'
+settings[slideshow_randomize]= 0
+settings[slideshow_wrap]= 0
+settings[slideshow_pause]= 0
+settings[responsive_meta]= 1
+settings[responsive_respond]= 0
+; Information added by drupal.org packaging script on 2013-05-13
+version = "7.x-2.2"
+core = "7.x"
+project = "corporateclean"
+datestamp = "1368461412"
+

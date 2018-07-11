@@ -1,0 +1,230 @@
+/**
+ * @file
+ * Menu
+ */
+/*
+ * Text color for main, secondary and tertiary menu.
+ */
+#main-menu a,
+#secondary-menu a,
+#tertiary-menu a {
+  color: white;
+  text-decoration: none;
+}
+#main-menu a:hover, #main-menu a.active,
+#secondary-menu a:hover,
+#secondary-menu a.active,
+#tertiary-menu a:hover,
+#tertiary-menu a.active {
+  color: white;
+  text-shadow: 0 0 10px white, 0 0 10px white;
+  opacity: 1;
+}
+
+/*
+ * Main menu
+ */
+#main-menu {
+  /*
+   * Level 1 <ul> tag
+   */
+  /*
+   * Level 1 <li> tag
+   */
+  /*
+   * Level 2 <ul> tag
+   */
+  /*
+   * Level 2 <li> tag
+   */
+  /*
+   * Level 3 <li> tag
+   */
+  /*
+   * Drop down related styling
+   */
+}
+#main-menu ul, #main-menu li {
+  line-height: 1;
+  list-style-image: none;
+  list-style-position: 0;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+#main-menu > ul {
+  text-transform: uppercase;
+  font-weight: 900;
+}
+#main-menu li.level-1 {
+  display: inline-block;
+  position: relative;
+}
+#main-menu li.level-1 a {
+  display: block;
+  border: 1px solid rgba(0, 0, 0, 0);
+  font-size: 1.2em;
+  padding: .5em;
+}
+@media (max-width: 24em) {
+  #main-menu li.level-1 a {
+    padding: .4em;
+  }
+}
+@media (max-width: 22em) {
+  #main-menu li.level-1 a {
+    padding: .3em;
+    font-size: 1.1em;
+  }
+}
+@media (max-width: 20em) {
+  #main-menu li.level-1 a {
+    font-size: 1em;
+  }
+}
+#main-menu li.level-1 > ul {
+  border: 1px solid black;
+  border-top: none;
+  text-align: left;
+  display: none;
+  font-size: .7em;
+  position: absolute;
+  top: 3.2em;
+  width: 20em;
+  z-index: 999;
+}
+#main-menu li.level-2 {
+  padding: .8em;
+  background: #666666;
+}
+#main-menu li.level-3 {
+  font-weight: 400;
+  text-transform: none;
+  padding: .15em 0 .15em .5em;
+}
+#main-menu li.level-3 a:before {
+  content: "- ";
+}
+#main-menu li.level-1 {
+  /*
+   * Disable drop downs on smaller screen
+   */
+}
+#main-menu li.level-1:nth-child(3) > ul {
+  left: -55px;
+}
+#main-menu li.level-1:nth-child(4) > ul, #main-menu li.level-1:nth-child(5) > ul {
+  right: 0px;
+}
+#main-menu li.level-1:hover {
+  background: #666666;
+}
+#main-menu li.level-1:hover a {
+  border: 1px solid black;
+  border-bottom: none;
+}
+#main-menu li.level-1:hover ul li a {
+  border: none;
+  display: inline;
+}
+#main-menu li.level-1:hover > ul {
+  display: block;
+  box-shadow: 5px 10px 10px -3px rgba(0, 0, 0, 0.7);
+}
+@media (max-width: 53em) {
+  #main-menu li.level-1:nth-child(1) {
+    display: block;
+  }
+  #main-menu li.level-1:nth-child(1) a {
+    border: none;
+  }
+  #main-menu li.level-1:nth-child(1):hover {
+    background: none;
+  }
+  #main-menu li.level-1:nth-child(1):hover a {
+    border: none;
+    border-bottom: none;
+  }
+  #main-menu li.level-1:nth-child(1):hover > ul {
+    display: none;
+    box-shadow: none;
+  }
+}
+@media (max-width: 46em) {
+  #main-menu li.level-1:nth-child(2) {
+    display: block;
+  }
+  #main-menu li.level-1:nth-child(2) a {
+    border: none;
+  }
+  #main-menu li.level-1:nth-child(2):hover {
+    background: none;
+  }
+  #main-menu li.level-1:nth-child(2):hover a {
+    border: none;
+    border-bottom: none;
+  }
+  #main-menu li.level-1:nth-child(2):hover > ul {
+    display: none;
+    box-shadow: none;
+  }
+}
+@media (max-width: 36em) {
+  #main-menu li.level-1:nth-child(3) {
+    display: block;
+  }
+  #main-menu li.level-1:nth-child(3) a {
+    border: none;
+  }
+  #main-menu li.level-1:nth-child(3):hover {
+    background: none;
+  }
+  #main-menu li.level-1:nth-child(3):hover a {
+    border: none;
+    border-bottom: none;
+  }
+  #main-menu li.level-1:nth-child(3):hover > ul {
+    display: none;
+    box-shadow: none;
+  }
+}
+@media (max-width: 28em) {
+  #main-menu li.level-1:nth-child(4), #main-menu li.level-1:nth-child(5) {
+    display: block;
+  }
+  #main-menu li.level-1:nth-child(4) a, #main-menu li.level-1:nth-child(5) a {
+    border: none;
+  }
+  #main-menu li.level-1:nth-child(4):hover, #main-menu li.level-1:nth-child(5):hover {
+    background: none;
+  }
+  #main-menu li.level-1:nth-child(4):hover a, #main-menu li.level-1:nth-child(5):hover a {
+    border: none;
+    border-bottom: none;
+  }
+  #main-menu li.level-1:nth-child(4):hover > ul, #main-menu li.level-1:nth-child(5):hover > ul {
+    display: none;
+    box-shadow: none;
+  }
+}
+
+/*
+ * Secondary and Tertiary menu
+ */
+#secondary-menu ul,
+#tertiary-menu ul {
+  padding: 0;
+}
+#secondary-menu ul li,
+#tertiary-menu ul li {
+  font-size: 0.8em;
+  display: inline;
+}
+#secondary-menu .block-title,
+#tertiary-menu .block-title {
+  display: none;
+}
+
+#secondary-menu ul.links {
+  text-align: right;
+}

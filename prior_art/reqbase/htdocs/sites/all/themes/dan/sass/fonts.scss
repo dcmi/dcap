@@ -1,0 +1,78 @@
+/**
+ * @file
+ * Font
+ */
+
+@import "base";
+
+@import url("http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,900,400italic");
+
+body {
+  color: $lighter-black;
+  font-family: $base-font-family;
+  font-weight: 400;
+}
+
+a {
+  color: $blue;
+  text-decoration: none;
+
+  &:hover {
+    opacity: .7;
+    text-decoration: none;
+  }
+}
+
+.submitted {
+  font-size: 0.8em;
+  color: $lighter-black;
+
+  a {
+    text-decoration: none;
+  }
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: $blue;
+  font-family: $base-font-family;
+  font-weight: 900;
+
+  a {
+    color: $blue;
+    text-decoration: none;
+  }
+}
+
+@media (max-width: 20em) {
+  ol, ul {
+    padding-left: 1.4em
+  }
+}
+
+li {
+  list-style: square;
+}
+
+hr {
+  display: block;
+  clear: both;
+  margin: 1.5em 0;
+}
+
+pre {
+  font-family: $font-monospace;
+}
+
+blockquote {
+  background: $lighter-grey url('../images/quotes-bottom.png') no-repeat;
+  background-position: 1em 1em;
+  color: $blue;
+  margin: 1em;
+  font-size: 1.2em;
+  font-weight: bold;
+  padding: 1em 1em 1em 5em;
+
+  p {
+    color: $blue;
+  }
+}

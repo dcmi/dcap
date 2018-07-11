@@ -1,0 +1,38 @@
+/**
+ * @file Styling and module support for module "Printer, email and PDF versions
+ * (print)".
+ *
+ * Project page on Drupal.org: @link http://drupal.org/project/print Printer, email and PDF versions @endlink
+ */
+
+@import "base";
+
+article footer ul.links {
+  display: block !important;
+  clear: both;
+  margin: .6em 0;
+}
+
+.links {
+  .print-page, .print-mail, .print-pdf {
+    background-repeat: no-repeat;
+    display: inline-block;
+    font-size: 0.8em;
+    padding-left: 2em;
+    padding-right: .5em;
+    white-space: nowrap;
+    background-position: 0 .4em;
+  }
+
+  .print-page {
+    background-image: inline-image("print.png");
+  }
+
+  .print-mail {
+    background-image: inline-image("mail.png");
+  }
+
+  .print-pdf {
+    background-image: inline-image("pdf.png");
+  }
+}

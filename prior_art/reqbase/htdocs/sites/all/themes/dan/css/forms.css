@@ -1,0 +1,152 @@
+/**
+ * @file
+ * Form Styling
+ */
+fieldset {
+  border: 1px solid #ccc;
+}
+
+.vertical-tabs {
+  font-size: .8em;
+}
+
+.form-item {
+  /* Wrapper for a form element (or group of form elements) and its label */
+  color: #666;
+  font-size: .9em;
+  margin: 1.5em 0;
+}
+.form-item input.error,
+.form-item textarea.error,
+.form-item select.error {
+  /* Highlight the form elements that caused a form submission error */
+  border: 1px solid #c00;
+}
+.form-item label {
+  /* The label for a form element */
+  padding: .3em 0;
+  display: block;
+  font-weight: bold;
+}
+.form-item label.option {
+  /* The label for a radio button or checkbox */
+  display: inline;
+  font-weight: normal;
+}
+.form-item .form-required {
+  /* The part of the label that indicates a required field */
+  color: #c00;
+}
+.form-item .description {
+  /* The descriptive help text (separate from the label) */
+  padding: .5em 0;
+  color: #999;
+}
+.form-checkboxes .form-item, .form-radios .form-item {
+  /* Pack groups of checkboxes and radio buttons closer together */
+  margin: 0;
+  /* Drupal core uses "0.4em 0" */
+}
+.form-item .form-text {
+  border: 1px solid #999999;
+  color: #2c2c2c;
+}
+@media (max-width: 40em) {
+  .form-item .form-text {
+    width: 100%;
+  }
+}
+
+.form-submit {
+  /* The submit button */
+  background-color: #009ee1;
+  border: 0;
+  color: white;
+  padding: .4em .9em;
+  font-size: .9em;
+  height: 30px;
+}
+.form-submit:hover {
+  background-color: #999999;
+}
+.form-submit:active {
+  background-color: #045a7f;
+}
+
+#edit-submit {
+  background-color: #045a7f;
+}
+#edit-submit:hover {
+  background-color: #999999;
+}
+
+.container-inline div,
+.container-inline label {
+  /* Inline labels and form divs */
+  display: inline;
+}
+
+a.button {
+  /* Buttons used by contrib modules like Media */
+  -webkit-appearance: button;
+  -moz-appearance: button;
+  appearance: button;
+}
+
+/*
+ * Password confirmation
+ */
+.password-parent,
+.confirm-parent {
+  margin: 0;
+}
+
+/*
+ * Drupal's default login form block
+ */
+#user-login-form {
+  text-align: left;
+  /* LTR */
+}
+
+#user-login ul {
+  margin: 1.5em 0;
+}
+
+/*
+ * Drupal admin tables
+ *
+ * We overrode these styles in normalize.css, but restore them for the admin
+ * section of the site.
+ */
+form th {
+  text-align: left;
+  /* LTR */
+  padding-right: 1em;
+  /* LTR */
+  border-bottom: 3px solid #ccc;
+}
+form tbody {
+  border-top: 1px solid #ccc;
+}
+form tr.even {
+  background-color: #fff;
+}
+form table .item-list ul {
+  margin: 0;
+}
+
+/*
+ * Drupal core wrongly puts this in system.menus.css. Since we override that, add it back.
+ */
+td.menu-disabled {
+  background: #ccc;
+}
+
+a.login-link:hover {
+  color: white;
+}
+
+html.js input.form-autocomplete {
+  background-position: 100% 3px;
+}

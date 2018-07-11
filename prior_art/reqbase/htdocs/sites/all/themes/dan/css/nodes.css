@@ -1,0 +1,87 @@
+/**
+ * @file
+ * Node Styling
+ *
+ * Style anything that isn't in the $content variable.
+ */
+.node {
+  /* Node wrapper */
+}
+.preview .node {
+  /* Preview of the content before submitting new or updated content */
+  /* background-color: #ffffea; */
+  /* Drupal core uses a #ffffea background */
+}
+.node .node-title {
+  /* Node title */
+}
+.node .user-picture {
+  /* The picture of the node author */
+}
+.node .submitted {
+  color: #999999;
+}
+.node .submitted .user-picture img {
+  float: right;
+}
+.node .content {
+  /* Node's content wrapper */
+}
+.node ul.links {
+  /* Node links. See also the ul.links declaration in the pages.css. */
+  font-size: .8em;
+}
+.node ul.links li {
+  padding: 0 .4em;
+}
+
+.node-promoted {
+  /* A node that has been promoted to the front page */
+}
+
+.node-sticky {
+  /* A sticky node (displayed before others in a list) */
+}
+
+.node-by-viewer {
+  /* A node created by the current user */
+}
+
+.node-teaser {
+  /* A node displayed as teaser */
+  border-bottom: 2px solid #009ee1;
+  margin-bottom: 2em;
+  padding-bottom: 1em;
+}
+
+/*
+ * All nodes are given a node-FOO class that describes the type of content that
+ * it is. If you create a new content type called "my-custom-type", it will
+ * receive a "node-my-custom-type" class.
+ */
+.node-page {
+  /* Page content node */
+}
+
+.node-article {
+  /* Article content node */
+}
+
+.node-unpublished {
+  /* Unpublished nodes */
+  /* background-color: #fff4f4; */
+  /* Drupal core uses a #fff4f4 background */
+}
+.node-unpublished p.unpublished {
+  /* The word "Unpublished" displayed underneath the content. */
+  height: 0;
+  overflow: visible;
+  color: #d8d8d8;
+  font-size: 75px;
+  line-height: 1;
+  font-family: Impact, "Arial Narrow", Helvetica, sans-serif;
+  font-weight: bold;
+  text-transform: uppercase;
+  text-align: center;
+  word-wrap: break-word;
+}

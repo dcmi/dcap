@@ -1,0 +1,163 @@
+<?php
+
+/**
+ * @file
+ * field_validation installation file
+ */
+
+/**
+ * Implements hook_schema().
+ */
+function field_validation_schema() {
+  $schema['field_validation_rule'] = array(
+    'description' => 'Stores rule definitions',
+    'export' => array(
+      'key' => 'name',
+      'key name' => 'Name',
+      'primary key' => 'ruleid',
+      'identifier' => 'rule', 
+      'default hook' => 'default_field_validation_rule',
+      'api' => array(
+        'owner' => 'field_validation',
+        'api' => 'default_field_validation_rules',
+        'minimum_version' => 2,
+        'current_version' => 2,
+      ),
+    ),
+    'fields' => array(
+      'ruleid' => array(
+        'type' => 'serial',
+        'description' => 'Unique identifier of the validation rule',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'no export' => TRUE,
+      ),
+      'rulename' => array(
+        'type' => 'varchar',
+        'description' => 'Name of the validation rule',
+        'not null' => TRUE,
+        'default' => '',
+        'length' => 255,
+      ),
+      'name' => array(
+        'type' => 'varchar',
+        'description' => 'Machine name of the validation rule',
+        'not null' => TRUE,
+        'default' => '',
+        'length' => 32,
+      ),
+      'field_name' => array(
+        'type' => 'varchar',
+        'length' => 32,
+        'not null' => TRUE,
+        'default' => ''
+      ),
+      'col' => array(
+        'type' => 'varchar',
+        'length' => 32,
+        'not null' => TRUE,
+        'default' => 'value'
+      ),
+      'entity_type' => array(
+        'type' => 'varchar',
+        'length' => 32,
+        'not null' => TRUE,
+        'default' => ''
+      ),
+      'bundle' => array(
+        'type' => 'varchar',
+        'length' => 128,
+        'not null' => TRUE,
+        'default' => ''
+      ),
+      'validator' => array(
+        'type' => 'varchar',
+        'description' => 'The validator key',
+        'not null' => TRUE,
+        'default' => '',
+        'length' => 255,
+      ),
+      'settings' => array(
+        'type' => 'text',
+        'size' => 'big',
+        'description' => 'Serialized settings for the validator to be used',
+        'serialize' => TRUE,
+        'object default' => array(),
+      ),
+      'error_message' => array(
+        'type' => 'varchar',
+        'description' => 'Rule error message',
+        'not null' => FALSE,
+        'length' => 255,
+      ),
+    ),
+    'primary key' => array('ruleid'),
+    'indexes' => array(
+      'field_name_bundle' => array('field_name', 'entity_type', 'bundle'),
+    ),
+  );
+
+  return $schema;
+}
+
+/**
+ * Update from 1.x to 2.x.
+ */
+function field_validation_update_7004(&$sandbox) {
+  $settings = array(
+    'type' => 'text',
+    'size' => 'big',
+    'description' => 'Serialized settings for the validator to be used',
+    'serialize' => TRUE,
+    'object default' => array(),
+  );
+  db_add_field('field_validation_rule', 'settings', $settings);
+
+  $result = db_query("SELECT * FROM {field_validation_rule}");
+  foreach ($result as $record) {
+    $settings_data = array(
+      'data' => $record->data,
+    );
+    $validator = 'field_validation_' . $record->validator . '_validator';
+    db_query("UPDATE {field_validation_rule} SET settings = :settings, validator = :validator WHERE ruleid = :ruleid", array(':settings' => serialize($settings_data), ':validator' => $validator, ':ruleid' => $record->ruleid));
+  }
+  db_drop_field('field_validation_rule', 'data');
+
+  module_enable(array('field_validation_ui'), FALSE);
+}
+
+/**
+ * Add missing field from upgrade.
+ */
+function field_validation_update_7005(&$sandbox) {
+  if (!db_field_exists('field_validation_rule', 'name')) {
+    // add missing column.
+    $settings = array(
+      'type' => 'varchar',
+      'description' => 'Machine name of the validation rule',
+      'not null' => TRUE,
+      'default' => '',
+      'length' => 32,
+    );
+    db_add_field('field_validation_rule', 'name', $settings);
+  }
+  if (!db_field_exists('field_validation_rule', 'col')) {
+    // add missing column.
+    $settings = array(
+      'type' => 'varchar',
+      'length' => 32,
+      'not null' => TRUE,
+      'default' => 'value',
+    );
+    db_add_field('field_validation_rule', 'col', $settings);
+  }
+  
+  db_query("UPDATE {system} SET weight = 10 WHERE name = 'field_validation'");
+}
+
+/**
+ * Implements hook_install().
+ */
+function field_validation_install() {
+  db_query("UPDATE {system} SET weight = 10 WHERE name = 'field_validation'");
+}

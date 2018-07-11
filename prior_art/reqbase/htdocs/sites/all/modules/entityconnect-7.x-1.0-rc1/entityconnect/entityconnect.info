@@ -1,0 +1,10 @@
+name = "Entity Connect"
+description = "Allows for referenced entity to be created and edited from the entity reference field"
+core = "7.x"
+
+; Information added by drupal.org packaging script on 2013-02-11
+version = "7.x-1.0-rc1"
+core = "7.x"
+project = "entityconnect"
+datestamp = "1360574066"
+

@@ -1,0 +1,204 @@
+/**
+ * @file
+ * Menu
+ */
+
+@import "base";
+
+/*
+ * Text color for main, secondary and tertiary menu.
+ */
+
+#main-menu,
+#secondary-menu,
+#tertiary-menu {
+  a {
+    color: $white;
+    text-decoration: none;
+
+    &:hover,
+    &.active {
+      color: $white;
+      @include text-shadow(0 0 10px $white, 0 0 10px $white);
+      opacity: 1;
+    }
+  }
+}
+
+/*
+ * Main menu
+ */
+
+#main-menu {
+  ul, li {
+    line-height: 1;
+    list-style-image: none;
+    list-style-position: 0;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+
+/*
+ * Level 1 <ul> tag
+ */
+
+  > ul {
+    text-transform: uppercase;
+    font-weight: 900;
+  }
+
+/*
+ * Level 1 <li> tag
+ */
+
+  li.level-1 {
+    display: inline-block;
+    position: relative;
+
+    a {
+      display: block;
+      border: 1px solid rgba(0,0,0,0);
+      font-size: 1.2em;
+      padding: .5em;
+
+      @media (max-width: 24em) {
+        padding: .4em;
+      }
+
+      @media (max-width: 22em) {
+        padding: .3em;
+        font-size: 1.1em;
+      }
+
+      @media (max-width: 20em) {
+        font-size: 1em;
+      }
+    }
+  }
+
+/*
+ * Level 2 <ul> tag
+ */
+
+  li.level-1 > ul {
+    border: 1px solid black;
+    border-top: none;
+    text-align: left;
+    display: none;
+    font-size: .7em;
+    position: absolute;
+    top: 3.2em;
+    width: 20em;
+    z-index: 999;
+  }
+
+/*
+ * Level 2 <li> tag
+ */
+
+  li.level-2 {
+    padding: .8em;
+    background: $darker-grey;
+  }
+
+/*
+ * Level 3 <li> tag
+ */
+
+  li.level-3 {
+    font-weight: 400;
+    text-transform: none;
+    padding: .15em 0 .15em .5em;
+    a:before {
+      content: "- "
+    }
+  }
+
+/*
+ * Drop down related styling
+ */
+
+  li.level-1 {
+
+    // Center drop down menu.
+    &:nth-child(3) > ul {
+      left: -55px;
+    }
+    // Align drop down menu right.
+    &:nth-child(4) > ul,
+    &:nth-child(5) > ul {
+      right: 0px;
+    }
+
+    &:hover {
+      // Make menu item to grey background on hover.
+      background: $darker-grey;
+      a {
+        border: 1px solid black;
+        border-bottom: none;
+      }
+      ul li a {
+        border: none;
+        display: inline;
+      }
+
+      // Show drop down menu on hover.
+      & > ul {
+        display: block;
+        box-shadow: 5px 10px 10px -3px rgba(0,0,0, 0.7);
+      }
+    }
+
+/*
+ * Disable drop downs on smaller screen
+ */
+
+    @media (max-width: 53em) {
+      &:nth-child(1) {
+        display: block;
+        @include no-drop-down;
+      }
+    }
+    @media (max-width: 46em) {
+      &:nth-child(2) {
+        display: block;
+        @include no-drop-down;
+      }
+    }
+    @media (max-width: 36em) {
+      &:nth-child(3) {
+        display: block;
+        @include no-drop-down;
+      }
+    }
+    @media (max-width: 28em) {
+      &:nth-child(4), &:nth-child(5) {
+        display: block;
+        @include no-drop-down;
+      }
+    }
+  }
+}
+
+/*
+ * Secondary and Tertiary menu
+ */
+
+#secondary-menu,
+#tertiary-menu {
+  ul {
+    padding: 0;
+    li {
+      font-size: 0.8em;
+      display: inline;
+    }
+  }
+  .block-title {
+    display: none;
+  }
+}
+
+#secondary-menu ul.links {
+  text-align: right;
+}

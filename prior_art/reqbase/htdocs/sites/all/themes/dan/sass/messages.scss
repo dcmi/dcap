@@ -1,0 +1,71 @@
+/**
+ * @file
+ * Messages
+ */
+
+@import "base";
+
+$error: $red;
+$status: $green;
+$warning: $yellow;
+
+div.messages {
+  background-position: .6em .4em;
+  background-repeat: no-repeat;
+  margin: .5em 0;
+  padding: .6em .6em .6em 3em; /* LTR */
+}
+
+div.status {
+   background-image: inline-image("status.png");
+}
+
+div.status,
+.ok {
+  color: $white;
+}
+
+div.status,
+table tr.ok {
+  background-color: $status;
+}
+
+div.warning {
+   background-image: inline-image("warning.png");
+}
+div.warning,
+.warning {
+  color: $white;
+}
+
+div.warning,
+table tr.warning {
+  background-color: $warning;
+}
+
+div.error {
+  background-image: inline-image("error.png");
+}
+
+div.error,
+.error {
+  color: $white;
+}
+
+div.error,
+table tr.error {
+  background-color: $error;
+}
+
+div.error p.error {
+  color: $white;
+}
+
+div.messages ul {
+  margin: 0 0 0 1em; /* LTR */
+  padding: 0;
+}
+
+div.messages ul li {
+  list-style-image: none;
+}

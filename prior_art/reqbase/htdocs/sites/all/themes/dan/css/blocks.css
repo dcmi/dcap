@@ -1,0 +1,19 @@
+/**
+ * @file
+ * Block Styling
+ */
+.block {
+  background-color: rgba(255, 255, 255, 0.05);
+  color: #999999;
+  font-size: .9em;
+  margin-bottom: .6em;
+  padding: .5em;
+}
+.block h2.block-title {
+  margin-top: 0;
+}
+
+#main .block {
+  margin-top: .6em;
+  background-color: #eeeeee;
+}

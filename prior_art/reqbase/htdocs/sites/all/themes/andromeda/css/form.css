@@ -1,0 +1,168 @@
+/**
+ * @file
+ * Form styling
+ */
+form {
+  
+}
+
+form .form-item{
+  margin:5px 0;
+}
+
+form label{
+  padding:2px;
+}
+
+form .form-text,
+form .form-textarea{
+  border:1px solid #F0F0F0;
+  height: 25px;
+  padding:2px 5px;
+  border-radius:5px;
+  font-size:12px;
+  font-family:Arial,Tahoma,Verdana;
+  font-size:12px;
+}
+
+form .form-textarea {
+  height:250px;
+}
+
+form .description {
+  padding:2px;
+}
+
+form .form-submit{
+  border: 0 none;
+  border-radius:5px;
+  color: #D4D4D4;
+  cursor: pointer;
+  font-size: 11px;
+  padding: 5px 10px;
+  text-align: center;
+  text-transform: uppercase;
+  background:#111111;
+  margin:0 5px 0 0;
+}
+
+form .form-submit:hover{
+  color:#FFFFFF;
+}
+
+/**
+ * Search form
+ */
+form#search-block-form{
+  overflow:hidden;
+  margin-bottom:20px;
+}
+
+form#search-block-form .form-text{
+  border: medium none;
+  float: left;
+  height: 18px;
+  padding: 6px;
+  width: 127px;
+  border-radius:5px 0 0 5px;
+  -moz-border-radius:5px 0 0 5px;
+  -webkit-border-radius:5px 0 0 5px;
+  background:#FFFFFF;
+}
+
+form#search-block-form .form-submit{
+  border:none;
+  background:url('../images/btn/btn-submit.png') no-repeat 0 0 transparent;
+  width:31px;
+  height:30px;
+  float:left;
+  text-indent:-9999px;
+  border-radius:0;
+  margin:0;
+}
+
+/*************************
+ * contact form
+ ************************/
+form#contact-form label{
+  color:#777;
+  font-weight:normal;
+  margin-bottom:5px;
+}
+
+form#contact-form .form-text, form#contact-form textarea{
+  background-color: #FBFBFB;
+  border: 1px solid #E0E0E0;
+  padding: 8px 5px;
+  width: 380px;
+}
+
+form#contact-form .form-submit{
+  margin-left:5px;
+  box-shadow: 0 0 5px #000000;
+  border:none;
+  color:#D4D4D4;
+  font-size:11px;
+  width:65px;
+  height:25px;
+  border-radius:4px;
+  -moz-border-radius:4px;
+  -webkit-border-radius:4px;
+  /* SVG fallback(Opera 11.10-, IE9) */
+  background: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxkZWZzPjxsaW5lYXJHcmFkaWVudCBpZD0iZ3JhZGllbnQiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBvZmZzZXQ9IjAlIiBzdHlsZT0ic3RvcC1jb2xvcjpyZ2JhKDQ5LDUzLDU5LDEpOyIgLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0eWxlPSJzdG9wLWNvbG9yOnJnYmEoNzYsODAsODYsMSk7IiAvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IGZpbGw9InVybCgjZ3JhZGllbnQpIiBoZWlnaHQ9IjEwMCUiIHdpZHRoPSIxMDAlIiAvPjwvc3ZnPg==);
+  
+  /* Opera 11.10+ */
+  background: -o-linear-gradient(top, rgba(49,53,59,1), rgba(76,80,86,1));
+  
+  /* Firefox 3.6+ */
+  background: -moz-linear-gradient(top, rgba(49,53,59,1), rgba(76,80,86,1));
+  
+  /* Chrome 7+ & Safari 5.03+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0, rgba(49,53,59,1)), color-stop(1, rgba(76,80,86,1)));
+  
+  /* IE5.5 - IE7 */
+  filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0,StartColorStr=#FF31353B,EndColorStr=#FF4C5056);
+  
+  /* IE8 */
+  -ms-filter: "progid:DXImageTransform.Microsoft.Gradient(GradientType=0,StartColorStr=#FF31353B,EndColorStr=#FF4C5056)"
+}
+
+form#contact-form .form-submit:hover{
+  /* SVG fallback(Opera 11.10-, IE9) */
+  background: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxkZWZzPjxsaW5lYXJHcmFkaWVudCBpZD0iZ3JhZGllbnQiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBvZmZzZXQ9IjAlIiBzdHlsZT0ic3RvcC1jb2xvcjpyZ2JhKDc2LDgwLDg2LDEpOyIgLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0eWxlPSJzdG9wLWNvbG9yOnJnYmEoNDksNTMsNTksMSk7IiAvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IGZpbGw9InVybCgjZ3JhZGllbnQpIiBoZWlnaHQ9IjEwMCUiIHdpZHRoPSIxMDAlIiAvPjwvc3ZnPg==);
+  
+  /* Opera 11.10+ */
+  background: -o-linear-gradient(top, rgba(76,80,86,1), rgba(49,53,59,1));
+  
+  /* Firefox 3.6+ */
+  background: -moz-linear-gradient(top, rgba(76,80,86,1), rgba(49,53,59,1));
+  
+  /* Chrome 7+ & Safari 5.03+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0, rgba(76,80,86,1)), color-stop(1, rgba(49,53,59,1)));
+  
+  /* IE5.5 - IE7 */
+  filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0,StartColorStr=#FF4C5056,EndColorStr=#FF31353B);
+  
+  /* IE8 */
+  -ms-filter: "progid:DXImageTransform.Microsoft.Gradient(GradientType=0,StartColorStr=#FF4C5056,EndColorStr=#FF31353B)"
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
