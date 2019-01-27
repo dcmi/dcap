@@ -1,5 +1,5 @@
 Entity,label,cardinality,property?,value?,Notes
-descriptionSet,descSetID,"1,1",dct:identifier,xsd:literal,
+descriptionSet,descSetID,"1,1",dsp:descriptionSet,xsd:literal,
 ,display name,"1,-1",rdfs:label,xsd:literal,one value per language
 ,version,"0,1",,xsd:literal,
 ,version date,"0,1",dct:date,xsd:datetime,
@@ -7,8 +7,8 @@ descriptionSet,descSetID,"1,1",dct:identifier,xsd:literal,
 ,creator,"0,-1","dct:creator, dct:contributor",xsd:literal,
 ,rights,"0,-1",dct:rights,xsd:literal,
 ,open/closed,"0,1",sx:closed,xsd:boolean,default open?
-,descriptions,"0,-1",dct:identifier,xsd:literal (array),
-description,descID,"1,1",dct:identifier,xsd:literal,
+,descriptions,"0,-1",dsp:description,xsd:literal (array),
+description,descID,"1,1",dsp:description,xsd:literal,
 ,display name,"1,-1",rdfs:label,xsd:literal,one value per language?
 ,description,"0,1",dct:description,xsd:literal,
 ,example,"0,-1",vann:example,xsd:literal,
@@ -17,8 +17,8 @@ description,descID,"1,1",dct:identifier,xsd:literal,
 ,class,"0,-1",rdf:type,rdfs:Class,The valid RDF  class(es) for this description; only for RDF data 
 ,min. occurrence,"0,1",sx:min,xsd:integer,Default 0
 ,max. occurrence,"0,1",sx:max,xsd:integer,Default -1
-,statements,"0,-1",dct:identifier,xsd:literal (array),
-Statement,statementID,"1,1",dct:identifier,xsd:literal,
+,statements,"0,-1",dsp:statement,xsd:literal (array),
+Statement,statementID,"1,1",dsp:statement,xsd:literal,
 ,property,"1,1",(term),xsd:literal,
 ,display name,"0,-1",rdfs:label,xsd:literal,one value per language
 ,description,"0,-1",dct:description,xsd:literal,
@@ -61,3 +61,4 @@ namespaces,http://vocab.org/vann/,vann,,,
 ,http://www.w3.org/ns/shex,sx,,,
 ,http://www.w3.org/1999/02/22-rdf-syntax-ns#,rdf,,,
 ,http://www.w3.org/2000/01/rdf-schema#,rdfs,,,
+,http://example.com/dsp,,,
