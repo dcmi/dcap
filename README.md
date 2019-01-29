@@ -9,6 +9,10 @@ The project will build on a considerable body of prior art - much of which is do
 
 The requirements for the Actionable DSP are being gathered and [documented here](requirements.md).
 
-
-
 ![](prior_art/singapore-framework.png)
+
+
+### Proposal for Description Set Profile
+
+1. Classes and properties that are specific to the Description Set Profile are in a draft ttl file [here](dsp.ttl)
+1. The elements that would be needed to create a profile are defined in a table [here](schemaList.csv). Because RDF does not support validation of metadata schemas, it is hoped that the actionable DSP can be implemented in the [Shapes Expression](http://shex.io/) (ShEx) language.
