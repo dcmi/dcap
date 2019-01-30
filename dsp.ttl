@@ -10,17 +10,9 @@
 #    Classes
 #################################################################
 
-###  http://example.com/ObjectValue
-<http://example.com/ObjectValue> rdf:type owl:Class ;
-    rdfs:subClassOf <http://example.com/StatementValue> ;
-    rdfs:label "Object value" .
-
-
-###  http://example.com/LitValue
-<http://example.com/LitValue> rdf:type owl:Class ;
-    rdfs:subClassOf <http://example.com/StatementValue> ;
-    rdfs:label "Literal value" .
-
+#################################################################
+#    DCAM Classes
+#################################################################
 
 ###  http://example.com/Description
 ###  This will be in the DCAM namespace
@@ -28,19 +20,11 @@
     rdfs:subClassOf owl:Thing ;
     rdfs:label "Description" .
 
-
 ###  http://example.com/DescriptionSet
 ###  This will be in the DCAM namespace
 <http://example.com/DescriptionSet> rdf:type owl:Class ;
     rdfs:subClassOf owl:Thing ;
     rdfs:label "Description set"^^xsd:string .
-
-
-###  http://example.com/DataValue
-<http://example.com/DataValue> rdf:type owl:Class ;
-    rdfs:subClassOf <http://example.com/StatementValue> ;
-    rdfs:label "Data value" .
-
 
 ###  http://example.com/Statement
 ###  This will be in the DCAM namespace
@@ -48,13 +32,32 @@
     rdfs:subClassOf owl:Thing ;
     rdfs:label "Statement" .
 
+#################################################################
+#   DSP  Classes
+#################################################################
+
+###  http://example.com/ObjectValue
+<http://example.com/ObjectValue> rdf:type owl:Class ;
+    rdfs:subClassOf <http://example.com/StatementValue> ;
+    rdfs:label "Object value" .
+
+###  http://example.com/LitValue
+<http://example.com/LitValue> rdf:type owl:Class ;
+    rdfs:subClassOf <http://example.com/StatementValue> ;
+    rdfs:label "Literal value" .
+
+###  http://example.com/DataValue
+<http://example.com/DataValue> rdf:type owl:Class ;
+    rdfs:subClassOf <http://example.com/StatementValue> ;
+    rdfs:label "Data value" .
+
 ###  http://example.com/StatementValue
 <http://example.com/StatementValue> rdf:type owl:Class ;
     rdfs:label "StatementValue" .
 	
-	#################################################################
-	#    Object Properties
-	#################################################################
+#################################################################
+#    Object Properties
+#################################################################
 
 ###  http://example.com/hasDescription
 <http://example.com/hasDescription> rdf:type owl:ObjectProperty ;
