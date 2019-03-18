@@ -1,8 +1,0 @@
-<?php
-
-/**
- * Provide a lifeline.
- */
-function disable_all_forms_enable() {
-  drupal_set_message(t('All forms are now disabled except for user #1. You will probably need drush or direct DB access to disable.'), 'warning');
-}
