@@ -1,7 +1,7 @@
 # Dublin Core Application Profile (DCAP)
 ### Revisiting the Singapore Framework....
 
-The [Singapore Framework](http://dublincore.org/documents/singapore-framework/) was a pioneering attempt to formalise the creation of metadata application profiles and can be considered to have been 'ahead of its time'. With a growing mainstream interest in developing and managing metadata profiles in a wide variety of contexts, the time has come to revisit this framework and to address, in particular, one component - the *Description Set Profile*.
+The [Singapore Framework](http://dublincore.org/documents/singapore-framework/) was a pioneering attempt to formalise the creation of metadata application profiles and can be considered to have been 'ahead of its time'. With a growing mainstream interest in developing and managing metadata profiles in a wide variety of contexts, the time has come to revisit this framework and to address, in particular, one component - the *Description Set Profile* (DSP).
 
 The goal of this project is to make the DSP *actionable*.
 
@@ -19,7 +19,11 @@ One implementation step was the creation of a Description Set Profile that conta
 
 ![](http://www.dublincore.org/specifications/dublin-core/dc-dsp/2008-03-31/dsp-uml.png)
 
+The original Description Set Profile was not implemented except in some experimental forms. 
+
 ### Proposal for a New Description Set Profile
+
+The overall environment for data interoperability has changed from the time of the Singapore Framework and the Description Set Profile. The advent of wide-spread linked data use provides a new model for data and also makes the need for sharing of application profiles more pronounced. Using the framework and the DSP as our starting points we have a strong basis for the development of a core schema for application profiles.
 
 1. Classes and properties that are specific to the Description Set Profile are in a draft ttl file [here](dsp.ttl)
 1. The elements that would be needed to create a profile are defined in a table [here](schemaList.csv). Because RDF does not support validation of metadata schemas, it is hoped that the actionable DSP can be implemented in the [Shapes Expression](http://shex.io/) (ShEx) language.
