@@ -1,0 +1,116 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://ld4p.github.io/sinopia/schemas/0.0.9/profile.json",
+  "type": "object",
+  "title": "Sinopia Profile Schema",
+  "description": "Profile, or array of Resource Templates with some top-level metadata.",
+  "version": "0.0.9",
+  "required": [ "Profile" ],
+  "additionalProperties": false,
+  "properties": {
+    "Profile": {
+      "type": "object",
+      "title": "Profile" ,
+      "description": "Profile key always at top level of a Sinopia Profile.",
+      "required": [
+        "author",
+        "date",
+        "description",
+        "id",
+        "resourceTemplates",
+        "schema",
+        "title"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "adherence": {
+          "type": "string",
+          "title": "Adherence",
+          "description": "The standards or rules that this profile adheres to.",
+          "example": [
+            "PCC",
+            "PCC RDA Working Group"
+          ]
+        },
+        "author": {
+          "type": "string",
+          "title": "Author",
+          "description": "Contact information associated with the profile.",
+          "minLength": 2,
+          "example": [
+            "PCC",
+            "Michelle Futornick",
+            "Cornell University Cataloging Department"
+          ]
+        },
+        "date": {
+          "type": "string",
+          "format": "date",
+          "title": "Date",
+          "description": "Date associated with the profile",
+          "minLength": 4,
+          "example": [
+            "2017-05-20"
+          ]
+        },
+        "description": {
+          "type": "string",
+          "title": "Description",
+          "description": "Textual description associated with the profile.",
+          "minLength": 3,
+          "example": [
+            "Metadata for BIBFRAME Resources"
+          ]
+        },
+        "id": {
+          "type": "string",
+          "title": "Identifier",
+          "description": "Unique identifier associated with the profile. Eventually, a Profile URI.",
+          "minLength": 3,
+          "example": [
+            "profile:bf2:AdminMetadata",
+            "http://sinopia.io/resources/common/AdminMetadataProfile"
+          ]
+        },
+        "remark": {
+          "type": "string",
+          "title": "Remark",
+          "description": "Comment or guiding statement intended to be presented as supplementary information in user display.",
+          "example": [
+            "Title information relating to a resource: work title, preferred title, instance title, transcribed title, translated title, variant form of title, etc."
+          ]
+        },
+        "resourceTemplates": {
+          "$ref": "https://ld4p.github.io/sinopia/schemas/0.0.9/resource-templates-array.json"
+        },
+        "schema": {
+          "const": "https://ld4p.github.io/sinopia/schemas/0.0.9/profile.json",
+          "title": "URL for Profile's JSON schema",
+          "description": "The profile adheres to the JSON schema at this URL",
+          "minLength": 8,
+          "example": [
+            "https://ld4p.github.io/sinopia/schemas/0.0.9/profile.json"
+          ]
+        },
+        "source": {
+          "type": "string",
+          "format": "uri",
+          "title": "Source URI",
+          "description": "URL or URI for the profile in the author's source repository or space.",
+          "example": [
+            "https://raw.githubusercontent.com/LD4P/sinopia_sample_profiles/master/profiles/v0.0.9/BIBFRAME%202.0%20Agents.json"
+          ]
+        },
+        "title": {
+          "type": "string",
+          "title": "Title",
+          "description": "Textual title associated with the profile.",
+          "minLength": 3,
+          "example": [
+            "BIBFRAME 2.0 Agents"
+          ]
+        }
+      }
+    }
+  }
+}
