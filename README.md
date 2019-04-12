@@ -1,25 +1,21 @@
 # Dublin Core Application Profile (DCAP)
-### Revisiting the Singapore Framework....
 
-The [Singapore Framework](http://dublincore.org/documents/singapore-framework/) was a pioneering attempt to formalise the creation of metadata application profiles and can be considered to have been 'ahead of its time'. With a growing mainstream interest in developing and managing metadata profiles in a wide variety of contexts, the time has come to revisit this framework and to address, in particular, one component - the *Description Set Profile Constraint Language*.
+The concept of the <em>metadata application profile</em> is important for DCMI and the Dublin Core community. It has underpinned many of DCMI's development efforts in recent years - not least of which the <a href="/specifications/dublin-core/singapore-framework/">Singapore Framework</a>. There is significant community interest in developing tools to aid in creating and documenting application profiles. There is a related interest in assuring that profiles specify validation rules for the data that they define.  
 
-The goal of this project is to make the DSP *actionable*.
+Previous work in the Dublin Core community defined a [framework](/specifications/dublin-core/singapore-framework/) for application profiles and a [constraint language](http://www.dublincore.org/specifications/dublin-core/dc-dsp/) based on the [Dublin Core Abstract Model](http://www.dublincore.org/specifications/dublin-core/abstract-model/). This current work will use some of the concepts developed previously but will not be bound to those specifications.
 
-The project will build on a considerable body of prior art - much of which is documented on the DCMI website. In some cases, copies of resources from that website have been added to this repository for convenience.
+Some key steps in the process will be:
 
-The requirements for the Actionable DSP are being gathered and [documented here](requirements.md).
+1. Gathering use cases and [requirements](requirements.md) for application profiles that will guide the work
+1. Development of a [basic vocabulary]( for the creation of application profiles 
+1. Alignment of the application profile vocabulary with actionable constraints, possibly using existing constraint languages
+1. If possible, development of a user interface for the creation of application profiles
 
-### Basics of Dublin Core Application Profiles
+ All of this should be done keeping in mind the "core" concept that has been the philosophy behind the work of the Dublin Core Metadata Initiative. This favors simple solutions that can be used by the broadest community, and that are extensible where more detail is needed.
 
-The general model of application profiles was described in the Singapore framework. This modeled the building blocks of a profile with an aim to maximize reusability. 
 
-![](prior_art/singapore-framework.png)
+# Proposal for a New Description Set Profile
 
-One implementation step was the creation of a Description Set Profile that contained the detailed, and potentially machine-actionable, description of the "things" the profile would describe and the terms used to describe them.
 
-![](http://www.dublincore.org/specifications/dublin-core/dc-dsp/2008-03-31/dsp-uml.png)
 
-### Proposal for a New Description Set Profile
-
-1. Classes and properties that are specific to the Description Set Profile are in a draft ttl file [here](dsp.ttl)
 1. The elements that would be needed to create a profile are defined in a table [here](schemaList.csv). Because RDF does not support validation of metadata schemas, it is hoped that the actionable DSP can be implemented in the [Shapes Expression](http://shex.io/) (ShEx) language.
