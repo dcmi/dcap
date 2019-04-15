@@ -29,3 +29,5 @@ There is an initial seeding of some documents to support these tasks. These docu
 1. Comparison of some [existing profile vocabularies](BIBFRAMEcompare.csv)
 1. [Elements list](schemaList.csv), based in part on the DSP
 
+
+2019-04-15: [check changes proposed in a PR](https://github.com/dcmi/dcap/pull/2/files/8ef86558a72d6d9dacb9d7d4d8268f98b372a77a)
