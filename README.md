@@ -20,7 +20,7 @@ Outcomes in this project will be:
 1. Alignment of the application profile vocabulary with actionable constraints, possibly using existing constraint languages
 1. Development of one or more example workflows using commonly known technologies
 1. Creation of reusable examples, especially of the most common functions
-1. If possible, the development of a demonstrator appliction for the creation of profiles
+1. If possible, the development of a demonstrator application for the creation of profiles
 
 All of this should be done keeping in mind the "core" concept that has been the philosophy behind the work of the Dublin Core Metadata Initiative. This favors simple solutions that can be used by the broadest community, and that are extensible where more detail is needed.
 
