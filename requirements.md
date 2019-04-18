@@ -17,6 +17,8 @@ Help someone else understand your data well enough to make use of it.  This is n
   * by making decisions visible
   * by providing a focus for process
 * To drive applications
+  * that validate different data representations
+    * create Schemas for XML (XSD, RelaxNG), JSON (JSON Schema), RDF (SHACL, ShEx)
 * To drive user interfaces
   * input forms
   * displays
