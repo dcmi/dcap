@@ -34,3 +34,8 @@ There is an initial seeding of some documents to support these tasks. These docu
 1. Comparison of some [existing profile vocabularies](BIBFRAMEcompare.csv)
 1. [Elements list](schemaList.csv), based in part on the DSP
 
+### Group Information
+1. [Group charter](http://www.dublincore.org/groups/application_profiles_ig/)
+1. [Email list information](https://lists.dublincore.org/mailman/listinfo/application-profiles-ig)
+1. [Email list archive](https://lists.dublincore.org/pipermail/application-profiles-ig/)
+
