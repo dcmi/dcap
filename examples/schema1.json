@@ -1,0 +1,43 @@
+
+{
+ "$schema": "http://json-schema.org/schema#",
+ "$id": "http://dcapexample.com/apPropertySchema.json",
+     "type": "object",
+     "properties": {
+     "APpropertyID": { 
+		"type": "string",
+		 "description": "URI for the property",
+		 "pattern": "(regex for URI here)"
+	 },
+    "APpropertyName": {
+		 "type": "string", 
+	 	 "description": "A metadata element name that is not a URI."
+	},
+    "APpropertyLabel": {
+		"type": "string",
+		"description": "A brief display label for the property. If using RDF-style language strings, only one label per language should be used"
+	 },
+	
+	"APpropertyDescription": {
+		"type": "string",
+		"description": "A description of the property at whatever length is needed"
+	}
+},
+ 	   "type": "object",
+	   "properties": {
+  		 "entityID": { 
+ 			 "type": "string",
+ 			"description": "URI for the entity"
+ 		 },
+     "entityLabel": {
+ 		"type": "string",
+ 		"description": "A brief display label for the entity. If using RDF-style language strings, only one label per language should be used"
+ 	 },
+	
+ 	"entityDescription": {
+ 		"type": "string",
+ 		"description": "A description of the entity at whatever length is needed"
+ 	}
+
+ }
+ }
