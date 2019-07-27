@@ -1,0 +1,11 @@
+{
+	"entityID": "12345",
+	"entityLabel": "Book",
+	"entityDescription": "This is the entity for the book",
+	"APproperties": {
+		"APpropertyName": "MARC 245",
+		"APpropertyLabel": "Main title",
+		"APpropertyDescription": "This is the main title for the book"
+		}
+
+}
