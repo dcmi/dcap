@@ -1,55 +1,55 @@
-DCAP entity,element,Sinopia entity,level 1 element,level 2 element,BIBFRAME entity,element,DSP entity,element
-descriptionSet,descSetID,Profile,id,,Profile,identifier,Description Set Template,
-,display name,,title,,,title,,
-,version,,version,,,description,,
-,version date,,date,,,date,,
-,topic,,,,,contact,,
-,creator,,author,description; min,,remark,,
-,rights,,,,,resource templates,,
-,open/closed,,,,,,,
-,description,,description,,,,,
-,,,remark,,,,,
-,,,schema,,,,,
-,,,adherence,description; min,,,,
-description,descID,resource,id,,Resource template,identifier,Description Template,ID
-,,,author,,,,,
-,,,date,,,,,
-,,,schema,,,,,
-,,,label,,,,,
-,display name,,title,,,resource identifier,,standalone
-,,,version,,,,,
-,description,,description,,,resource label,,minOccurs
-,usage note,,,,,contact,,maxOccurs
-,example,,,,,,,resource class
-,standalone,,,,,remark,,
-,class,,,,,property templates,,
-,min. occurrence,,,,,,,
-,max. occurrence,,,,,,,
-,statements,,,,,,,
-Statement,statementID,property,,,Property,,Statement template,minOccurs
-,property,,propertyURI,,,identifier,,maxOccurs
-,display name,,propertyLabel,,,property label,,type
-,description,,description,,,mandatory,Property constraints,list
-,usage note,,remark,,,,,Sub-property
-,example,,example,,,repeatable,,
-,,,enum (t/f),,,,,
-,min. occurrence,,mandatory,,,type,,
-,max. occurrence,,repeatable,,,value constraint,,
-,,,adherence,,,,,
-,value link,,,,,remark,,
-Value,valueID,,,,,,,
-,display name,,title,,Value constraint,language,Literal value constraints,literal list
-,short description,,description,,,language URI,,language (allowed)
-,usage note,,,,,,,language list
-,example,,example,,,language label,,syntax encoding scheme (SES)
-,,,,,,dataType,,SES list
-,datatype value constraint,,,,,value template reference,Non-literal constraints,desc. Template reference
-,max length,,,,,use values from,,class membership
-,min  length,,minLength,,,editable,,value URI occurrence
-,language tag constraint,,,,,remark,,value URI list
-,unique language constraint,,,,,,,vocab. Encoding scheme (allowed)
-,literal value list,valueConstraint,useValuesFrom,,,,,vocab. Encoding scheme list
-,datatype,,valueDataType,,Value DataType,dataType ID,,
-,,,defaultLiteral,,,dataType label,,
-,,,,,,dataType label hint,,
-,,,,,,remark,,
+DCAP entity,element,YAMA entity,element,Sinopia entity,level 1 element,level 2 element,BIBFRAME entity,element,DSP entity,element
+descriptionSet,descSetID,description_set,ID,Profile,id,,Profile,identifier,Description Set Template,
+,display name,,title,,title,,,title,,
+,version,,version,,version,,,description,,
+,version date,,date,,date,,,date,,
+,topic,,subject,,,,,contact,,
+,creator,,creator,,author,description, min,,remark,
+,rights,,license,,,,,resource templates,,
+,open/closed,,open,,,,,,,
+,description,,descriptions,,description,,,,,
+,,,,,remark,,,,,
+,,,,,schema,,,,,
+,,,,,adherence,description, min,,,
+description,descID,descriptions,,resource,id,,Resource template,identifier,Description Template,ID
+,,,label,,author,,,,,
+,,,,,date,,,,,
+,,,x class,,schema,,,,,resource class
+,,,x subclass,,label,,,,,
+,display name,,name,,title,,,resource identifier,,standalone
+,,,,,version,,,,,
+,description,,description,,description,,,resource label,,minOccurs
+,usage note,,long_description,,,,,contact,,maxOccurs
+,example,,,,,,,,,
+,standalone,,standalone,,,,,remark,,
+,class,,,,,,,property templates,,
+,min. occurrence,,min,,,,,,,
+,max. occurrence,,max,,,,,,,
+,statements,,statements,,,,,,,
+Statement,statementID,statements,,property,,,Property,,Statement template,minOccurs
+,property,,,,propertyURI,,,identifier,,maxOccurs
+,display name,,name ,,propertyLabel,,,property label,,type
+,description,,description,,description,,,mandatory,Property constraints,list
+,usage note,,long_description,,remark,,,,,Sub-property
+,example,,,,example,,,repeatable,,
+,,,label,,enum (t/f),,,,,
+,min. occurrence,,min,,mandatory,,,type,,
+,max. occurrence,,max,,repeatable,,,value constraint,,
+,,,type,,adherence,,,,,
+,value link,,,,,,,remark,,
+Value,valueID,,,,,,,,,
+,display name,,,,title,,Value constraint,language,Literal value constraints,literal list
+,short description,,,,description,,,language URI,,language (allowed)
+,usage note,,,,,,,,,language list
+,example,,,,example,,,language label,,syntax encoding scheme (SES)
+,,,constraint ID,,,,,dataType,,SES list
+,datatype value constraint,,,,,,,value template reference,Non-literal constraints,desc. Template reference
+,max length,,,,,,,use values from,,class membership
+,min  length,,,,minLength,,,editable,,value URI occurrence
+,language tag constraint,,,,,,,remark,,value URI list
+,unique language constraint,,,,,,,,,vocab. Encoding scheme (allowed)
+,literal value list,,,valueConstraint,useValuesFrom,,,,,vocab. Encoding scheme list
+,datatype,,,,valueDataType,,Value DataType,dataType ID,,
+,,,,,defaultLiteral,,,dataType label,,
+,,,,,,,,dataType label hint,,
+,,,,,,,,remark,,
