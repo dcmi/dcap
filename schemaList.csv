@@ -1,33 +1,29 @@
 Entity,label,cardinality,property?,value?,Notes
-descriptionSet,descSetID,"1,1",dsp:descriptionSet,xsd:literal,
+descriptionSet,,"0,1",dsp:descriptionSet,,
+,descSetID,"1,1",,xsd:literal,
 ,display name,"1,-1",rdfs:label,xsd:literal,one value per language
-,version,"0,1",,xsd:literal,
-,version date,"0,1",dct:date,xsd:datetime,
-,topic,"0,-1",dct:subject,"xsd:literal, xsd:IRI",DCT says advised to take from a list.
-,creator,"0,-1","dct:creator, dct:contributor",xsd:literal,
-,rights,"0,-1",dct:rights,xsd:literal,
-,open/closed,"0,1",sx:closed,xsd:boolean,default open?
 ,descriptions,"0,-1",dsp:description,xsd:literal (array),
-description,descID,"1,1",dsp:description,xsd:literal,
+description,,"0,-1",dsp:description,,
+,descID,"1,1",dct:identifier,xsd:literal,
 ,display name,"1,-1",rdfs:label,xsd:literal,one value per language?
 ,description,"0,1",dct:description,xsd:literal,
 ,example,"0,-1",vann:example,xsd:literal,
 ,usage note,"0,1",vann:usageNote,xsd:literal,
-,standalone,"0,1",,"yes, no, either",No' means the description can only be used if it is the object of a triple; yes & either seem to be equivalent
 ,class,"0,-1",rdf:type,rdfs:Class,The valid RDF  class(es) for this description; only for RDF data 
 ,min. occurrence,"0,1",sx:min,xsd:integer,Default 0
 ,max. occurrence,"0,1",sx:max,xsd:integer,Default -1
 ,statements,"0,-1",dsp:statement,xsd:literal (array),
-Statement,statementID,"1,1",dsp:statement,xsd:literal,
-,property,"1,1",(term),xsd:literal,
+statement,,"0,-1",dsp:statement,,
+,statementID,"1,1",dct:identifier,xsd:literal,
+,property name,"1,1",?,xsd:literal or URI,Expected to be a URI but minimally can just be the name of a metadata element recognized by a community
 ,display name,"0,-1",rdfs:label,xsd:literal,one value per language
 ,description,"0,-1",dct:description,xsd:literal,
 ,usage note,"0,-1",vann:usageNote,xsd:literal,
-,example,"0,-1",vann:example,xsd:literal,
 ,min. occurrence,"0,1",sx:minInclusive,xsd:integer,Default 0
 ,max. occurrence,"0,1",sx:maxInclusive,xsd:integer,Default -1
 ,value link,"0,1",sx:valueExpr,xsd:literal,Assuming a statement can be reused within a set
-Value,valueID,"1,1",dct:identifier,xsd:literal,
+value,,*,dsp:value (?),,* requires a statement; 1-1 with statement 
+,valueID,"1,1",dct:identifier,xsd:literal,
 ,display name,"0,-1",rdfs:label,literal or language literal,one value per language
 ,short description,"0,-1",dct:description,xsd:literal,
 ,usage note,"0,-1",vann:usageNote,xsd:literal,
