@@ -1,0 +1,208 @@
+{
+	"$schema": "http://json-schema.org/draft-03/schema#",
+	"type": "object",
+	"name": "Description Set",
+	"minimum": 0,
+	"maximum": 1,
+	"url": "http://example.com/DescriptionSet",
+	"properties": {
+		"descSetID": {
+			"minimum": 1,
+			"maximum": 1,
+			"type": "dct:identifier"
+		},
+		"displayName": {
+			"type": "xsd:literal",
+			"minimum": 1,
+			"maximum": -1,
+			"note": "one value per language"
+		},
+		"descriptions": {
+			"minimum": 0,
+			"maximum": -1,
+			"id": "dsp:description",
+			"type": "array"
+			}
+		},
+	"type": "object",
+	"name": "Description",
+	"minimum": 0,
+	"maximum": -1,
+	"url": "http://example.com/Description",
+	"properties": {
+		"descID": {
+			"minimum": 1,
+			"maximum": 1,
+			"type": "dct:identifier"
+			},
+		"display name": {
+			"minimum": 1,
+			"maximum": -1,
+			"type": "xsd:literal",
+			"note": "one value per language?"
+			},
+		"description":{
+			"minimum": 0,
+			"maximum": 1,
+			"type": "xsd:literal"
+		},
+		"example": {
+			"minimum": 0,
+			"maximum": -1,
+			"type": "xsd:literal"
+			},
+			"usageNote": {
+				"minimum": 0,
+				"maximum": 1,
+				"type": "xsd:literal"
+			},
+			"class": {
+				"minimum": 0,
+				"maximum": -1,
+				"type": "rdfs:Class",
+				"note": "The valid RDF class(es)for this description; only for RDF data"
+			},
+			"min. occurrence": {
+				"minimum": 0,
+				"maximum": 1,
+				"type": "xsd:integer",
+				"note": "Default = 0"
+			},
+			"max. occurrence": {
+				"minimum": 0,
+				"maximum": 1,
+				"type": "xsd:integer",
+				"note": "Default = unlimited"
+			},
+			"statements": {
+				"minimum": 0,
+				"maximum": -1,
+				"type": "array"
+			}
+		},
+  "type": "object", 
+  "name": "statement",
+  "minimum": 0,
+  "maximum": -1,
+  "url": "http://example.com/Description",
+  "properties": {
+	  "statementID": {
+		  "minimum": 1,
+		  "maximum": 1,
+		  "type": "xsd:literal"
+	  },
+	  "propertyName": {
+	  "minimum": 1,
+	  "maximum": 1,
+	  "type": "xsd:literal",
+	  "note": "Expected to be a URI but minimally can just be the name of a metadata element recognized by a community"
+  },
+	"display name": {
+		"minimum": 0,
+		"maximum": -1,
+		"type": "xsd:literal",
+		"note": "would be good to have a way to limit to one value per language"
+},
+	"description": {
+		"minimum": 0,
+		"maximum": -1,
+		"type": "xsd:literal"
+	},
+	"usage note": {
+	"minimum": 0,
+	"maximum": -1,
+	"type": "xsd:literal"
+},
+	"minOccurrence": {
+		"minimum": 0,
+		"maximum": 1,
+		"type": "xsd:integer",
+		"note": "if not included there is no minimum occurrence requirement. MinOccurrence 0 means not required; minOccurence >= 1 means required." 
+	},
+	"max. occurrence": {
+		"minimum": 0,
+		"maximum": 1,
+		"type": "xsd:integer",
+		"note": "If not included there is no maximum occurrence requirement. MaxOccurrence 1 means not repeatable. MaxOccurrence 0 is problematic because means 'cannot occur'."
+	},
+	"value link": {
+		"minimum": 0,
+		"maximum": 1,
+		"type": "xsd:literal",
+		"note": "This needs to be a link to a value description, unless the decision is to combine statements and values in a single object."
+	}
+	},
+	"type": "object",
+	"name": "value",
+	"note": "There should be only one value per statement.",
+	"properties": {
+		"valueID": {
+			"minimum": 1,
+			"maximum": 1,
+			"type": "xsd:literal",
+			"note": "A unique identifier within the instance 'record'"
+		},
+		"display name": {
+			"minimum": 0,
+			"maximum": -1,
+			"type": "xsd:literal",
+			"note": "would be good to have a way to limit to one value per language"
+	},
+	"description": {
+		"minimum": 0,
+		"maximum": -1,
+		"type": "xsd:literal"
+	},
+	"usage note": {
+	"minimum": 0,
+	"maximum": -1,
+	"type": "xsd:literal"
+	},
+	"example": {
+		"minimum": 0,
+		"maximum": -1,
+		"type": "xsd:literal"
+	},
+	"dataType": {
+		"minimum": 1,
+		"maximum": 1,
+		"type": "any xsd:datatype"
+	},
+	"datatypeValueConstraint": {
+		"minimum": 0,
+		"maximum": 1,
+		"type": "xsd:literal",
+		"note": "A grep-like string that defines a pattern"
+	},
+	"maxLength": {
+		"minimum": 0,
+		"maximum": 1,
+		"type": "xsd:integer",
+		"note": "Maximum length of the value, generally applied to a literal string. If not included there is no maximum length"
+	},
+	"minLength": {
+		"minimum": 0,
+		"maximum": 1,
+		"type": "xsd:integer",
+		"note": "Minimum length of the value, generally applied to a literal string. If not included there is no minimum length"
+	},
+	"languageTagConstraint": {
+		"minimum": 0,
+		"maximum": 1,
+		"type": "xsd:literal",
+		"note":"One or more language tags that are considered valid for the data. This could be an array of language tags, such as (en, fr, de)"
+	},
+	"uniqueLanguageConstraint":{
+		"minimum": 0,
+		"maximum": 1,
+		"type": "xsd:boolean",
+		"note": "This means that there is only one value allowed per language."
+	},
+	"literalValueList": {
+		"minimum": 0,
+		"maximum": 1,
+		"type": "literal array",
+		"note": "A delimited list of valid literal values, such as (blue,red,green)"
+	}
+}
+}
