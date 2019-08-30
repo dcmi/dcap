@@ -1,0 +1,625 @@
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta name="viewport" content="width=device-width"><meta charset="utf-8"><meta name="generator" content="ReSpec 23.7.0"><style>/* --- EXAMPLES --- */
+span.example-title {
+    text-transform: none;
+}
+aside.example, div.example, div.illegal-example {
+    padding: 0.5em;
+    margin: 1em 0;
+    position: relative;
+    clear: both;
+}
+div.illegal-example { color: red }
+div.illegal-example p { color: black }
+aside.example, div.example {
+    padding: .5em;
+    border-left-width: .5em;
+    border-left-style: solid;
+    border-color: #e0cb52;
+    background: #fcfaee;
+}
+
+aside.example div.example {
+    border-left-width: .1em;
+    border-color: #999;
+    background: #fff;
+}
+aside.example div.example span.example-title {
+    color: #999;
+}
+</style><style>/* --- ISSUES/NOTES --- */
+div.issue-title, div.note-title , div.ednote-title, div.warning-title {
+    padding-right:  1em;
+    min-width: 7.5em;
+    color: #b9ab2d;
+}
+div.issue-title { color: #e05252; }
+div.note-title, div.ednote-title { color: #2b2; }
+div.warning-title { color: #f22; }
+div.issue-title span, div.note-title span, div.ednote-title span, div.warning-title span {
+    text-transform: uppercase;
+}
+div.note, div.issue, div.ednote, div.warning {
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+.note &gt; p:first-child, .ednote &gt; p:first-child, .issue &gt; p:first-child, .warning &gt; p:first-child { margin-top: 0 }
+.issue, .note, .ednote, .warning {
+    padding: .5em;
+    border-left-width: .5em;
+    border-left-style: solid;
+}
+div.issue, div.note , div.ednote,  div.warning {
+    padding: 1em 1.2em 0.5em;
+    margin: 1em 0;
+    position: relative;
+    clear: both;
+}
+span.note, span.ednote, span.issue, span.warning { padding: .1em .5em .15em; }
+
+.issue {
+    border-color: #e05252;
+    background: #fbe9e9;
+}
+.issue.closed span.issue-number {
+    text-decoration: line-through;
+}
+
+.note, .ednote {
+    border-color: #52e052;
+    background: #e9fbe9;
+}
+
+.warning {
+    border-color: #f11;
+    border-width: .2em;
+    border-style: solid;
+    background: #fbe9e9;
+}
+
+.warning-title:before{
+    content: "⚠"; /*U+26A0 WARNING SIGN*/
+    font-size: 3em;
+    float: left;
+    height: 100%;
+    padding-right: .3em;
+    vertical-align: top;
+    margin-top: -0.5em;
+}
+
+li.task-list-item {
+    list-style: none;
+}
+
+input.task-list-item-checkbox {
+    margin: 0 0.35em 0.25em -1.6em;
+    vertical-align: middle;
+}
+
+.issue a.respec-gh-label {
+  padding: 5px;
+  margin: 0 2px 0 2px;
+  font-size: 10px;
+  text-transform: none;
+  text-decoration: none;
+  font-weight: bold;
+  border-radius: 4px;
+  position: relative;
+  bottom: 2px;
+}
+
+.issue a.respec-label-dark {
+  color: #fff;
+  background-color: #000;
+}
+
+.issue a.respec-label-light {
+  color: #000;
+  background-color: #fff;
+}
+</style>
+    
+    
+    <title>Shape Expressions Language 2.1</title>
+    <!-- link rel="stylesheet" href="css/wgio.min.css"/ ask Iovka -->
+    <link rel="stylesheet" href="http://shex.io/shex-semantics/local.css" />
+  <style id="respec-mainstyle">/*****************************************************************
+ * ReSpec 3 CSS
+ * Robin Berjon - http://berjon.com/
+ *****************************************************************/
+
+/* Override code highlighter background */
+.hljs {
+  background: transparent !important;
+}
+
+/* --- INLINES --- */
+h1 abbr,
+h2 abbr,
+h3 abbr,
+h4 abbr,
+h5 abbr,
+h6 abbr,
+a abbr {
+  border: none;
+}
+
+dfn {
+  font-weight: bold;
+}
+
+a.internalDFN {
+  color: inherit;
+  border-bottom: 1px solid #99c;
+  text-decoration: none;
+}
+
+a.externalDFN {
+  color: inherit;
+  border-bottom: 1px dotted #ccc;
+  text-decoration: none;
+}
+
+a.bibref {
+  text-decoration: none;
+}
+
+#references :target {
+  background: #eaf3ff;
+}
+
+cite .bibref {
+  font-style: normal;
+}
+
+code {
+  color: #c83500;
+}
+
+th code {
+  color: inherit;
+}
+
+/* --- TOC --- */
+
+.toc a,
+.tof a {
+  text-decoration: none;
+}
+
+a .secno,
+a .figno {
+  color: #000;
+}
+
+ul.tof,
+ol.tof {
+  list-style: none outside none;
+}
+
+.caption {
+  margin-top: 0.5em;
+  font-style: italic;
+}
+
+/* --- TABLE --- */
+
+table.simple {
+  border-spacing: 0;
+  border-collapse: collapse;
+  border-bottom: 3px solid #005a9c;
+}
+
+.simple th {
+  background: #005a9c;
+  color: #fff;
+  padding: 3px 5px;
+  text-align: left;
+}
+
+.simple th[scope="row"] {
+  background: inherit;
+  color: inherit;
+  border-top: 1px solid #ddd;
+}
+
+.simple td {
+  padding: 3px 10px;
+  border-top: 1px solid #ddd;
+}
+
+.simple tr:nth-child(even) {
+  background: #f0f6ff;
+}
+
+/* --- DL --- */
+
+.section dd&gt;p:first-child {
+  margin-top: 0;
+}
+
+.section dd&gt;p:last-child {
+  margin-bottom: 0;
+}
+
+.section dd {
+  margin-bottom: 1em;
+}
+
+.section dl.attrs dd,
+.section dl.eldef dd {
+  margin-bottom: 0;
+}
+
+#issue-summary&gt;ul,
+.respec-dfn-list {
+  column-count: 2;
+}
+
+#issue-summary li,
+.respec-dfn-list li {
+  list-style: none;
+}
+
+details.respec-tests-details {
+  margin-left: 1em;
+  display: inline-block;
+  vertical-align: top;
+}
+
+details.respec-tests-details&gt;* {
+  padding-right: 2em;
+}
+
+details.respec-tests-details[open] {
+  z-index: 999999;
+  position: absolute;
+  border: thin solid #cad3e2;
+  border-radius: 0.3em;
+  background-color: white;
+  padding-bottom: 0.5em;
+}
+
+details.respec-tests-details[open]&gt;summary {
+  border-bottom: thin solid #cad3e2;
+  padding-left: 1em;
+  margin-bottom: 1em;
+  line-height: 2em;
+}
+
+details.respec-tests-details&gt;ul {
+  width: 100%;
+  margin-top: -0.3em;
+}
+
+details.respec-tests-details&gt;li {
+  padding-left: 1em;
+}
+
+a[href].self-link:hover {
+  opacity: 1;
+  text-decoration: none;
+  background-color: transparent;
+}
+
+h2,
+h3,
+h4,
+h5,
+h6 {
+  position: relative;
+}
+
+aside.example .marker &gt; a.self-link {
+  color: inherit;
+}
+
+h2&gt;a.self-link,
+h3&gt;a.self-link,
+h4&gt;a.self-link,
+h5&gt;a.self-link,
+h6&gt;a.self-link {
+  border: none;
+  color: inherit;
+  font-size: 83%;
+  height: 2em;
+  left: -1.6em;
+  opacity: .5;
+  position: absolute;
+  text-align: center;
+  text-decoration: none;
+  top: 0;
+  transition: opacity .2s;
+  width: 2em;
+}
+
+h2&gt;a.self-link::before,
+h3&gt;a.self-link::before,
+h4&gt;a.self-link::before,
+h5&gt;a.self-link::before,
+h6&gt;a.self-link::before {
+  content: "§";
+  display: block;
+}
+
+@media (max-width: 767px) {
+  dd {
+    margin-left: 0;
+  }
+
+  /* Don't position self-link in headings off-screen */
+  h2&gt;a.self-link,
+  h3&gt;a.self-link,
+  h4&gt;a.self-link,
+  h5&gt;a.self-link,
+  h6&gt;a.self-link {
+    left: auto;
+    top: auto;
+  }
+}
+
+@media print {
+  .removeOnSave {
+    display: none;
+  }
+}
+</style><style>/*
+
+github.com style (c) Vasily Polovnyov &lt;vast@whiteants.net&gt;
+
+*/
+
+.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 0.5em;
+  color: #333;
+  background: #f8f8f8;
+}
+
+.hljs-comment,
+.hljs-quote {
+  color: #998;
+  font-style: italic;
+}
+
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-subst {
+  color: #333;
+  font-weight: bold;
+}
+
+.hljs-number,
+.hljs-literal,
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag .hljs-attr {
+  color: #008080;
+}
+
+.hljs-string,
+.hljs-doctag {
+  color: #d14;
+}
+
+.hljs-title,
+.hljs-section,
+.hljs-selector-id {
+  color: #900;
+  font-weight: bold;
+}
+
+.hljs-subst {
+  font-weight: normal;
+}
+
+.hljs-type,
+.hljs-class .hljs-title {
+  color: #458;
+  font-weight: bold;
+}
+
+.hljs-tag,
+.hljs-name,
+.hljs-attribute {
+  color: #000080;
+  font-weight: normal;
+}
+
+.hljs-regexp,
+.hljs-link {
+  color: #009926;
+}
+
+.hljs-symbol,
+.hljs-bullet {
+  color: #990073;
+}
+
+.hljs-built_in,
+.hljs-builtin-name {
+  color: #0086b3;
+}
+
+.hljs-meta {
+  color: #999;
+  font-weight: bold;
+}
+
+.hljs-deletion {
+  background: #fdd;
+}
+
+.hljs-addition {
+  background: #dfd;
+}
+
+.hljs-emphasis {
+  font-style: italic;
+}
+
+.hljs-strong {
+  font-weight: bold;
+  }
+  body.left { padding-left: 0; }
+</style>
+<link rel="stylesheet" href="https://www.w3.org/StyleSheets/TR/2016/base" />
+      </head>
+  
+  <body style="padding-left: 0">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+      
+    
+
+    <section id="shexj" class="appendix">
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+      <div class="shexjTable">
+    <p class="obj"><span class="obj"><a href="#dfn-shapes-schema" class="internalDFN" data-link-type="dfn">JSON-LD context</a> { "@context": "http://www.w3.org/ns/shex.jsonld"</span> }</p>
+<table class="shexj">
+  <tbody>
+    <tr class="obj"><th class="obj"><a id="dfn-shapes-schema" class="internalDFN" data-link-type="dfn">Schema</a></th><td>{</td><td>
+    <dfn class="param" data-lt="prefixes map|prefix" data-dfn-type="dfn" id="dfn-prefixes-map"></dfn>
+    <a class="param internalDFN" href="#dfn-start" data-link-type="dfn">start</a>:<a class="nobref internalDFN" href="#dfn-shapeexpr" data-link-type="dfn">shapeExpr</a>? <a class="param internalDFN" href="#dfn-shapes" data-link-type="dfn">shapes</a>:[<a class="nobref internalDFN" href="#dfn-shapeexpr" data-link-type="dfn">shapeExpr</a>+]? }</td></tr>
+  <tr class="nob"><th class="nob"><a id="dfn-shapeexpr" class="internalDFN" data-link-type="dfn">shapeExpr</a></th>         <td>=</td> <td><a class="objref internalDFN" href="#dfn-nodeconstraint" data-link-type="dfn">NodeConstraint</a> | <a class="objref internalDFN" href="#dfn-shape" data-link-type="dfn">Shape</a> ;</td></tr>
+  
+  
+  
+  <tr class="nob"><th class="nob"><a id="dfn-shapeexprlabel" class="internalDFN" data-link-type="dfn">shapeExprLabel</a></th>       <td>=</td> <td><a href="#dfn-iriref" class="internalDFN" data-link-type="dfn">IRIREF</a> ;</td></tr>
+  <tr class="obj"><th class="obj"><a id="dfn-nodeconstraint" class="internalDFN" data-link-type="dfn">NodeConstraint</a></th> <td>{</td><td><span class="param">id</span>:<a class="nobref internalDFN" href="#dfn-shapeexprlabel" data-link-type="dfn">shapeExprLabel</a> <span class="param">nodeKind</span>:(<span class="literal">"iri"</span> | <span class="literal">"bnode"</span> | <span class="literal">"nonliteral"</span> | <span class="literal">"literal"</span>)? <span class="param">datatype</span>:<a href="#dfn-iriref" class="internalDFN" data-link-type="dfn">IRIREF</a>? <a class="nobref internalDFN" href="#dfn-numericfacet" data-link-type="dfn">numericFacet</a>* <span class="param">values</span>:[<a class="nobref internalDFN" href="#dfn-valuesetvalue" data-link-type="dfn">valueSetValue</a>]? }</td></tr>
+  
+  <tr class="nob"><th class="nob"><a id="dfn-numericfacet" class="internalDFN" data-link-type="dfn">numericFacet</a></th>     <td>=</td><td>(<span class="param">mininclusive</span>|<span class="param">minexclusive</span>|<span class="param">maxinclusive</span>|<span class="param">maxexclusive</span>):<a class="nobref internalDFN" href="#dfn-numericliteral" data-link-type="dfn">numericLiteral</a> </td></tr>
+  
+  <tr class="nob"><th class="nob"><a id="dfn-numericliteral" class="internalDFN" data-link-type="dfn">numericLiteral</a></th> <td>=</td><td><a href="#dfn-integer" class="internalDFN" data-link-type="dfn">INTEGER</a> | <a href="#dfn-decimal" class="internalDFN" data-link-type="dfn">DECIMAL</a> | <a href="#dfn-double" class="internalDFN" data-link-type="dfn">DOUBLE</a> ;</td></tr>
+  <tr class="nob"><th class="nob"><a id="dfn-valuesetvalue" class="internalDFN" data-link-type="dfn">valueSetValue</a></th><td>=</td><td><a class="nobref internalDFN" href="#dfn-objectvalue" data-link-type="dfn">objectValue</a> | <a class="objref internalDFN" href="#dfn-iristem" data-link-type="dfn">IriStem</a> ;</td></tr>
+  <tr class="nob"><th class="nob"><a id="dfn-objectvalue" class="internalDFN" data-link-type="dfn">objectValue</a></th><td>=</td><td><a href="#dfn-iriref" class="internalDFN" data-link-type="dfn">IRIREF</a> | <a href="#dfn-objectliteral" class="internalDFN" data-link-type="dfn">ObjectLiteral</a> ;</td></tr>
+  <tr class="nob"><th class="nob"><a id="dfn-objectliteral" class="internalDFN" data-link-type="dfn">ObjectLiteral</a></th><td>{</td><td><span class="param">value</span>:<a href="#dfn-string" class="internalDFN" data-link-type="dfn">STRING</a> <span class="param">language</span>:<a href="#dfn-string" class="internalDFN" data-link-type="dfn">STRING</a>? <span class="param">type</span>:<a href="#dfn-string" class="internalDFN" data-link-type="dfn">STRING</a>? }</td></tr>
+  <tr class="obj"><th class="obj"><a id="dfn-iristem" class="internalDFN" data-link-type="dfn">IriStem</a></th><td>{</td><td><span class="param">stem</span>:<a href="#dfn-iriref" class="internalDFN" data-link-type="dfn">IRIREF</a> }</td></tr>
+  
+  
+  
+  
+  
+  
+  
+  <tr class="obj"><th class="obj"><a id="dfn-shape" class="internalDFN" data-link-type="dfn">Shape</a></th>                       <td>{</td><td><span class="param">id</span>:<a class="nobref internalDFN" href="#dfn-shapeexprlabel" data-link-type="dfn">shapeExprLabel</a> <span class="param">expression</span>:<a class="nobref internalDFN" href="#dfn-tripleexpr" data-link-type="dfn">tripleExpr</a>}</td></tr>
+  <tr class="nob"><th class="nob"><a id="dfn-tripleexpr" class="internalDFN" data-link-type="dfn">tripleExpr</a></th>             <td>=</td><td><a class="objref internalDFN" href="#dfn-eachof" data-link-type="dfn">EachOf</a> | <a class="objref internalDFN" href="#dfn-tripleconstraint" data-link-type="dfn">TripleConstraint</a> ;</td></tr>
+  <tr class="obj"><th class="obj"><a id="dfn-eachof" class="internalDFN" data-link-type="dfn">EachOf</a></th>                     <td>{</td><td><span class="param">expressions</span>:[<a class="nobref internalDFN" href="#dfn-tripleexpr" data-link-type="dfn">tripleExpr</a>}</td></tr>
+  
+  <tr class="obj"><th class="obj"><a id="dfn-tripleconstraint" class="internalDFN" data-link-type="dfn">TripleConstraint</a></th> <td>{</td><td><a class="param" href="https://www.w3.org/TR/rdf11-concepts/#dfn-predicate">predicate</a>:<a href="#dfn-iriref" class="internalDFN" data-link-type="dfn">IRIREF</a> <span class="param">valueExpr</span>:<a class="nobref internalDFN" href="#dfn-shapeexpr" data-link-type="dfn">shapeExpr</a>? <span class="param">min</span>:<a href="#dfn-integer" class="internalDFN" data-link-type="dfn">INTEGER</a>? <span class="param">max</span>:<a href="#dfn-integer" class="internalDFN" data-link-type="dfn">INTEGER</a>}</td></tr>
+  
+</tbody></table>
+
+</div>
+
+    </section>
+
+    <h2>ShExC example</h2>
+    <pre>
+PREFIX dc: &lt;http://purl.org/dc/terms/&gt;
+PREFIX foaf: &lt;http://xmlns.com/foaf/0.1/&gt;
+PREFIX xsd: &lt;http://www.w3.org/2001/XMLSchema#&gt;
+BASE &lt;http://a.example/schema&gt;
+
+&lt;#book&gt; {
+  dc:title xsd:string ;
+  dc:creator @&lt;#person&gt;+ ;
+}
+
+&lt;#person&gt; {
+  foaf:name xsd:string+ ;
+  foaf:homepage IRI?
+}
+    </pre>
+
+    <h2>ShExJ-Lite equivalent</h2>
+    <pre>
+{
+  "type": "Schema",
+  "@context": "http://www.w3.org/ns/shex.jsonld",
+  "shapes": [
+    {
+      "type": "Shape",
+      "id": "http://a.example/schema#book",
+      "expression": {
+        "type": "EachOf",
+        "expressions": [
+          {
+            "type": "TripleConstraint",
+            "predicate": "http://purl.org/dc/terms/title",
+            "valueExpr": {
+              "type": "NodeConstraint",
+              "datatype": "http://www.w3.org/2001/XMLSchema#string"
+            }
+          },
+          {
+            "type": "TripleConstraint",
+            "predicate": "http://purl.org/dc/terms/creator",
+            "valueExpr": "http://a.example/schema#person",
+            "min": 1,
+            "max": -1
+          }
+        ]
+      }
+    },
+    {
+      "type": "Shape",
+      "id": "http://a.example/schema#person",
+      "expression": {
+        "type": "EachOf",
+        "expressions": [
+          {
+            "type": "TripleConstraint",
+            "predicate": "http://xmlns.com/foaf/0.1/name",
+            "valueExpr": {
+              "type": "NodeConstraint",
+              "datatype": "http://www.w3.org/2001/XMLSchema#string"
+            },
+            "min": 1,
+            "max": -1
+          },
+          {
+            "type": "TripleConstraint",
+            "predicate": "http://xmlns.com/foaf/0.1/homepage",
+            "valueExpr": {
+              "type": "NodeConstraint",
+              "nodeKind": "iri"
+            },
+            "min": 0,
+            "max": 1
+          }
+        ]
+      }
+    }
+  ]
+}    </pre>
+
+
+    
+
+    
+    
+  
+
+
+</body></html>
