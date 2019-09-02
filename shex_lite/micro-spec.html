@@ -498,15 +498,20 @@ github.com style (c) Vasily Polovnyov &lt;vast@whiteants.net&gt;
     <p class="obj"><span class="obj"><a href="#dfn-shapes-schema" class="internalDFN" data-link-type="dfn">JSON-LD context</a> { "@context": "http://www.w3.org/ns/shex.jsonld"</span> }</p>
 <table class="shexj">
   <tbody>
-    <tr class="obj"><th class="obj"><a id="dfn-shapes-schema" class="internalDFN" data-link-type="dfn">Schema</a></th><td>{</td><td>
-    <dfn class="param" data-lt="prefixes map|prefix" data-dfn-type="dfn" id="dfn-prefixes-map"></dfn>
-    <a class="param internalDFN" href="#dfn-start" data-link-type="dfn">start</a>:<a class="nobref internalDFN" href="#dfn-shapeexpr" data-link-type="dfn">shapeExpr</a>? <a class="param internalDFN" href="#dfn-shapes" data-link-type="dfn">shapes</a>:[<a class="nobref internalDFN" href="#dfn-shapeexpr" data-link-type="dfn">shapeExpr</a>+]? }</td></tr>
+    <tr class="obj">
+      <th class="obj"><a id="dfn-shapes-schema" class="internalDFN" data-link-type="dfn">Schema</a></th>
+      <td>{</td>
+      <td>
+        <dfn class="param" data-lt="prefixes map|prefix" data-dfn-type="dfn" id="dfn-prefixes-map"></dfn>
+        <a class="param internalDFN" href="#dfn-start" data-link-type="dfn">start</a>:<a class="nobref internalDFN" href="#dfn-shapeexpr" data-link-type="dfn">shapeExpr</a>? <a class="param internalDFN" href="#dfn-shapes" data-link-type="dfn">shapes</a>:[<a class="nobref internalDFN" href="#dfn-shapeexpr" data-link-type="dfn">shapeExpr</a>+]? }
+      </td>
+    </tr>
   <tr class="nob"><th class="nob"><a id="dfn-shapeexpr" class="internalDFN" data-link-type="dfn">shapeExpr</a></th>         <td>=</td> <td><a class="objref internalDFN" href="#dfn-nodeconstraint" data-link-type="dfn">NodeConstraint</a> | <a class="objref internalDFN" href="#dfn-shape" data-link-type="dfn">Shape</a> ;</td></tr>
   
   
   
   <tr class="nob"><th class="nob"><a id="dfn-shapeexprlabel" class="internalDFN" data-link-type="dfn">shapeExprLabel</a></th>       <td>=</td> <td><a href="http://shex.io/shex-semantics/#dfn-iriref" class="internalDFN" data-link-type="dfn">IRIREF</a> ;</td></tr>
-  <tr class="obj"><th class="obj"><a id="dfn-nodeconstraint" class="internalDFN" data-link-type="dfn">NodeConstraint</a></th> <td>{</td><td><span class="param">id</span>:<a class="nobref internalDFN" href="#dfn-shapeexprlabel" data-link-type="dfn">shapeExprLabel</a> <span class="param">nodeKind</span>:(<span class="literal">"iri"</span> | <span class="literal">"bnode"</span> | <span class="literal">"nonliteral"</span> | <span class="literal">"literal"</span>)? <span class="param">datatype</span>:<a href="http://shex.io/shex-semantics/#dfn-iriref" class="internalDFN" data-link-type="dfn">IRIREF</a>? <a class="nobref internalDFN" href="#dfn-numericfacet" data-link-type="dfn">numericFacet</a>* <span class="param">values</span>:[<a class="nobref internalDFN" href="#dfn-valuesetvalue" data-link-type="dfn">valueSetValue</a>]? }</td></tr>
+  <tr class="obj"><th class="obj"><a id="dfn-nodeconstraint" class="internalDFN" data-link-type="dfn">NodeConstraint</a></th> <td>{</td><td><span class="param">id</span>:<a class="nobref internalDFN" href="#dfn-shapeexprlabel" data-link-type="dfn">shapeExprLabel</a> <span class="param">nodeKind</span>:(<span class="literal">"iri"</span> | <span class="literal">"bnode"</span> | <span class="literal">"nonliteral"</span> | <span class="literal">"literal"</span>)? <span class="param">datatype</span>:<a href="http://shex.io/shex-semantics/#dfn-iriref" class="internalDFN" data-link-type="dfn">IRIREF</a>? <a class="nobref internalDFN" href="#dfn-numericfacet" data-link-type="dfn">numericFacet</a>* <span class="param">values</span>:[<a class="nobref internalDFN" href="#dfn-valuesetvalue" data-link-type="dfn">valueSetValue</a>+]? }</td></tr>
   
   <tr class="nob"><th class="nob"><a id="dfn-numericfacet" class="internalDFN" data-link-type="dfn">numericFacet</a></th>     <td>=</td><td>(<span class="param">mininclusive</span>|<span class="param">minexclusive</span>|<span class="param">maxinclusive</span>|<span class="param">maxexclusive</span>):<a class="nobref internalDFN" href="#dfn-numericliteral" data-link-type="dfn">numericLiteral</a> </td></tr>
   
@@ -528,7 +533,8 @@ github.com style (c) Vasily Polovnyov &lt;vast@whiteants.net&gt;
   
   <tr class="obj"><th class="obj"><a id="dfn-tripleconstraint" class="internalDFN" data-link-type="dfn">TripleConstraint</a></th> <td>{</td><td><a class="param" href="https://www.w3.org/TR/rdf11-concepts/#dfn-predicate">predicate</a>:<a href="http://shex.io/shex-semantics/#dfn-iriref" class="internalDFN" data-link-type="dfn">IRIREF</a> <span class="param">valueExpr</span>:<a class="nobref internalDFN" href="#dfn-shapeexpr" data-link-type="dfn">shapeExpr</a>? <span class="param">min</span>:<a href="http://shex.io/shex-semantics/#dfn-integer" class="internalDFN" data-link-type="dfn">INTEGER</a>? <span class="param">max</span>:<a href="http://shex.io/shex-semantics/#dfn-integer" class="internalDFN" data-link-type="dfn">INTEGER</a>}</td></tr>
   
-</tbody></table>
+</tbody>
+</table>
 
 </div>
 
