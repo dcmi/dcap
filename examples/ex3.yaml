@@ -7,11 +7,11 @@ value:
     dataType: literal 
     minLength: 3 
     maxLength: 250
-	
+    
   - &value2
 	  valueID: value2
 	  dataType: literal
-	  
+
   - &value3
 	  valueID: value3
 	  dataType: xsd:mbox
