@@ -20,7 +20,7 @@ statement:
 
   - &title
     statementID: title 
-    displayName: title 
+    displayName: Title 
     value : *value_literal_3_250
 
   - &name
