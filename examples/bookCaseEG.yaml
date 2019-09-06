@@ -1,0 +1,60 @@
+%YAML 1.1
+---
+value:
+
+  - &value_literal_3_250
+    valueID: value_literal_3_250
+    dataType: literal 
+    minLength: 3 
+    maxLength: 250
+	
+  - &value2
+	  valueID: value2
+	  dataType: literal
+	  
+  - &value3
+	  valueID: value3
+	  dataType: xsd:mbox
+
+statement:
+
+  - &title
+    statementID: title 
+    displayName: title 
+    value : *value_literal_3_250
+
+  - &name
+    statementID: name 
+    displayName: Name
+	value: *value2
+  
+  - &homepage
+    statementID: homepage
+    displayName: Homepage 
+	value: *value3
+
+description:
+
+  - &book
+    descID: book 
+    displayName: Book
+    statements: 
+      - << : *title
+        minOccur : 1
+        maxOccur : 1
+
+  - &creator
+    descID: creator 
+    displayName: Creator 
+    statements: 
+      - << : *name
+        minOccur : 1
+        maxOccur : -1
+      - << : *homepage
+        minOccur : 0
+        maxOccur : 1
+
+descriptionSet: 
+
+  descSetID: 123
+  descriptions : [*book, *creator]
