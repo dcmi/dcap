@@ -1,0 +1,65 @@
+https://dcmi.github.io/dcap/shex_lite/micro-spec.html
+
+1. A Schema has 
+   * zero or one 'start' (a shapeExpr)
+   * zero or one array, 'shapes' (consisting of one or more shapeExpr)
+
+2. A shapeExpr is either
+   * a NodeConstraint or 
+   * a Shape
+
+3. A shapeExprLabel is 
+   * an IRI reference
+
+4. A NodeConstraint has
+   * exactly one 'id' (a shapeExprLabel)
+   * zero or one 'nodeKind' ("iri", "bnode", "nonliteral", or "literal")
+   * zero or one 'datatype' (an IRI reference)
+   * zero or more 'numericFacet'
+   * zero or one array, 'values' (consisting of one or more valueSetValue)
+
+5. A numericFacet is one of:
+   * 'mininclusive' (a numericaLiteral) or
+   * 'minexclusive' (a numericaLiteral) or
+   * 'maxinclusive' (a numericaLiteral) or
+   * 'maxexclusive' (a numericaLiteral)
+
+6. A numericLiteral is either 
+   * an integer or
+   * a decimal number or
+   * a float
+
+7. A valueSetValue is either 
+   * an objectValue or 
+   * an IriStem
+
+8. An objectValue is either
+   * an IRI reference or
+   * an ObjectLiteral
+
+9. An ObjectLiteral has 
+   * exactly one 'value' (a string)
+   * zero or one 'language' (a string)
+   * zero or one 'type' (a string)
+
+10. An IriStem has
+   * exactly one 'stem' (an IRI reference)
+
+11. A Shape has
+   * exactly one 'id' (a shapeExprLabel)
+   * exactly one 'expression' (a tripleExpr)
+
+12. A tripleExpr is either 
+    * exactly one EachOf or 
+    * exactly one TripleConstraint
+
+13. An EachOf has 
+    * exactly one array, 'expressions' (consisting of one or more tripleExpr) - error?
+
+14. A TripleConstraint has  
+    * exactly one 'predicate' (an IRI reference)
+    * zero or one 'valueExpr' (a shapeExpr)
+    * zero or one 'min' (an integer)
+    * zero or one 'max' (an integer)
+
+
