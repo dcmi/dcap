@@ -7,14 +7,14 @@ value:
     dataType: literal 
     minLength: 3 
     maxLength: 250
-	
+
   - &value2
-	  valueID: value2
-	  dataType: literal
-	  
+    valueID: value2
+    dataType: literal
+    
   - &value3
-	  valueID: value3
-	  dataType: xsd:mbox
+    valueID: value3
+    dataType: xsd:mbox
 
 statement:
 
@@ -26,12 +26,12 @@ statement:
   - &name
     statementID: name 
     displayName: Name
-	value: *value2
+    value: *value2
   
   - &homepage
     statementID: homepage
     displayName: Homepage 
-	value: *value3
+    value: *value3
 
 description:
 
