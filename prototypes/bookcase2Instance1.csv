@@ -1,0 +1,6 @@
+Entity_ID,Entity_label,statementID,property,propLabel,cardinality,valuetype
+book,Book,creator,dct:creator,Author,"0,-1",entity
+,,title,dct:title,Title,"1,1",literal
+,,pubDate,dct::date,Year of publicaton,"1,1",xsd:year
+person,Person,name,foaf:Name,Name,"1,1",literal
+,,email,foaf:mbox,Email,"0,1",URI
