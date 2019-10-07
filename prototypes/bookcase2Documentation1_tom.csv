@@ -3,4 +3,4 @@ book,dct:creator,@person,entity,"0,-1",Author,Value to be validated as a person 
 ,dct:title,,literal,"1,1",Title,
 ,dct:date,,date,"1,1",Date,Use form: YYYY-MM-DD
 person,foaf:name,,literal,"1,1",Name,Use form: FirstName LastName
-,foaf:mbox,,URI,"0,1",Email,Email address in mbox:foo@bar.org form
+,foaf:mbox,,URI,"0,1",Email,Use form: mbox:foo@bar.org
