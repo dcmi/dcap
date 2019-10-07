@@ -2,5 +2,5 @@ Entity_ID,Property,ValueType,Value,Cardinality
 book,dct:creator,entity,person,"0,-1"
 ,dct:title,literal,"Flower arranging simplified","1,1"
 ,dct::date,xsd:date,2017,"1,1"
-person,literal,foaf:name,"John Smith","1,1"
+person,foaf:name,literal,"John Smith","1,1"
 ,foaf:mbox,email,john@example.org,"0,1"
