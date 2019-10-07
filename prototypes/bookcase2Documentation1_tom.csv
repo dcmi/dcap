@@ -1,6 +1,6 @@
-Entity_ID,Property,ValueType,Value,Cardinality,Property_Label,Annotation
-book,dct:creator,entity,person,"0,-1",Author,Value to be validated as a person entity
-,dct:title,literal,,"1,1",Title,
-,dct::date,xsd:date,,"1,1",Date,Use form: YYYY-MM-DD
-person,foaf:name,literal,,"1,1",Name,Use form: FirstName LastName
-,foaf:mbox,URI,,"0,1",Email,Email address in mbox:foo@bar.org form
+Entity_ID,Property,Value,ValueType,Cardinality,Property_Label,Annotation
+book,dct:creator,entity:person"0,-1",Author,Value to be validated as a person entity
+,dct:title,,literal,"1,1",Title,
+,dct:date,,date,"1,1",Date,Use form: YYYY-MM-DD
+person,foaf:name,,literal,"1,1",Name,Use form: FirstName LastName
+,foaf:mbox,,URI,"0,1",Email,Email address in mbox:foo@bar.org form

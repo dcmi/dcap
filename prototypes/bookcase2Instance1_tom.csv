@@ -1,6 +1,6 @@
-Entity_ID,Property,ValueType,Value,Cardinality
-book,dct:creator,entity,person,"0,-1"
-,dct:title,literal,"Flower arranging simplified","1,1"
-,dct::date,xsd:date,2017,"1,1"
-person,foaf:name,literal,"John Smith","1,1"
-,foaf:mbox,URI,mbox:john@example.org,"0,1"
+Entity_ID,Property,Value
+book,dct:creator,entity:person
+,dct:title,Flower arranging simplified
+,dct::date,xsd:2017
+person,foaf:name,John Smith
+,foaf:mbox,mbox:john@example.org
