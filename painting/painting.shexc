@@ -1,0 +1,28 @@
+# https://www.wikidata.org/wiki/EntitySchema:E130
+PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+start = @<painting>
+
+<painting> {
+    # instance of painting
+    wdt:P31 [wd:Q3305213] ;
+    # inception
+    wdt:P571 xsd:dateTime ? ;
+    # location
+    wdt:P276 . + ;
+    # title
+    wdt:P1476 . + ;
+    # collection
+    wdt:P195 . + ;
+    # creator
+    wdt:P170 @<creator>+
+}
+
+<creator> {
+  wdt:P31 [wd:~] ;
+}
+
+# Proposed test for SPARQL - Top 25 paintings
+# SELECT ?id WHERE { VALUES ?id { wd:Q12418 wd:Q45585 wd:Q175036 wd:Q29530 wd:Q185372 wd:Q219831 wd:Q151047 wd:Q208758 wd:Q25729 wd:Q154469 wd:Q474338 wd:Q328523 wd:Q321303 wd:Q1892745 wd:Q334138 wd:Q1091086 wd:Q698487 wd:Q212616 wd:Q152509 wd:Q152867 wd:Q220859 wd:Q734834  } }
