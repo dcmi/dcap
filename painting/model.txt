@@ -1,0 +1,18 @@
+Entity Template
+    Entity ID
+    Entity Label
+
+Statement Template  
+    Property constraints
+        Property label
+        Property URI
+    Value Constraints
+        Value type [ entity / string / URI ]
+        Value entity ID
+        Value list
+        Value URI stem
+        Value string language
+        Value string datatype
+    Statement Cardinality
+        Min
+        Max
