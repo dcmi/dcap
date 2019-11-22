@@ -1,1 +1,1 @@
-Entity_ID,Entity_label,statementID,property,propLabel,cardinality,valuetype,annotation
+Entity_name,Entity_label,statementID,Property,Property_Label,Cardinality,Valuetype,Annotation
