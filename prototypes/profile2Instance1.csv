@@ -1,4 +1,4 @@
-Entity_name,Entity_label,statementID,Property,Property_label,Cardinality,Valuetype,Annotation
+Entity_name,Entity_label,StatementID,Property,Property_label,Cardinality,Valuetype,Annotation
 book,Book,creator,dct:creator,Author,"0,-1",entity,"Author is not required; no limit on the number"
 ,,title,dct:title,Title,"1,1",literal,"Each book must have a title"
 ,,pubDate,dct:date,Year of publication,"1,1",xsd:year,"Only the year, 9999"
