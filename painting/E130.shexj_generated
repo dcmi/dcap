@@ -1,0 +1,78 @@
+{
+  "type": "Schema",
+  "start": "https://rawgit.com/shexSpec/shex.js/master/packages/shex-webapp/doc/painting",
+  "shapes": [
+    {
+      "type": "Shape",
+      "id": "https://rawgit.com/shexSpec/shex.js/master/packages/shex-webapp/doc/creator",
+      "expression": {
+        "type": "TripleConstraint",
+        "predicate": "http://www.wikidata.org/prop/direct/P31",
+        "valueExpr": {
+          "type": "NodeConstraint",
+          "values": [
+            {
+              "type": "IriStem",
+              "stem": "http://www.wikidata.org/entity/"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "type": "Shape",
+      "id": "https://rawgit.com/shexSpec/shex.js/master/packages/shex-webapp/doc/painting",
+      "expression": {
+        "type": "EachOf",
+        "expressions": [
+          {
+            "type": "TripleConstraint",
+            "predicate": "http://www.wikidata.org/prop/direct/P31",
+            "valueExpr": {
+              "type": "NodeConstraint",
+              "values": [
+                "http://www.wikidata.org/entity/Q3305213"
+              ]
+            }
+          },
+          {
+            "type": "TripleConstraint",
+            "predicate": "http://www.wikidata.org/prop/direct/P571",
+            "valueExpr": {
+              "type": "NodeConstraint",
+              "datatype": "http://www.w3.org/2001/XMLSchema#dateTime"
+            },
+            "min": 0,
+            "max": 1
+          },
+          {
+            "type": "TripleConstraint",
+            "predicate": "http://www.wikidata.org/prop/direct/P276",
+            "min": 1,
+            "max": -1
+          },
+          {
+            "type": "TripleConstraint",
+            "predicate": "http://www.wikidata.org/prop/direct/P1476",
+            "min": 1,
+            "max": -1
+          },
+          {
+            "type": "TripleConstraint",
+            "predicate": "http://www.wikidata.org/prop/direct/P195",
+            "min": 1,
+            "max": -1
+          },
+          {
+            "type": "TripleConstraint",
+            "predicate": "http://www.wikidata.org/prop/direct/P170",
+            "valueExpr": "https://rawgit.com/shexSpec/shex.js/master/packages/shex-webapp/doc/creator",
+            "min": 1,
+            "max": -1
+          }
+        ]
+      }
+    }
+  ],
+  "@context": "http://www.w3.org/ns/shex.jsonld"
+}
