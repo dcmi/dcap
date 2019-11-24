@@ -1,0 +1,8 @@
+﻿Entity_name,Property,Property_label,Mand,Repeat,Value,Value_type,Annotation
+painting,wdt:P31,Is a,yes,no,wd:Q3305213,URI,"Instance of ""painting"""
+,wdt:P571,Date of inception,no,no,,DateTime,
+,wdt:P276,Location,yes,yes,,,
+,wdt:P1476,Title,yes,yes,,,
+,wdt:P195,Collection,yes,yes,,,
+,wdt:P170,Creator,yes,yes,creator,Entity_name,
+creator,wdt:P31,Is a,yes,no,wd:,URIStem,
