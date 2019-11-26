@@ -1,0 +1,8 @@
+﻿Entity_name,Entity_label,Property,Property_label,Cardinality,Value,Value_type,Annotation
+painting,Painting,wdt:P31,Is a,1..1,wd:Q3305213,URI,"instance of ""painting"""
+,,wdt:P571,Date of inception,0..1,,DateTime,
+,,wdt:P276,Location,1..-1,,,
+,,wdt:P1476,Title,1..-1,,,
+,,wdt:P195,Collection,1..-1,,,
+,,wdt:P170,Creator,1..-1,creator,Entity_name,
+creator,Artist,wdt:P31,Is a,1..1,wd:,URIStem,"instance of ""creator"""
