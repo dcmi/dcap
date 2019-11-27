@@ -1,5 +1,5 @@
 Entity_name,Entity_label,Statement_ID,Property,Property_Label,Cardinality,Value_type,Annotation
-book,Book,creator,dct:creator,Author,"0,-1",entity,"Author is not required; no limit on the number"
+book,Book,creator,dct:creator,Author,"0,-1",@person,"Author is not required; no limit on the number"
 ,,title,dct:title,Title,"1,1",literal,"Each book must have a title"
 ,,pubDate,dct:date,Year of publication,"1,1",xsd:year,"Only the year, 9999"
 person,Person,name,foaf:Name,Name,"1,1",literal,"Each person has one name"
