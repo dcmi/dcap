@@ -12,7 +12,7 @@ The prototypes may also show instance data that conforms to the profile, but we 
 
 ## Minimal profile templates
 
-#3# [Wikidata example](wikidata_painting)
+### [Wikidata example](wikidata_painting)
 
 Presented at DCMI 2019, this prototype has a simple, one "spreadsheet" csv file as input, and uses a program (available in a Jupyter notebook) to convert the file to the Wikidata Entity Schema format that is expressed in ShEx.
 
