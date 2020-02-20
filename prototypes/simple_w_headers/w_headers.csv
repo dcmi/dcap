@@ -1,0 +1,6 @@
+Entity Description Template,,Statement Template,,,,,,,,,,
+Entity-ID,Entity Label,Property Constraints,,Value Constraints,,,,,,,Cardinality,
+,,Property Label,Prefixed Property URI,Value Kind,Value Entity-Ref,Value URI,Value String,Value List,String Language,String Datatype,Min,Max
+book,Book,Creator,dcterms:creator,bnode,creator,,,,,,1,1
+creator,Creator,Name,foaf:name,literal,,,,,,,1,-1
+,,Homepage,foaf:homepage,uri,,,,,,,0,1
