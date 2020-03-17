@@ -1,0 +1,7 @@
+Entity_name,Entity_label,Statement_ID,Property,Property_Label,Mandatory,Repeatable,Value_type,Annotation
+book,Book,creator,dct:creator,Author,y,y,@person,"Author is not required; no limit on the number"
+,,title,dct:title,Title,y,n,literal,"Each book must have a title"
+,,pubDate,dct:date,Year of publication,y,n,xsd:year,"Only the year, 9999"
+person,Person,name,foaf:Name,Name,y,n,literal,"Each person has one name"
+,,email,foaf:mbox,Email,n,y,URI,"Email is optional but only one allowed"
+,,birthDate,dct:date,Birth year, n,y,xsd:year,"Only the year, 9999"
