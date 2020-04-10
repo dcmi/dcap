@@ -1,3 +1,5 @@
+*Group Progress ["cheat sheet"](https://gist.github.com/tombaker/00e47cf4771dff8566a44529a77aae48)*
+
 # Dublin Core Application Profile (DCAP)
 
 The concept of the <em>(metadata) application profile</em> is important for DCMI and the Dublin Core community. It has underpinned many of DCMI's development efforts in recent years. There is significant community interest in developing tools to aid in creating and documenting application profiles. There is a related interest in assuring that profiles specify validation rules for the data that they define.  
@@ -38,4 +40,5 @@ There is an initial seeding of some documents to support these tasks. These docu
 1. [Group charter](http://www.dublincore.org/groups/application_profiles_ig/)
 1. [Email list information](https://lists.dublincore.org/mailman/listinfo/application-profiles-ig)
 1. [Email list archive](https://lists.dublincore.org/pipermail/application-profiles-ig/)
+1. Group Progress ["cheat sheet"](https://gist.github.com/tombaker/00e47cf4771dff8566a44529a77aae48)
 
