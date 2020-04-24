@@ -1,5 +1,7 @@
 # Formalizing the simple profile
 
+2020-04-10: Edited here and synced with https://github.com/dcmi/dcap/blob/master/prototypes/simple/formalisms.md
+
 We need sufficient formalization to allow the creation of input and validation programs. The assumption here is the [simple](https://github.com/dcmi/dcap/tree/master/prototypes/simple) prototype that we have agreed on as the basic "core".
 
 In essence, the below is the template for the profile template. It is necessary to think "meta" here.

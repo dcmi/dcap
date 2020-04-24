@@ -42,4 +42,8 @@ The template file is similar to the one-sheet one above but with some modificati
 
 ### [Extended Template in JSON](extendedTemplateInJSON)
 
-This is based on the fuller schema described in [simpleSchema.csv](/simpleSchema.csv)
+This is based on the fuller schema described in [simpleSchema.csv](/simpleSchema.csv) of Sep 2019
+* [data1.json](prototypes/data1.json) (Sep 2019)
+* [schema1.json](prototypes/schema1.json) (Sep 2019)
+* [schema2.json](prototypes/extendedTemplateInJSON/schema2.json) (Nov 2019)
+* [sinopiaProfile.json](prior_art/sinopiaProfile.json) (Apr 2019)
