@@ -1,0 +1,26 @@
+ID,URI,Label,Type,Value Space,Comment
+sdo:,http://schema.org/,schema.org,,,
+foaf:,http://xmlns.com/foaf/,FOAF,,,
+wd:,http://www.wikidata.org/entity/,Wikidata Entities,,,
+wdt:,http://www.wikidata.org/prop/direct/,Wikidata Properties,,,
+xsd:,http://www.w3.org/2001/XMLSchema#,XML Schema,,,
+rdf:,http://www.w3.org/1999/02/22-rdf-syntax-ns#,RDF,,,
+,,,,,
+@book,,Book,,,
+,rdf:type,instance of,URI,sdo:Book,must be schema.org/Book 
+,rdf:type,instance of,URI,wd:Q571,must be wikidata Book
+,sdo:name,title,Literal,xsd:string,
+,sdo:author,author,URI,@author,
+,wdt:P127,owner,URI,@owner,owned by
+,,,,,
+@author,,Author,,,
+,rdf:type,instance of,URI,sdo:Person sdo:Organization,must be person or organization
+,sdo:givenName,given name,Literal,xsd:string,
+,sdo:familyName,family name,Literal,xsd:string,
+,,,,,
+@owner,,Owner,,,
+,rdf:type,instance of,URI,sdo:Person,
+,rdf:type,instance of,URI,foaf:Person,
+,sdo:givenName,given name,Literal,xsd:string,
+,sdo:familyName,family name,Literal,xsd:string,
+,foaf:knows,friend of,URI,@owner,

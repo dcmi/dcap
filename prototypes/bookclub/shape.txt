@@ -1,0 +1,29 @@
+PREFIX shapes: <http://example.org/bookshare/shapes#>
+PREFIX sdo: <http://schema.org/>
+PREFIX foaf: <http://xmlns.com/foaf/>
+PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+shapes:Book {
+  rdf:type [sdo:Book] ;
+  rdf:type [wd:Q571] ;
+  sdo:name xsd:string ;
+  sdo:author IRI @shapes:Author * ;
+  wdt:P127 IRI @shapes:Owner *
+}
+
+shapes:Author {
+  rdf:type [sdo:Person sdo:Organization] ;
+  sdo:givenName  xsd:string ;
+  sdo:familyName  xsd:string
+}
+
+shapes:Owner {
+  rdf:type [sdo:Person] ;
+  rdf:type [foaf:Person] ;
+  sdo:givenName  xsd:string ;
+  sdo:familyName  xsd:string ;
+  foaf:knows IRI @shapes:Owner *
+}
