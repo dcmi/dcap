@@ -1,0 +1,14 @@
+ID,URI,Value,Cardinality,Comment
+wd,<http://www.wikidata.org/entity/>,,,
+wdt,<http://www.wikidata.org/prop/direct/>,,,
+xsd,<http://www.w3.org/2001/XMLSchema#>,,,
+,,,,
+@hospital,EXTRA,wdt:P31,,
+,,,,
+@hospital,wdt:P31,wd:Q16917,,# instance of a hospital
+@hospital,wdt:P17,,1,#country
+@hospital,wdt:P131,,1,#located in the administrative territorial entity
+@hospital,wdt:P625,,+,#coordinate location
+@hospital,wdt:P856,,*,#official website
+@hospital,wdt:P1705,,*,#native label
+@hospital,wdt:P6375,,*,#street address
