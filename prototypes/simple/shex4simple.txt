@@ -1,20 +1,27 @@
 PREFIX : <http://dublincore.org/profile>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX rdfs: <http://www.w3.org/1999/02/22-rdf-syntax-ns>
 
 start = @<Profile>
 
 <Profile> {               # A Profile has:
-  :Profile_name IRI ; #   identifier for the profile
-  :Profile_label xsd:string {0,1} ; #  optional label, not repeatable
-  :Property @<PropertyShape>+         # one or more PropertyShape(s) .
+  :EntityShape @<EntityShape>* ;
+  :Property @<PropertyShape>+         # one or more PropertyShape(s) 
 }
 
+<EntityShape> {
+    :EntityShapeID IRI;    #
+    :Property @<PropertyShape>+ 
+    }
+
 <PropertyShape> {                   # A Property has:
- :Property_name IRI ;  #   an identifier, IRI or string
- :Property_label xsd:string* ; # an optional label
+ :PropertyID IRI ;  #   an identifier, IRI or string
+ :PropertyLabel [xsd:string rdfs:langString]* ; # an optional label 
  :Mandatory  ["y" "n"] ; 
  :Repeatable ["y" "n"] ;
- :Value_type xsd:string ; # The type of value - may be pick list?
- :Value xsd:string ; # additional value constraints
- :Annotation xsd:string ; # any information needed about property + value .
+ :ValueType ["IRI" "LITERAL" "BNODE"] ; # The general value type
+ :ValueDataType IRI ; # any identified value type; preference to xsd types
+ :ValueConstraint xsd:string ; # additional value constraints
+ :EntityShapeReference Nonliteral ; # A reference to an entity in the profile
+ :Annotation xsd:string ; # any information needed about property + value 
 }
