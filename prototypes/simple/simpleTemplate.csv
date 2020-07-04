@@ -1,7 +1,1 @@
-Was:
-
-Entity_name,Entity_label,Property,Property_Label,Mandatory,Repeatable,Value_type,Value,Annotation
-
-Suggesting:
-
 EntityID,Entity_label,PropertyID,Property_Label,Mandatory,Repeatable,Value_type,Value_datatype,Value_constraint,Annotation
