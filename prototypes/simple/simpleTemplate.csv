@@ -1,1 +1,1 @@
-EntityShapeID,EntityLabel,PropertyID,PropertyLabel,Mandatory,Repeatable,ValueType,ValueDatatype,ValueConstraint,EntityShapeReference,Annotation
+EntityID,EntityLabel,PropertyID,PropertyLabel,Mandatory,Repeatable,ValueType,ValueDatatype,ValueConstraint,EntityShapeReference,Annotation
