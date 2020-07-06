@@ -2,26 +2,33 @@ PREFIX : <http://dublincore.org/profile>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 PREFIX rdfs: <http://www.w3.org/1999/02/22-rdf-syntax-ns>
 
+# ShEx validation for simple profile 
+# blank = 1,1
+# + = 1,n
+# * = 0, n
+# ? = 0, 1
+
 start = @<Profile>
 
 <Profile> {               # A Profile has:
-  :EntityShape @<EntityShape>* ;
-  :Property @<PropertyShape>+         # one or more PropertyShape(s) 
+  :EntityShape @<EntityShape>* ;     # optional entity shape, repeatable
+  :Property @<PropertyShape>+        # one or more PropertyShape(s) 
 }
 
 <EntityShape> {
-    :EntityShapeID IRI;    #
-    :Property @<PropertyShape>+ 
+    :EntityShapeID IRI;         # if entity, required, not repeatable
+    :EntityLabel LITERAL?       # optional, not repeatable
+    :Property @<PropertyShape>+ # required for profile, repeatable
     }
 
 <PropertyShape> {                   # A Property has:
- :PropertyID IRI ;  #   an identifier, IRI or string
- :PropertyLabel [xsd:string rdfs:langString]* ; # an optional label 
- :Mandatory  ["y" "n"] ; 
- :Repeatable ["y" "n"] ;
- :ValueType ["IRI" "LITERAL" "BNODE"] ; # The general value type
- :ValueDataType IRI ; # any identified value type; preference to xsd types
- :ValueConstraint xsd:string ; # additional value constraints
- :EntityShapeReference Nonliteral ; # A reference to an entity in the profile
- :Annotation xsd:string ; # any information needed about property + value 
+ :PropertyID IRI ;              # required identifier, IRI (for RDF profile)
+ :PropertyLabel [xsd:string rdfs:langString]* ; # an optional label, not repeatable
+ :Mandatory  ["y" "n"]? ;       # optional, maximum 1
+ :Repeatable ["y" "n"]? ;       # optional, maximum 1
+ :ValueType ["IRI" "LITERAL" "BNODE"]? ; # The general value type, optional, not repeatable
+ :ValueDataType IRI? ;          # optional, not repeatable; preference to xsd types
+ :ValueConstraint xsd:string? ; # additional value constraints; optional, not repeatable
+ :EntityShapeReference Nonliteral? ; # A reference to an entity in the profile; optional, not repeatable
+ :Annotation xsd:string* ;      # any information needed about property + value; optional, repeatable
 }
