@@ -17,7 +17,7 @@ start = @<Profile>
 
 <EntityShape> {
     :EntityShapeID IRI;         # if entity, required, not repeatable
-    :EntityLabel LITERAL?       # optional, not repeatable
+    :EntityLabel LITERAL?;       # optional, not repeatable
     :Property @<PropertyShape>+ # required for profile, repeatable
     }
 
