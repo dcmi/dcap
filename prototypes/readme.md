@@ -38,6 +38,10 @@ A simple template similar to the profile2 template. The valueType is general (e.
 
 The template file is similar to the one-sheet one above but with some modifications made during the Hackathon. Each row represents an entity, a statement, and a value constraint. 
 
+### [Simple](Simple profile)
+
+This profile has been updated as the group has made decisions, and becomes the basis for milestone 1 of the group's work. Not all of the files will be carried over.
+
 ## Extended profile templates
 
 ### [Extended Template in JSON](extendedTemplateInJSON)
