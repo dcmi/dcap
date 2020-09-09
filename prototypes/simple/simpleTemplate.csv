@@ -1,1 +1,1 @@
-entityID,entityLabel,propertyID,propertyLabel,mandatory,repeatable,valueType,valueDataType,valueConstraint,entityShapeReference,annotation,
+shapeID,shapeLabel,propertyID,propertyLabel,mandatory,repeatable,valueType/RDFNode,valueDataType,constraint,constraintType,entityShapeReference,annotation
