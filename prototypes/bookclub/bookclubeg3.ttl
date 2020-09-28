@@ -1,0 +1,41 @@
+@prefix ex: <http://example.org/> .
+@prefix sdo: <https://schema.org> .
+@prefix wd: <http://www.wikidata.org/entity/> .
+@prefix wdt: <http://www.wikidata.org/prop/direct/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+
+ex:abc
+    ex:hasBook ex:123 ;
+    ex:hasMember 
+        _:b2 ,
+        _:b5 ,
+        ex:789 
+        .
+
+ex:123 
+    a sdo:Book ;
+    a wd:Q571 ;
+    sdo:name "Moby Dick" ;
+    sdo:author _:b1 ;
+    wdt:P127 _:b2 
+     .
+    
+_:b1 
+    a sdo:Person ;
+    sdo:givenName "Herman" ;
+    sdo:familyName "Melville" 
+     .
+_:b2
+    a sdo:Person ;
+    a foaf:Person ;
+    sdo:givenName "Mary" ;
+    sdo:familyName "Reader" ;
+    foaf:knows _:b5 ;
+    ex:owns ex:123 .
+    
+ex:789
+    a sdo:Person ;
+    a foaf:Person ;
+    sdo:givenName "Fred" ;
+    sdo:familyName "Flintstone" .
+    

@@ -1,0 +1,35 @@
+@prefix book: <http://example.org/bookshare/data/books#> .
+@prefix member: <http://example.org/bookshare/data/members#> .
+@prefix author: <http://example.org/bookshare/data/authors#> .
+@prefix wd: <http://www.wikidata.org/entity/> .
+@prefix wdt: <http://www.wikidata.org/prop/direct/> .
+@prefix sdo: <http://schema.org/> .
+@prefix foaf: <http://xmlns.com/foaf/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+book:001 a sdo:Book, wd:Q571 ;
+    sdo:name "The Human Factor" ;
+    sdo:author author:001 ;
+    wdt:P127 member:001 , member:002 .   # owned by
+
+book:002 a sdo:Book, wd:Q571 ;
+    sdo:name "The Comedians" ;
+    sdo:author author:001 ;
+    wdt:P127 member:002 .                # owned by
+
+author:001 a sdo:Person ;
+    sdo:givenName "Graham" ;
+    sdo:familyName "Greene" .
+
+member:001 a sdo:Person, foaf:Person ;
+    sdo:givenName "Greg" ;
+    sdo:familyName "Arious" ;
+    foaf:knows member:002 .
+
+member:002 a sdo:Person, foaf:Person ;
+    sdo:givenName "Billy" ;
+    sdo:familyName "No Mates" .
+
+member:003 a sdo:Person, foaf:Person ;
+    sdo:givenName "Mary" ;
+    sdo:familyName "No Mates" .
