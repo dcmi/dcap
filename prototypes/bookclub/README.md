@@ -11,6 +11,7 @@ This is a single file with four different variations on the book club example.
 2. This table has a row for the shape that includes cardinality on the shape; otherwise it is the same as 1. It isn't clear if this can be validated in this format using RDF validation.
 3. The third table uses a "manifest" method to define book and member as shapes within the book club, with desired cardinality.
 4. The fourth table is based on #1 but does not change the cardinality commitment of shapes; it does demonstrate a possibly more readable style using a row for the shape above the row(s) for properties.
+5. This table includes unique classes for Book and for Member, which can be tested for their presence within a single file or dataset.
 
 ## Sample instance data
 
