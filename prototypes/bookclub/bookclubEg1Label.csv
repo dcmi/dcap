@@ -1,0 +1,21 @@
+
+shapeID,property,Label,Mandatory,Repeatable,valueType,literalValueType,shapeRef,constraintType,constraint,Annotation
+book,,Book,,,,,,,,
+,rdf:type,instance of,y,n,URI,,,,sdo:Book,must be schema.org/Book 
+,rdf:type,instance of,y,n,URI,,,,wd:Q571,must be wikidata Book
+,sdo:name,title,y,n,Literal,xsd:string,,,,
+,sdo:author,author,y,y,URI,,author,,,URI or bnode?
+,wdt:P127,owner,n,y,URI,,member,,,URI or bnode?
+,,,,,,,,,,
+author,,Author,,,,,,,,
+,rdf:type,instance of,y,n,URI,,,,sdo:Person sdo:Organization,must be person or organization/rdf would be union
+,sdo:givenName,given name,y,n,Literal,xsd:string,,,,
+,sdo:familyName,family name,n,n,Literal,xsd:string,,,,
+,,,,,,,,,,
+member,,Member,,,,,,,,
+,rdf:type,instance of,y,n,URI,,,,sdo:Person,
+,rdf:type,instance of,y,n,URI,,,,foaf:Person,
+,sdo:givenName,given name,y,n,Literal,xsd:string,,,,
+,sdo:familyName,family name,y,n,Literal,xsd:string,,,,
+,foaf:knows,friend of,n,y,URI,,member,,,
+,ex:owns,owns book,n,y,URI,,book,,,
