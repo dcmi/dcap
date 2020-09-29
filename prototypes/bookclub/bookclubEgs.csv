@@ -83,3 +83,22 @@ member,Member,,,,,,,,,,
 ,,foaf:knows,friend of,n,y,URI,,member,,,
 ,,ex:owns,owns book,n,y,URI,,book,,,
 ,,,,,,,,,,,
+5,,,,,,,,,,,
+shapeID,shapeLabel,property,propertyLabel,Mandatory,Repeatable,valueType,literalValueType,shapeRef,constraintType,constraint,Annotation
+book,Book,rdf:type,instance of,y,n,URI,,,,sdo:Book,must be schema.org/Book 
+book,Book,rdf:type,instance of,y,n,URI,,,,wd:Q571,must be wikidata Book
+book,Book,sdo:name,title,y,n,Literal,xsd:string,,,,
+book,Book,sdo:author,author,y,y,URI,,author,,,URI or bnode?
+book,Book,wdt:P127,owner,n,y,URI,,member,,,URI or bnode?
+,,,,,,,,,,,
+author,Author,rdf:type,instance of,y,n,URI,,,,sdo:Person sdo:Organization,must be person or organization/rdf would be union
+author,Author,sdo:givenName,given name,y,n,Literal,xsd:string,,,,
+author,Author,sdo:familyName,family name,n,n,Literal,xsd:string,,,,
+,,,,,,,,,,,
+member,Member,rdf:type,instance of,y,n,URI,,,,ex:Member,
+member,Member,rdf:type,instance of,y,n,URI,,,,sdo:Person,
+member,Member,rdf:type,instance of,y,n,URI,,,,foaf:Person,
+member,Member,sdo:givenName,given name,y,n,Literal,xsd:string,,,,
+member,Member,sdo:familyName,family name,y,n,Literal,xsd:string,,,,
+member,Member,foaf:knows,friend of,n,y,URI,,member,,,
+member,Member,ex:owns,owns book,n,y,URI,,book,,,
