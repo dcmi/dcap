@@ -14,6 +14,6 @@ book,,rdf:type,instance of,y,n,URI,,,,wd:Q571,must be wikidata Book
 book,,sdo:name,title,y,n,Literal,xsd:string,,,,
 book,,sdo:author,author,y,y,URI,,author,,,URI or bnode?
 book,,wdt:P127,owner,n,y,URI,,member,,,URI or bnode?
-member,,Member,sdo:familyName,family name,y,n,Literal,xsd:string,,,,
+member,,Member,sdo:familyName,family name,y,n,Literal,xsd:string,,,
 member,,foaf:knows,friend of,n,y,URI,,member,,,
 member,,ex:owns,owns book,n,y,URI,,book,,,
