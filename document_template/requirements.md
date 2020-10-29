@@ -33,17 +33,18 @@ Font types
 
 Section offsets ("boxes")
 
-1. <pre> type: for code-like examples
+1. &lt;pre> type: for code-like examples
 
-2. <note> type: for notes that are not to be considered part of the 
+2. &lt;note> type: for notes that are not to be considered part of the 
    spec, like "This section is still under development."
+   see https://www.w3.org/TR/2020/REC-json-ld11-20200716/#typographical-conventions
 
 Tables
 - Could HTML tables be used? Easier to edit than Markdown 
   tables, and more flexible w.r.t. format.
 
 References
-- Link to entry in reference section 
+- Link to entry in reference section (note: w3c has deprecated this function in respec, so seem to be using just anchor text - https://github.com/w3c/respec/wiki/refNote)
 
 Maybe
 - "Data include" as per respec: 
