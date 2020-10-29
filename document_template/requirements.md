@@ -1,6 +1,6 @@
 DCAP documentation requirements
 
-Header metadata
+Header metadata - similar to https://www.dublincore.org/specifications/dublin-core/dcmi-terms/
 - Editor
 - Contributors
 - Latest version link (dublincore.org)
@@ -9,7 +9,7 @@ Header metadata
 - Status
 
 
-Table of contents
+Table of contents - similar to https://www.dublincore.org/specifications/dublin-core/dcmi-terms/
 
 Headers (four levels deep)
 
