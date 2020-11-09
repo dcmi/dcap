@@ -1,8 +1,8 @@
-entityID,entityLabel,propertyID,propertyLabel,mandatory,repeatable,valueType,valueDataType,valueConstraint,entityShapeReference,annotation
-book,Book,dct:creator,Author,y,y,,,,person,Author is not required; no limit on the number
-,,dct:title,Title,y,n,,literal,,,Each book must have a title
-,,dct:date,Year of publication,y,n,,xsd:year,,,Only the year - 9999
-person,Person,foaf:Name,Name,y,n,,literal,,,Each person has one name
-,,foaf:mbox,Email,n,y,,URI,,,Email is optional but only one allowed
-,,dct:date,Birth year, n,y,,xsd:year,,,Only the year - 9999
+shapeID,shapeLabel,propertyID,propertyLabel,mandatory,repeatable,valueNodeType,valueDataType,valueConstraint,valueConstraintType,valueShape,note
+book,Book,dct:creator,Author,y,y,,,,,person,Author is not required; no limit on the number
+,,dct:title,Title,y,n,,literal,,,,Each book must have a title
+,,dct:date,Year of publication,y,n,,xsd:year,,,,Only the year - 9999
+person,Person,foaf:Name,Name,y,n,,literal,,,,Each person has one name
+,,foaf:mbox,Email,n,y,,URI,,,,Email is optional but only one allowed
+,,dct:date,Birth year, n,y,,xsd:year,,,,Only the year - 9999
 
