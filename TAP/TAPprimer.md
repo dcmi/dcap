@@ -1,5 +1,20 @@
 # DCMI Application Profile
 
+**Date:**
+November 27, 2020
+
+**Status:**
+Draft - Request for Comments
+
+**Editors:**
+Karen Coyle
+
+**Contributors**
+Tom Baker, DCMI
+Phil Barker
+John Huck, University of Alberta
+Ben Reisenberg, University of Washington
+
 [![hackmd-github-sync-badge](https://hackmd.io/pTp9ub_bQbO6vxZra1w-kw/badge)](https://hackmd.io/pTp9ub_bQbO6vxZra1w-kw)
 
 
