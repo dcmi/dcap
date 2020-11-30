@@ -16,13 +16,13 @@ I made these adaptations in November of 2020. Generally speaking, I tried to sta
 
 - Predicates that could take an IRI or a literal are represented twice, to conform to the limitations of the current TAP format. Accompanying notes were modified accordingly.
 
-- Where the Recommendation had URI, I replaced it with IRI for consistency with the TAP format.
+- Where the Recommendations had URI, I replaced it with IRI for consistency with the TAP format.
 
-- The Recommendation included proposals for predicates that could be created and hosted in the OpaqueNamespace platform. I left those as-is.
+- The Recommendations included proposals for predicates that could be created and hosted in the OpaqueNamespace platform. I left those as-is.
 
-- The Recommendation included predicates from some vocabularies like the MARC Code List for Relators, indicating that any predicate from that vocabulary could be used, and presenting this with form such as relators:[term] or classSchemes:[code]. Where this form was found, I replaced the bracketed element with a sample term and amended the note to convey the intended meaning.
+- The Recommendations included predicates from some vocabularies like the MARC Code List for Relators, indicating that any predicate from that vocabulary could be used, and presenting this with form such as relators:[term] or classSchemes:[code]. Where this form was found, I replaced the bracketed element with a sample term and amended the note to convey the intended meaning.
 
-- I would like to acknowledge the tremendous amount of work carried out by members of the Samvera community over a long period of time that went into the creation of this set of recommendations, and to applaud them for it. I encourage interested parties to consult the Recommendation itself for full details on the process and its outcomes.
+- I would like to acknowledge the tremendous amount of work carried out by members of the Samvera community over a long period of time that went into the creation of this set of recommendations, and to applaud them for it. I encourage interested parties to consult the Recommendations document itself for full details on the process and its outcomes.
 
 John Huck
 November, 2020
