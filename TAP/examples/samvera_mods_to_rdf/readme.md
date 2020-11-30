@@ -1,6 +1,6 @@
 # Samvera MODS to RDF Recommendations - Represented in DC TAP format
 
-These Tabular Application Profile (TAP) examples represent an adaptation of the MODS to RDF Mapping Recommendations (v.1.0) completed by the Samvera MODS to RDF Working Group in January of 2019, which are available from the group's [wiki] (https://wiki.lyrasis.org/display/samvera/MODS+and+RDF+Descriptive+Metadata+Subgroup).
+These Tabular Application Profile (TAP) examples represent an adaptation of the MODS to RDF Mapping Recommendations (v.1.0) completed by the Samvera MODS to RDF Working Group in January of 2019, which are available from the group's [wiki](https://wiki.lyrasis.org/display/samvera/MODS+and+RDF+Descriptive+Metadata+Subgroup).
 
 I made these adaptations in November of 2020. Generally speaking, I tried to stay as close to the details of the document as I could. Here are some points of difference.
 
@@ -22,7 +22,7 @@ I made these adaptations in November of 2020. Generally speaking, I tried to sta
 
 - The Recommendation included predicates from some vocabularies like the MARC Code List for Relators, indicating that any predicate from that vocabulary could be used, and presenting this with form such as relators:[term] or classSchemes:[code]. Where this form was found, I replaced the bracketed element with a sample term and amended the note to convey the intended meaning.
 
-- I would like to acknowledge the tremendous amount of work carried out by community members in the working group over a long period of time that went into the creation of this set of recommendations, and to applaud them for it. I encourage interested parties to consult the Recommendation itself for full details on the process and its outcomes.
+- I would like to acknowledge the tremendous amount of work carried out by members of the Samvera community over a long period of time that went into the creation of this set of recommendations, and to applaud them for it. I encourage interested parties to consult the Recommendation itself for full details on the process and its outcomes.
 
 John Huck
 November, 2020
