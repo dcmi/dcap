@@ -114,7 +114,7 @@ recordInfo,Record Info,edm:provider,Metadata Creator,n,n,IRI,,metadataOrganizati
 recordInfo,Record Info,edm:provider,Metadata Creator,n,n,LITERAL,xsd:string,,,The organization responsible for making the metadata record and/or digital object available.
 recordInfo,Record Info,bf:derivedFrom,Metadata Derived From,n,n,LITERAL,xsd:string,,,Information about the origin or provenance of the metadata record.
 metadataOrganization,Metadata Organization,rdf:type,,n,n,IRI,,,foaf:Organization,The class for minted institution or corporate name objects.
-metadataOrganization,Metadata Organization,rdfs:label,,n,y,LITERAL,xsd:string,,,Use for the title of the minted organization object.
+metadataOrganization,Metadata Organization,rdfs:label,,n,n,LITERAL,xsd:string,,,Use for the title of the minted organization object.
 metadataOrganization,Metadata Organization,rdfs:seeAlso,,n,y,IRI,,,,Use to link a minted institution object to a closely related existing authority or URI.
 mods,MODS Document,dcterms:type,Type of Resource,n,y,IRI,,,,Direct mapping option for <mods:typeOfResource>. Use with a type from a controlled vocabulary (such as the LoC ​Resource Types Scheme​ or ​DCMI Type Vocabulary​).
 mods,MODS Document,edm:hasType,Genre,n,y,IRI,,,,"Direct mapping option for <mods:genre>. Use with a genre term from a controlled vocabulary, or a local term."

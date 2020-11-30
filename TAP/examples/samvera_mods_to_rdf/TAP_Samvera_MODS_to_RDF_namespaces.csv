@@ -21,8 +21,3 @@ Schema.org,schema,http://schema.org/
 SKOS Simple Knowledge Organization System,skos,http://www.w3.org/2004/02/skos/core#
 SKOS Simple Knowledge Organization System eXtension for Labels,skosxl,http://www.w3.org/2008/05/skos-xl
 Standard Identifiers Scheme,identifiers,http://id.loc.gov/vocabulary/identifiers
-,,
-This TAP representation is an adaptation of the following resource,,
-MODS to RDF Mapping Recommendations v.1.0 (January 2019),,
-by the Samvera MODS to RDF Working Group,,
-https://wiki.lyrasis.org/display/samvera/MODS+and+RDF+Descriptive+Metadata+Subgroup,,
